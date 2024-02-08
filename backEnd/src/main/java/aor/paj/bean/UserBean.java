@@ -29,15 +29,17 @@ public class UserBean {
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e); }
         }else
-            users = new ArrayList<User>();
+            users = new ArrayList<>();
     }
 
     public void addUser (User a) {
+        System.out.println(a.getUsername());
         users.add(a);
         writeIntoJsonFile();
     }
 
     public ArrayList<User> getUsers() {
+
         return users;
     }
 

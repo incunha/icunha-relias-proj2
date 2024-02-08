@@ -5,20 +5,19 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class User {
-
     String username;
     String password;
     String email;
     String firstName;
     String lastName;
-    int phoneNumber;
+    String phoneNumber;
     String profilePhoto;
 
     public User () {
 
     }
 
-    public User(String username, String password, String email, String firstName, String lastName, int phoneNumber, String profilePhoto) {
+    public User(String username, String password, String email, String firstName, String lastName, String phoneNumber, String profilePhoto) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -52,7 +51,7 @@ public class User {
         return lastName;
     }
     @XmlElement
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
     @XmlElement
@@ -60,6 +59,31 @@ public class User {
         return profilePhoto;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
 }
