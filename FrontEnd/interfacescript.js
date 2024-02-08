@@ -80,7 +80,6 @@ window.addEventListener("click", function (event) {
   if (contextMenu.style.display === "block") {
     contextMenu.style.display = "none";
   }
-
 });
 
 //Função que determina o que acontece quando o cursor está sobre trashIcon
