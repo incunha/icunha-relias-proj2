@@ -2,6 +2,7 @@ package aor.paj.bean;
 
 import aor.paj.dto.Task;
 import aor.paj.dto.User;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbConfig;
@@ -12,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
 
+@ApplicationScoped
 public class UserBean {
 
     final String filenameUser = "users.json";

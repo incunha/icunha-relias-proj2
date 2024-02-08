@@ -9,45 +9,51 @@
     <div class="registration-content" id="registrationForm">
       <h2>Create an Account</h2>
       <div id="formContainer">
-      <form action="registar" method="post">
+        <form action="registar" method="post">
           <div class="input-group">
-              <label id="usernameReg" for="username">Username:</label>
-              <input type="text" id="usernameInput" name="username" required />
+            <label id="usernameReg" for="username">Username:</label>
+            <input type="text" id="usernameInput" name="username" required />
           </div>
-      
+
           <div class="input-group">
-              <label id="passwordReg" for="password">Password:</label>
-              <input type="password" id="passwordReg" name="password" required />
+            <label id="passwordReg" for="password">Password:</label>
+            <input type="password" id="passwordReg" name="password" required />
           </div>
-      
+
           <div class="input-group">
-              <label id="emailReg" for="email">Email:</label>
-              <input type="email" id="emailReg" name="email" required />
+            <label id="emailReg" for="email">Email:</label>
+            <input type="email" id="emailReg" name="email" required />
           </div>
-      
+
           <div class="input-group">
-              <label id="firstNameReg" for="firstName">First Name:</label>
-              <input type="text" id="firstNameReg" name="firstName" required />
+            <label id="firstNameReg" for="firstName">First Name:</label>
+            <input type="text" id="firstNameReg" name="firstName" required />
           </div>
-      
+
           <div class="input-group">
-              <label id="lastNameReg" for="lastName">Last Name:</label>
-              <input type="text" id="lastNameReg" name="lastName" required />
+            <label id="lastNameReg" for="lastName">Last Name:</label>
+            <input type="text" id="lastNameReg" name="lastName" required />
           </div>
-      
+
           <div class="input-group">
-              <label id="phoneNumberReg" for="phoneNumber">Phone Number:</label>
-              <input type="text" id="phoneNumber" name="phoneNumber" />
+            <label id="phoneNumberReg" for="phoneNumber">Phone Number:</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" />
           </div>
-      
+
           <div class="input-group">
-              <label id="photoReg" for="photo">Profile Photo (URL):</label>
-              <input type="text" id="photo" name="photo" />
+            <label id="photoReg" for="photo">Profile Photo (URL):</label>
+            <input type="text" id="photo" name="photo" />
           </div>
-          <button type="submit" id="createAccountButton">Create Account</button>
-      </form>
+          <button
+            type="submit"
+            id="createAccountButton"
+            onclick="addTask(this.form)"
+          >
+            Create Account
+          </button>
+        </form>
       </div>
     </div>
-    <script src="loginscript.js"></script>
+    <script src="registrationscript.js"></script>
   </body>
 </html>

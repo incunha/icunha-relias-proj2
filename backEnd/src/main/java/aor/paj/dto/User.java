@@ -12,7 +12,6 @@ public class User {
     String firstName;
     String lastName;
     int phoneNumber;
-
     String profilePhoto;
 
     public User () {
