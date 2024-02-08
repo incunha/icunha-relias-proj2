@@ -7,20 +7,20 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/activity")
+@Path("/task")
 public class TaskService {
     @Inject
     TaskBean taskBean;
 
     @GET
     @Path("/all")
-    @Produces(MediaType.APPLICATION_JSON) public List<Task> getActivities() {
+    @Produces(MediaType.APPLICATION_JSON) public List<Task> getTasks() {
         return taskBean.getTasks();
     }
 
     @POST
     @Path("/add")
-    @Consumes(MediaType.APPLICATION_JSON) public Response addActivity(Task a) {
+    @Consumes(MediaType.APPLICATION_JSON) public Response addTask(Task a) {
         taskBean.addTask(a);
         return Response.status(200).entity("A new task is created").build();
     }
@@ -28,7 +28,7 @@ public class TaskService {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getActivity(@PathParam("id")int id) {
+    public Response getTask(@PathParam("id")int id) {
         Task activity = taskBean.getTask(id);
         if (activity == null) {
             return Response.status(200).entity("Task with this idea is not found").build();
@@ -59,8 +59,3 @@ public class TaskService {
         return Response.status(200).entity("updated").build(); }
 }
 
-
-
-
-
-}
