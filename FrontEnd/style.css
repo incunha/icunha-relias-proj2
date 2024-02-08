@@ -57,7 +57,7 @@ body.modal-open::before {
   display: block; /*para centrar a imagem*/
   margin: auto; /* Centraliza o logo horizontalmente usando margens automáticas */
   filter: brightness(70%); /*reduz a intensidade do brilho para 70% */
-  margin-top: 10%;
+  margin-top: 2%;
 }
 /* Imagem do Logo no aside (canto superior esquerdo)*/
 #logo {
@@ -797,4 +797,62 @@ aside::after {
 /*Margens das opções do dropdown list de section*/
 #editTaskStatus option {
   padding: 10px;
+}
+
+/*CSS da página de registo*/
+
+/*container do formulário de registo*/
+#formContainer {
+  margin-top: 0px; 
+  margin-right: 1000px; 
+}
+/* titulo do formulário de registo */
+#registrationForm h2 {
+  font-family: Arial, sans-serif;
+  color: #205d88;
+  font-weight: bold;
+  font-size: 40px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+#registrationForm {
+  margin-top: 20px; 
+  margin-left: 100px; 
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; 
+}
+/* Define as características das labels*/
+.input-group label {
+  font-family: Arial, sans-serif;
+  color: #205d88;
+  font-weight: bold;
+  font-size: 18px;
+  width: 150px; 
+  text-align: right; 
+  margin-right: 20px;
+}
+
+.input-group input {
+  width: 400px; 
+  box-sizing: border-box; 
+  padding: 10px; 
+  border: none;
+  outline: none;
+}
+/* Botão de submeter o registo */
+#createAccountButton {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #205d88;
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid #343a40;
+  border-radius: 5px;
+  margin-left: 400px;
+  border: none;
 }
