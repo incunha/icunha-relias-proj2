@@ -9,45 +9,45 @@
     <div class="registration-content" id="registrationForm">
       <h2>Create an Account</h2>
       <div id="formContainer">
-        <form action="registaar" method="post">
+        <form method="post">
           <div class="input-group">
-            <label id="usernameReg" for="username">Username:</label>
+            <label id="usernameRegg" for="username">Username:</label>
             <input type="text" id="usernameInput" name="username" required />
           </div>
 
           <div class="input-group">
-            <label id="passwordReg" for="password">Password:</label>
+            <label id="passwordRegg" for="password">Password:</label>
             <input type="password" id="passwordReg" name="password" required />
           </div>
 
           <div class="input-group">
-            <label id="emailReg" for="email">Email:</label>
+            <label id="emailRegg" for="email">Email:</label>
             <input type="email" id="emailReg" name="email" required />
           </div>
 
           <div class="input-group">
-            <label id="firstNameReg" for="firstName">First Name:</label>
+            <label id="firstNameRegg" for="firstName">First Name:</label>
             <input type="text" id="firstNameReg" name="firstName" required />
           </div>
 
           <div class="input-group">
-            <label id="lastNameReg" for="lastName">Last Name:</label>
+            <label id="lastNameRegg" for="lastName">Last Name:</label>
             <input type="text" id="lastNameReg" name="lastName" required />
           </div>
 
           <div class="input-group">
-            <label id="phoneNumberReg" for="phoneNumber">Phone Number:</label>
-            <input type="text" id="phoneNumber" name="phoneNumber" />
+            <label id="phoneNumberRegg" for="phoneNumber">Phone Number:</label>
+            <input type="text" id="phoneNumberReg" name="phoneNumber" />
           </div>
 
           <div class="input-group">
-            <label id="photoReg" for="photo">Profile Photo (URL):</label>
-            <input type="text" id="photo" name="photo" />
+            <label id="photoRegg" for="photo">Profile Photo (URL):</label>
+            <input type="text" id="photoReg" name="photo" />
           </div>
           <button
-            type="submit"
+            type="button"
             id="createAccountButton"
-            onclick="addTask(this.form)"
+            onclick="addUser(this.form)"
           >
             Create Account
           </button>
