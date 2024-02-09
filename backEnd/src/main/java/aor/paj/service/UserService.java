@@ -16,16 +16,42 @@ public class UserService {
     UserBean userBean;
 
     @GET
-    @Path("/all")
+    @Path("/users")
     @Produces(MediaType.APPLICATION_JSON) public List<User> getUsers() {
         return userBean.getUsers();
     }
 
     @POST
-    @Path("/add")
+    @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON) public Response addUser(User a) {
-        userBean.addUser(a);
-        return Response.status(200).entity("A new user is created").build();
+        try {
+            userBean.addUser(a);
+            return Response.status(200).entity("A new user is created").build();
+        }catch (Exception e){
+            return Response.status(401).build();
+        }
+
+    }
+    @POST
+    @Path("/validate")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response validateUser(User a){
+        if(a.getFirstName().isEmpty()||a.getLastName().isEmpty()||a.getEmail().isEmpty()||a.getPassword().isEmpty()||a.getPhoneNumber().isEmpty()||a.getUsername().isEmpty()){
+            return Response.status(401).entity("Campos obrigatórios não preenchidos.").build();
+        }
+        return Response.status(200).entity("Campos preenchidos").build();
+    }
+    @POST
+    @Path("/verifyUsername")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response verifyUsername(User a){
+        List<User> users = userBean.getUsers();
+        for(User user: users){
+            if(user.getUsername().equals(a.getUsername())){
+                return Response.status(200).entity("Username já existe.").build();
+            }
+        }
+        return Response.status(404).entity("Username disponível.").build();
     }
 
 }
