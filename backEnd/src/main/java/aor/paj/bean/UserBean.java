@@ -49,6 +49,25 @@ public class UserBean {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e); }
     }
+
+    public User verifyLogin(String username, String password){
+        System.out.println(username+" "+password);
+        for(User user: users){
+            if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public User verifyUsername(String username){
+        for(User user: users){
+            if(user.getUsername().equals(username)){
+                return user;
+            }
+        }
+        return null;
+    }
 }
 
 

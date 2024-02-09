@@ -16,13 +16,13 @@ public class UserService {
     UserBean userBean;
 
     @GET
-    @Path("/users")
+    @Path("/all")
     @Produces(MediaType.APPLICATION_JSON) public List<User> getUsers() {
         return userBean.getUsers();
     }
 
     @POST
-    @Path("/register")
+    @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON) public Response addUser(User a) {
         try {
             userBean.addUser(a);
@@ -44,14 +44,26 @@ public class UserService {
     @POST
     @Path("/verifyUsername")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response verifyUsername(User a){
+    public Response verifyUsername(@QueryParam("username") String username){
         List<User> users = userBean.getUsers();
         for(User user: users){
-            if(user.getUsername().equals(a.getUsername())){
+            if(user.getUsername().equals(username)){
                 return Response.status(200).entity("Username já existe.").build();
             }
         }
         return Response.status(404).entity("Username disponível.").build();
     }
 
+    @GET
+    @Path("verifyLogin")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response verifyLogin(@QueryParam("username") String username, @QueryParam("password") String password) {
+        User verifiedUser = userBean.verifyLogin(username, password);
+        System.out.println(username+" "+password);
+        if (verifiedUser == null) {
+            return Response.status(401).entity("Username ou password incorretos.").build();
+        } else {
+            return Response.status(200).entity(verifiedUser).build();
+        }
+    }
 }
