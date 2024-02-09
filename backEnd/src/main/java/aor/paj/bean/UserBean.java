@@ -1,6 +1,6 @@
 package aor.paj.bean;
 
-import aor.paj.dto.Task;
+
 import aor.paj.dto.User;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.json.bind.Jsonb;
@@ -39,7 +39,6 @@ public class UserBean {
     }
 
     public ArrayList<User> getUsers() {
-
         return users;
     }
 
