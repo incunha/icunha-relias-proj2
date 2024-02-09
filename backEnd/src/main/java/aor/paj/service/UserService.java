@@ -16,13 +16,13 @@ public class UserService {
     UserBean userBean;
 
     @GET
-    @Path("/all")
+    @Path("/users")
     @Produces(MediaType.APPLICATION_JSON) public List<User> getUsers() {
         return userBean.getUsers();
     }
 
     @POST
-    @Path("/add")
+    @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON) public Response addUser(User a) {
         try {
             userBean.addUser(a);
