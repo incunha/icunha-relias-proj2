@@ -18,20 +18,23 @@ async function addUser(form) {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
     },
-}).then(async function (response) {
+    body: JSON.stringify(user),
+  }).then(async function (response) {
     if (response.status == 401) {
-      alert("please fill all fields:)")
-    } else {
-      await fetch("http://localhost:8080/backEnd_war_exploded/rest/user/add", {
-        method: "POST",
-        headers: {
-          Accept: "*/*",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify(user),
-    
-      }).then(function (response) {
+      alert("please fill all fields:)");
+    } else if (response.status == 200) {
+      await fetch(
+        "http://localhost:8080/backEnd_war_exploded/rest/user/register",
+        {
+          method: "POST",
+          headers: {
+            Accept: "*/*",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify(user),
+        }
+      ).then(function (response) {
         if (response.status == 200) {
           alert("user is added successfully :)");
           window.location.href = "index.html";

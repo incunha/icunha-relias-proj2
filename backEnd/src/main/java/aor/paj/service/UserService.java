@@ -35,8 +35,14 @@ public class UserService {
     @POST
     @Path("/validate")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response validateUser(User a){
-        if(a.getFirstName().isEmpty()||a.getLastName().isEmpty()||a.getEmail().isEmpty()||a.getPassword().isEmpty()||a.getPhoneNumber().isEmpty()||a.getUsername().isEmpty()){
+    public Response validateUser(User a) {
+        if (a == null ||
+                a.getFirstName() == null || a.getFirstName().isEmpty() ||
+                a.getLastName() == null || a.getLastName().isEmpty() ||
+                a.getEmail() == null || a.getEmail().isEmpty() ||
+                a.getPassword() == null || a.getPassword().isEmpty() ||
+                a.getPhoneNumber() == null || a.getPhoneNumber().isEmpty() ||
+                a.getUsername() == null || a.getUsername().isEmpty()) {
             return Response.status(401).entity("Campos obrigatórios não preenchidos.").build();
         }
         return Response.status(200).entity("Campos preenchidos").build();
