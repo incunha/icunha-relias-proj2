@@ -1,17 +1,17 @@
 async function addUser(form) {
   let user = {
-    'username': form.username.value,
-    'password': form.password.value,
-    'email': form.email.value,
-    'firstName': form.firstName.value,
-    'lastName': form.lastName.value,
-    'phoneNumber': form.phoneNumber.value,
-    'profilePhoto': form.photo.value,
+    username: form.username.value,
+    password: form.password.value,
+    email: form.email.value,
+    firstName: form.firstName.value,
+    lastName: form.lastName.value,
+    phoneNumber: form.phoneNumber.value,
+    profilePhoto: form.photo.value,
   };
 
-  alert("operke");
+  alert("TESTE 2");
   console.log(JSON.stringify(user));
-  
+
   await fetch("http://localhost:8080/backEnd_war_exploded/rest/user/add", {
     method: "POST",
     headers: {
@@ -20,7 +20,6 @@ async function addUser(form) {
       "Access-Control-Allow-Origin": "*",
     },
     body: JSON.stringify(user),
-
   }).then(function (response) {
     if (response.status == 200) {
       alert("user is added successfully :)");
