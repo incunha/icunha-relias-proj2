@@ -126,6 +126,11 @@ botaoLogout.addEventListener("click", function () {
   window.location.href = "index.html";
 });
 
+//Listener para quando o botão de editar perfil é clicado
+document.getElementById('editProfileButton').addEventListener('click', function() {
+  window.location.href = 'editProfilePage.html'; 
+});
+
 //Listener para quando o botão Add Task é clicado
 addTaskButton.addEventListener("click", function () {
   //Limpas os campos de input da modal

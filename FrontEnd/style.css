@@ -308,6 +308,36 @@ footer a {
   box-shadow: 0 0 0 #205d88;/* Remove a sombra */
   transform: translate(0, 0);/* Volta o elemento para a posição original */
 }
+
+/* botão de editar perfil */
+#editProfileButton {
+  position: relative;
+  top: 16rem;
+  left: 0%;
+  margin-left: 0;
+  width: 12rem;
+  font-family: inherit;
+  font-size: inherit;
+  background: white;
+  border: 3px solid #205d88;
+  margin-right: 2.6rem;
+  box-shadow: 0 0 0 #205d88;
+  transition: all 0.2s;
+  border-radius: 10px;
+}
+
+/* características do botão de editar perfil quando se passa sobre ele */
+#editProfileButton:hover {
+  box-shadow: 0.4rem 0.4rem 0 #205d88; /* Adiciona uma sombra */
+  transform: translate(-0.4rem, -0.4rem); /* Move o elemento para cima e para a esquerda */
+}
+
+/* características do botão de editar perfil quando é clicado */
+#editProfileButton:active {
+  box-shadow: 0 0 0 #205d88; /* Remove a sombra */
+  transform: translate(0, 0); /* Volta o elemento para a posição original */
+}
+
 /*caracteristicas dos títulos das colunas (To Do, Doing, Done)*/
 .titulos > h2 {
   position: relative;
@@ -855,4 +885,37 @@ aside::after {
   border-radius: 5px;
   margin-left: 400px;
   border: none;
+}
+
+
+
+
+.profile-content {
+  margin-left: 600px; /* ajuste este valor conforme necessário */
+}
+
+#editProfileTitle {
+  font-family: Arial, sans-serif;
+  color: #205d88;
+  font-weight: bold;
+  font-size: 40px;
+  text-align: left;
+  margin-top: 30px;
+  margin-left: 50px;
+}
+
+#goBackButton {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 45px;
+  color: white; 
+  font-size: 24px;
+}
+
+button[type="submit"] {
+  margin-left: 470px; 
+  width: 100px; 
+  height: 30px;
+  color: white; 
 }

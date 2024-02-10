@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TaskCraft - Edit Profile</title>
+    <link rel="icon" href="resources/Logos/tab_logo.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <aside>
+      <img id="logo" src="resources/Logos/logo.png" alt="Logo" />
+    </aside>
+    <button id="goBackButton">↩</button>
+    <div class="profile-content" id="editProfileForm">
+      <h2 id="editProfileTitle">Edit Profile</h2>
+      <div id="formContainer">
+        <form method="post">
+          <div class="input-group">
+            <label for="username">Username:</label>
+            <input
+              type="text"
+              id="usernameInput"
+              name="username"
+              placeholder="Current username"
+              disabled
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="passwordInput"
+              name="password"
+              placeholder="Current password"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              id="emailInput"
+              name="email"
+              placeholder="Current email"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="firstName">First Name:</label>
+            <input
+              type="text"
+              id="firstNameInput"
+              name="firstName"
+              placeholder="Current first name"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="lastName">Last Name:</label>
+            <input
+              type="text"
+              id="lastNameInput"
+              name="lastName"
+              placeholder="Current last name"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="phoneNumber">Phone Number:</label>
+            <input
+              type="text"
+              id="phoneNumberInput"
+              name="phoneNumber"
+              placeholder="Current phone number"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="photo">Profile Photo (URL):</label>
+            <input
+              type="text"
+              id="photoInput"
+              name="photo"
+              placeholder="Current photo URL"
+            />
+          </div>
+
+          <button type="submit">Save</button>
+        </form>
+      </div>
+    </div>
+    <script src="editProfilescript.js"></script>
+  </body>
+</html>
