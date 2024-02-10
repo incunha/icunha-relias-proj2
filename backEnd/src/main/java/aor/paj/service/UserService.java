@@ -52,7 +52,7 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response verifyUsername(@QueryParam("username") String username){
         List<User> users = userBean.getUsers();
-        for(User user: users){
+            for(User user: users){
             if(user.getUsername().equals(username)){
                 return Response.status(200).entity("Username já existe.").build();
             }
