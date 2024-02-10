@@ -25,6 +25,8 @@ async function loginVerified(form) {
       sessionStorage.setItem("username", username);
       //Armazena o username na localStorage
       localStorage.setItem("username", username);
+      //Armazena a password na localStorage
+      localStorage.setItem("password", user.password);
       //Redireciona para a página de interface
       window.location.href = "interface.html";
     }
