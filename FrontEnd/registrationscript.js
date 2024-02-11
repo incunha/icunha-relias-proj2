@@ -11,7 +11,7 @@ async function addUser(form) {
 
   console.log(JSON.stringify(user));
 
-  await fetch("http://localhost:8080/backEnd_war_exploded/rest/user/validate", {
+  await fetch("http://localhost:8080/backEnd/rest/user/validate", {
     method: "POST",
     headers: {
       Accept: "*/*",
@@ -24,7 +24,7 @@ async function addUser(form) {
       alert("please fill all fields:)");
     } else if (response.status == 200) {
       await fetch(
-        `http://localhost:8080/backEnd_war_exploded/rest/user/verifyUsername?username=${user.username}`,
+        `http://localhost:8080/backEnd/rest/user/verifyUsername?username=${user.username}`,
         {
           method: "POST",
           headers: {
@@ -39,18 +39,15 @@ async function addUser(form) {
           alert("username already exists" + user.username);
         } else if (response.status == 404) {
           alert("USERNAME DISPONÍVEL" + response.status);
-          await fetch(
-            "http://localhost:8080/backEnd_war_exploded/rest/user/register",
-            {
-              method: "POST",
-              headers: {
-                Accept: "*/*",
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-              },
-              body: JSON.stringify(user),
-            }
-          ).then(function (response) {
+          await fetch("http://localhost:8080/backEnd/rest/user/register", {
+            method: "POST",
+            headers: {
+              Accept: "*/*",
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify(user),
+          }).then(function (response) {
             if (response.status == 200) {
               alert("user is added successfully :)");
               window.location.href = "index.html";
