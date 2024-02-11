@@ -65,11 +65,25 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response verifyLogin(@QueryParam("username") String username, @QueryParam("password") String password) {
         User verifiedUser = userBean.verifyLogin(username, password);
-        System.out.println(username+" "+password);
+        System.out.println(username+"------"+password);
         if (verifiedUser == null) {
             return Response.status(401).entity("Username ou password incorretos.").build();
         } else {
             return Response.status(200).entity(verifiedUser).build();
         }
     }
+
+    @GET
+    @Path("/userbyusername")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUser(@QueryParam("username") String username) {
+        System.out.println("HERE");
+        User userByUsername = userBean.getUser(username);
+        if (userByUsername== null) {
+            return Response.status(404).entity("User with this username is not found").build();
+        } else {
+            return Response.status(200).entity(userByUsername).build();
+        }
+    }
+
 }

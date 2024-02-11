@@ -1,6 +1,7 @@
 package aor.paj.bean;
 
 
+import aor.paj.dto.Task;
 import aor.paj.dto.User;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.json.bind.Jsonb;
@@ -65,6 +66,14 @@ public class UserBean {
             if(user.getUsername().equals(username)){
                 return user;
             }
+        }
+        return null;
+    }
+
+    public User getUser(String username) {
+        for (User u : users) {
+            if (u.getUsername().equals(username))
+                return u;
         }
         return null;
     }

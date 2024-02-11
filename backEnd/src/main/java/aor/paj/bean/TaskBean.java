@@ -34,7 +34,8 @@ public class TaskBean {
         writeIntoJsonFile();
     }
 
-    public Task getTask(int i) { for (Task a : tasks) {
+    public Task getTask(int i) {
+        for (Task a : tasks) {
         if (a.getId() == i)
             return a;
     }
