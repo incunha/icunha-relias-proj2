@@ -2,6 +2,18 @@ document.getElementById("goBackButton").addEventListener("click", function () {
   window.location.href = "interface.html";
 });
 
+/* Função para ver a password através da checkbox */
+function togglePasswordVisibility() {
+  var passwordInput = document.getElementById("passwordInput");
+  var verPasswordCheckbox = document.getElementById("showPasswordCheckbox");
+
+  if (verPasswordCheckbox.checked) {
+    passwordInput.type = "text";
+  } else {
+    passwordInput.type = "password";
+  }
+}
+
 window.onload = async function () {
   const username = localStorage.getItem("username"); // Obtém o nome de utilizador da localStorage
 
@@ -36,6 +48,7 @@ window.onload = async function () {
     .then(function (userData) {
       alert("Information found");
 
+      document.getElementById("usernameInput").value = userData.username;
       document.getElementById("emailInput").value = userData.email;
       document.getElementById("firstNameInput").value = userData.firstName;
       document.getElementById("lastNameInput").value = userData.lastName;

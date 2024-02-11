@@ -25,7 +25,7 @@
             />
           </div>
 
-          <div class="input-group">
+          <div class="input-group" id="divPassword">
             <label for="password">Password:</label>
             <input
               type="password"
@@ -33,6 +33,14 @@
               name="password"
               placeholder="Current password"
             />
+            <label for="showPasswordCheckbox" id="showPasswordLabel">
+              <input
+                type="checkbox"
+                id="showPasswordCheckbox"
+                onchange="togglePasswordVisibility()"
+              />
+              See Password
+            </label>
           </div>
 
           <div class="input-group">
