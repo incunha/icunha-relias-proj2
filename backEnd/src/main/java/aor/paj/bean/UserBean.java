@@ -38,6 +38,15 @@ public class UserBean {
         writeIntoJsonFile();
     }
 
+    public User getUser(String username){
+        for(User user: users){
+            if(user.getUsername().equals(username)){
+                return user;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<User> getUsers() {
         return users;
     }
@@ -67,6 +76,24 @@ public class UserBean {
             }
         }
         return null;
+    }
+
+    public boolean userUpdate(String username){
+        User user = getUser(username);
+
+        for(User u: users){
+            if(u.getUsername().equals(username)){
+                u.setPassword(user.getPassword());
+                u.setFirstName(user.getFirstName());
+                u.setLastName(user.getLastName());
+                u.setEmail(user.getEmail());
+                u.setPhoneNumber(user.getPhoneNumber());
+                u.setProfilePhoto(user.getProfilePhoto());
+                writeIntoJsonFile();
+                return true;
+            }
+        }
+        return false;
     }
 }
 

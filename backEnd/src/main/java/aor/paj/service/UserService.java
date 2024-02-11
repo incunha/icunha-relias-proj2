@@ -21,6 +21,19 @@ public class UserService {
         return userBean.getUsers();
     }
 
+    @GET
+    @Path("/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUser(@PathParam("username") String username) {
+        System.out.println(username);
+        User user = userBean.getUser(username);
+        if (user == null) {
+            return Response.status(404).entity("Username não encontrado.").build();
+        } else {
+            return Response.status(200).entity(user).build();
+        }
+    }
+
     @POST
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON) public Response addUser(User a) {
@@ -71,5 +84,21 @@ public class UserService {
         } else {
             return Response.status(200).entity(verifiedUser).build();
         }
+    }
+
+    @PUT
+    @Path("/{username}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateUser(@PathParam("username") String username) {
+        Response response;
+        boolean updated = userBean.userUpdate(username);
+        if (!updated) {
+            response = Response.status(404).entity("Username não encontrado.").build();
+        } else {
+            User updatedUser = userBean.getUser(username);
+            response = Response.status(200).entity(updatedUser).build();
+        }
+        return response;
     }
 }
