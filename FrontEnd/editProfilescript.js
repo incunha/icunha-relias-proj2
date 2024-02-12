@@ -66,6 +66,7 @@ document
     event.preventDefault();
     const userData = {
       username: document.getElementById("usernameInput").value,
+      password: document.getElementById("passwordInput").value,
       email: document.getElementById("emailInput").value,
       firstName: document.getElementById("firstNameInput").value,
       lastName: document.getElementById("lastNameInput").value,
@@ -91,10 +92,11 @@ async function saveNewInfos(userData) {
     );
 
     if (response.status == 200) {
-      console.log("Informações do usuário atualizadas com sucesso!");
+      console.log("Informações do utilizador atualizadas com sucesso!");
+      alert("Info changed with sucess!");
     } else if (response.status == 404) {
       console.error(
-        `Erro ao atualizar informações do usuário. Status: ${response.status}`
+        `Erro ao atualizar informações do utilizador. Status: ${response.status}`
       );
     }
   } catch (error) {
