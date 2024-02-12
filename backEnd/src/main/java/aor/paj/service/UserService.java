@@ -61,7 +61,7 @@ public class UserService {
     }
 
     @GET
-    @Path("verifyLogin")
+    @Path("/verifyLogin")
     @Produces(MediaType.APPLICATION_JSON)
     public Response verifyLogin(@QueryParam("username") String username, @QueryParam("password") String password) {
         User verifiedUser = userBean.verifyLogin(username, password);
@@ -85,5 +85,23 @@ public class UserService {
             return Response.status(200).entity(userByUsername).build();
         }
     }
+
+    @PUT
+    @Path("/updateUser")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateUser(User user) {
+        List<User> users = userBean.getUsers();
+        for (User u : users) {
+            if (user.getUsername().equals(u.getUsername())) {
+                userBean.updateUserToNew(u, user);
+                return Response.status(200).entity("Info changed.").build();
+            }
+        }
+        return Response.status(404).entity("User with this username is not found").build();
+    }
+
+
+
 
 }
