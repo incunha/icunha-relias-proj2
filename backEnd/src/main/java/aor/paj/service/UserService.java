@@ -85,18 +85,6 @@ public class UserService {
         }
     }
 
-    @GET
-    @Path("/userbyusername")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getUser(@QueryParam("username") String username) {
-        System.out.println("HERE");
-        User userByUsername = userBean.getUser(username);
-        if (userByUsername== null) {
-            return Response.status(404).entity("User with this username is not found").build();
-        } else {
-            return Response.status(200).entity(userByUsername).build();
-        }
-    }
 
     @PUT
     @Path("/{username}/update")
@@ -112,8 +100,5 @@ public class UserService {
         }
         return Response.status(404).entity("User with this username is not found").build();
     }
-
-
-
 
 }
