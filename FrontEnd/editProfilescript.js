@@ -70,7 +70,7 @@ document
       firstName: document.getElementById("firstNameInput").value,
       lastName: document.getElementById("lastNameInput").value,
       phoneNumber: document.getElementById("phoneNumberInput").value,
-      firstName: document.getElementById("photoInput").value,
+      profilePhoto: document.getElementById("photoInput").value,
     };
     saveNewInfos(userData);
   });
