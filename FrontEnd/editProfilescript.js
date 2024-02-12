@@ -59,3 +59,45 @@ window.onload = async function () {
       console.error("Error fetching user information:", error);
     });
 };
+
+document
+  .getElementById("saveButton")
+  .addEventListener("click", function (event) {
+    event.preventDefault();
+    const userData = {
+      username: document.getElementById("usernameInput").value,
+      email: document.getElementById("emailInput").value,
+      firstName: document.getElementById("firstNameInput").value,
+      lastName: document.getElementById("lastNameInput").value,
+      phoneNumber: document.getElementById("phoneNumberInput").value,
+      firstName: document.getElementById("photoInput").value,
+    };
+    saveNewInfos(userData);
+  });
+
+async function saveNewInfos(userData) {
+  try {
+    const response = await fetch(
+      "http://localhost:8080/backEnd/rest/user/updateUser",
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(userData),
+      }
+    );
+
+    if (response.status == 200) {
+      console.log("Informações do usuário atualizadas com sucesso!");
+    } else if (response.status == 404) {
+      console.error(
+        `Erro ao atualizar informações do usuário. Status: ${response.status}`
+      );
+    }
+  } catch (error) {
+    console.error("Erro durante a requisição:", error);
+  }
+}
