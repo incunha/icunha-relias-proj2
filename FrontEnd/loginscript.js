@@ -6,7 +6,7 @@ async function loginVerified(form) {
   console.log(JSON.stringify(user));
 
   await fetch(
-    `http://localhost:8080/backEnd_war_exploded/rest/user/verifyLogin?username=${user.username}&password=${user.password}`,
+    `http://localhost:8080/backEnd/rest/user/verifyLogin?username=${user.username}&password=${user.password}`,
     {
       method: "GET",
       headers: {
@@ -25,6 +25,8 @@ async function loginVerified(form) {
       sessionStorage.setItem("username", username);
       //Armazena o username na localStorage
       localStorage.setItem("username", username);
+      //Armazena a password na localStorage
+      localStorage.setItem("password", user.password);
       //Redireciona para a página de interface
       window.location.href = "interface.html";
     }

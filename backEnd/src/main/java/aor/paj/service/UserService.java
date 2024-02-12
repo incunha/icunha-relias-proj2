@@ -74,11 +74,11 @@ public class UserService {
     }
 
     @GET
-    @Path("verifyLogin")
+    @Path("/verifyLogin")
     @Produces(MediaType.APPLICATION_JSON)
     public Response verifyLogin(@QueryParam("username") String username, @QueryParam("password") String password) {
         User verifiedUser = userBean.verifyLogin(username, password);
-        System.out.println(username+" "+password);
+        System.out.println(username+"------"+password);
         if (verifiedUser == null) {
             return Response.status(401).entity("Username ou password incorretos.").build();
         } else {
@@ -86,19 +86,35 @@ public class UserService {
         }
     }
 
+    @GET
+    @Path("/userbyusername")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUser(@QueryParam("username") String username) {
+        System.out.println("HERE");
+        User userByUsername = userBean.getUser(username);
+        if (userByUsername== null) {
+            return Response.status(404).entity("User with this username is not found").build();
+        } else {
+            return Response.status(200).entity(userByUsername).build();
+        }
+    }
+
     @PUT
-    @Path("/{username}")
+    @Path("/updateUser")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUser(@PathParam("username") String username) {
-        Response response;
-        boolean updated = userBean.userUpdate(username);
-        if (!updated) {
-            response = Response.status(404).entity("Username não encontrado.").build();
-        } else {
-            User updatedUser = userBean.getUser(username);
-            response = Response.status(200).entity(updatedUser).build();
+    public Response updateUser(User user) {
+        List<User> users = userBean.getUsers();
+        for (User u : users) {
+            if (user.getUsername().equals(u.getUsername())) {
+                userBean.updateUserToNew(u, user);
+                return Response.status(200).entity("Info changed.").build();
+            }
         }
-        return response;
+        return Response.status(404).entity("User with this username is not found").build();
     }
+
+
+
+
 }
