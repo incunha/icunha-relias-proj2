@@ -1,6 +1,4 @@
 package aor.paj.bean;
-
-
 import aor.paj.dto.Task;
 import aor.paj.dto.User;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -18,8 +16,25 @@ import java.util.ArrayList;
 public class UserBean {
 
     final String filenameUser = "users.json";
-
     private ArrayList <User> users;
+
+    public boolean usernameExists(String username){
+        for(User user: users){
+            if(user.getUsername().equals(username)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean emailExists(String email){
+        for(User user: users){
+            if(user.getEmail().equals(email)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public UserBean () {
         File f = new File (filenameUser);
@@ -33,10 +48,16 @@ public class UserBean {
             users = new ArrayList<>();
     }
 
-    public void addUser (User a) {
-        System.out.println(a.getUsername());
-        users.add(a);
-        writeIntoJsonFile();
+    private void writeIntoJsonFile(){
+        Jsonb jsonb = JsonbBuilder.create(new JsonbConfig().withFormatting(true));
+        try {
+            jsonb.toJson(users, new FileOutputStream(filenameUser));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e); }
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
     }
 
     public User getUser(String username){
@@ -48,16 +69,24 @@ public class UserBean {
         return null;
     }
 
-    public ArrayList<User> getUsers() {
-        return users;
+    public void addUser (User a) {
+        System.out.println(a.getUsername());
+        a.setTasks(new ArrayList<>());
+        users.add(a);
+        writeIntoJsonFile();
     }
 
-    private void writeIntoJsonFile(){
-        Jsonb jsonb = JsonbBuilder.create(new JsonbConfig().withFormatting(true));
-        try {
-            jsonb.toJson(users, new FileOutputStream(filenameUser));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e); }
+    public boolean validateFields (User a) {
+        if (a == null ||
+                a.getFirstName() == null || a.getFirstName().isEmpty() ||
+                a.getLastName() == null || a.getLastName().isEmpty() ||
+                a.getEmail() == null || a.getEmail().isEmpty() ||
+                a.getPassword() == null || a.getPassword().isEmpty() ||
+                a.getPhoneNumber() == null || a.getPhoneNumber().isEmpty() ||
+                a.getUsername() == null || a.getUsername().isEmpty()) {
+            return false;
+        }
+        return true;
     }
 
     public User verifyLogin(String username, String password){
@@ -70,31 +99,48 @@ public class UserBean {
         return null;
     }
 
-    public User verifyUsername(String username){
-        for(User user: users){
-            if(user.getUsername().equals(username)){
-                return user;
+    public boolean userUpdate(String username){
+        User user = getUser(username);
+
+        for(User u: users){
+            if(u.getUsername().equals(username)){
+                u.setPassword(user.getPassword());
+                u.setFirstName(user.getFirstName());
+                u.setLastName(user.getLastName());
+                u.setEmail(user.getEmail());
+                u.setPhoneNumber(user.getPhoneNumber());
+                u.setProfilePhoto(user.getProfilePhoto());
+                writeIntoJsonFile();
+                return true;
             }
         }
         return null;
     }
 
-    public User getUser(String username) {
-        for (User u : users) {
-            if (u.getUsername().equals(username))
-                return u;
+    public boolean AuthorizeUser(String username, String password){
+        for(User user: users){
+            if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+                return true;
+            }
         }
-        return null;
+        return false;
+    }
+    public void addTask(String username, Task t){
+        for(User u: users){
+            if(u.getUsername().equals(username)){
+                u.addTask(t);
+                writeIntoJsonFile();
+            }
+        }
     }
 
-    public User updateUserToNew (User u, User user) {
-        u.setEmail(user.getEmail());
-        u.setFirstName(user.getFirstName());
-        u.setLastName(user.getLastName());
-        u.setPassword(user.getPassword());
-        u.setPhoneNumber(user.getPhoneNumber());
-        u.setProfilePhoto(user.getProfilePhoto());
-        return u;
+    public void removeTask(String username, String id){
+        for(User u: users){
+            if(u.getUsername().equals(username)){
+                u.removeTask(id);
+                writeIntoJsonFile();
+            }
+        }
     }
 }
 

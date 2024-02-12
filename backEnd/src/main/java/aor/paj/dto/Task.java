@@ -4,26 +4,36 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Task {
-    int id;
+    String id;
     String title;
     String description;
+    String status;
 
     public Task(){
 
     }
 
-    public Task(int id, String title, String description) {
+    public Task(String id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;
     }
 
     @XmlElement
-    public int getId() {
+    public String getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
+    }
+    public void createId() {
+        this.id = "task"+(Math.random() * 1000);
+    }
+    public void setIntitialStatus() {
+        this.status = "todo";
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @XmlElement
