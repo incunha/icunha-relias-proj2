@@ -88,7 +88,7 @@ public class UserService {
 
 
     @PUT
-    @Path("/{username}/update")
+    @Path("/username/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateUser(User user) {

@@ -17,11 +17,9 @@ async function loginVerified(form) {
       alert("username or password incorrect");
     } else if (response.status == 200) {
       alert("Bem-vindo," + user.username + "!");
-      // Armazena o username na sessionStorage
-      const username = form.username.value;
-      sessionStorage.setItem("username", username);
+
       // Armazena o username na localStorage
-      localStorage.setItem("username", username);
+      localStorage.setItem("username", user.username);
       // Armazena a password na localStorage
       localStorage.setItem("password", user.password);
       // Redireciona para a página de interface
