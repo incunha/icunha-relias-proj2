@@ -21,7 +21,6 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON) public List<User> getUsers() {
         return userBean.getUsers();
     }
-
     @GET
     @Path("/{username}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -35,7 +34,7 @@ public class UserService {
         }
     }
     @POST
-    @Path("/addTask")
+    @Path("/{username}/addTask")
     @Consumes(MediaType.APPLICATION_JSON) public Response addTask(@HeaderParam("username")String username,@HeaderParam("password")String password, Task t) {
         if(!userBean.AuthorizeUser(username, password)){
             System.out.println(username+" "+password);
@@ -46,9 +45,8 @@ public class UserService {
             return Response.status(200).entity("A new task is created").build();
         }
     }
-
     @DELETE
-    @Path("/deleteTask")
+    @Path("/{username}/deleteTask/{id}")
     @Produces(MediaType.APPLICATION_JSON) public Response removeTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @QueryParam("id")String id) {
         if(!userBean.AuthorizeUser(username, password)){
             return Response.status(405).entity("Forbidden.").build();
@@ -57,8 +55,6 @@ public class UserService {
             return Response.status(200).entity("Task is removed").build();
         }
     }
-
-
     @POST
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -72,7 +68,6 @@ public class UserService {
             return Response.status(200).entity("Usuário criado.").build();
         }
     }
-
     @GET
     @Path("/verifyLogin")
     @Produces(MediaType.APPLICATION_JSON)
@@ -85,8 +80,17 @@ public class UserService {
             return Response.status(200).entity(verifiedUser).build();
         }
     }
-
-
+    @GET
+    @Path("/logout")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response logout(@HeaderParam("username")String username) {
+        User user = userBean.logout(username);
+        if (user == null) {
+            return Response.status(404).entity("User não encontrado.").build();
+        } else {
+            return Response.status(200).entity("Logout efetuado.").build();
+        }
+    }
     @PUT
     @Path("/username/update")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -100,6 +104,16 @@ public class UserService {
             }
         }
         return Response.status(404).entity("User with this username is not found").build();
+    }
+    @GET
+    @Path("{username}/tasks")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllTasks(@HeaderParam("username")String username,@HeaderParam("password")String password) {
+        if(!userBean.AuthorizeUser(username, password)){
+            return Response.status(405).entity("Forbidden.").build();
+        } else {
+            return Response.status(200).entity(userBean.getAllTasks(username)).build();
+        }
     }
 
 }

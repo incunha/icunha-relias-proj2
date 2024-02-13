@@ -120,6 +120,7 @@ public class UserBean {
         return false;
     } */
 
+
     public boolean AuthorizeUser(String username, String password) {
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
@@ -128,6 +129,18 @@ public class UserBean {
         }
         return false;
     }
+
+
+    public User updateUserToNew(User u, User user) {
+        u.setEmail(user.getEmail());
+        u.setFirstName(user.getFirstName());
+        u.setLastName(user.getLastName());
+        u.setPassword(user.getPassword());
+        u.setPhoneNumber(user.getPhoneNumber());
+        u.setProfilePhoto(user.getProfilePhoto());
+        return u;
+    }
+
 
     public void addTask(String username, Task t) {
         for (User u : users) {
@@ -155,9 +168,8 @@ public class UserBean {
         u.setPhoneNumber(user.getPhoneNumber());
         u.setProfilePhoto(user.getProfilePhoto());
     }
+
 }
-
-
 
 
 
