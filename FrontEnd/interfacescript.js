@@ -122,8 +122,7 @@ trashIcon.ondrop = function (event) {
 
 //Listener para quando o botão de logout é clicado
 botaoLogout.addEventListener("click", function () {
-  localStorage.removeItem("username");
-  localStorage.removeItem("password");
+  localStorage.clear();
   //Redireciona para a página de login
   window.location.href = "index.html";
 });
