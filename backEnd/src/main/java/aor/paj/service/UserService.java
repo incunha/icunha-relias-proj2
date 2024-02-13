@@ -34,7 +34,7 @@ public class UserService {
         }
     }
     @POST
-    @Path("/{username}/addTask")
+    @Path("/addTask")
     @Consumes(MediaType.APPLICATION_JSON) public Response addTask(@HeaderParam("username")String username,@HeaderParam("password")String password, Task t) {
         if(!userBean.AuthorizeUser(username, password)){
             System.out.println(username+" "+password);
@@ -106,7 +106,7 @@ public class UserService {
         return Response.status(404).entity("User with this username is not found").build();
     }
     @GET
-    @Path("{username}/tasks")
+    @Path("/tasks")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllTasks(@HeaderParam("username")String username,@HeaderParam("password")String password) {
         if(!userBean.AuthorizeUser(username, password)){
