@@ -91,6 +91,7 @@ async function saveNewInfos(userData) {
     if (response.status == 200) {
       console.log("Informações do utilizador atualizadas com sucesso!");
       alert("Info changed with sucess!");
+      window.location.href = "interface.html";
     } else if (response.status == 404) {
       console.error(
         `Erro ao atualizar informações do utilizador. Status: ${response.status}`
