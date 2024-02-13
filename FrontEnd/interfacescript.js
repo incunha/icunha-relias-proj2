@@ -122,14 +122,18 @@ trashIcon.ondrop = function (event) {
 
 //Listener para quando o botão de logout é clicado
 botaoLogout.addEventListener("click", function () {
+  localStorage.removeItem("username");
+  localStorage.removeItem("password");
   //Redireciona para a página de login
   window.location.href = "index.html";
 });
 
 //Listener para quando o botão de editar perfil é clicado
-document.getElementById('editProfileButton').addEventListener('click', function() {
-  window.location.href = 'editProfilePage.html'; 
-});
+document
+  .getElementById("editProfileButton")
+  .addEventListener("click", function () {
+    window.location.href = "editProfilePage.html";
+  });
 
 //Listener para quando o botão Add Task é clicado
 addTaskButton.addEventListener("click", function () {
