@@ -102,6 +102,15 @@ public class UserBean {
         return null;
     }
 
+    public User logout(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     /*public boolean userUpdate(String username) {
         User user = getUser(username);
 
@@ -148,6 +157,15 @@ public class UserBean {
                 writeIntoJsonFile();
             }
         }
+    }
+
+    public ArrayList <Task> getAllTasks(String username) {
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
+                return u.getTasks();
+            }
+        }
+        return null;
     }
 
     public void updateUserToNew (User u, User user) {

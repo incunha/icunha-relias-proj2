@@ -46,7 +46,7 @@ public class UserService {
         }
     }
     @DELETE
-    @Path("/{username}/deleteTask/{id}")
+    @Path("/deleteTask")
     @Produces(MediaType.APPLICATION_JSON) public Response removeTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @QueryParam("id")String id) {
         if(!userBean.AuthorizeUser(username, password)){
             return Response.status(405).entity("Forbidden.").build();
