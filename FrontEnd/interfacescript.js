@@ -166,7 +166,7 @@ doneSection.addEventListener("dragover", function (event) {
 });
 
 //Listener para quando o botão de adicionar uma nova tarefa é clicado
-submitTaskButton.addEventListener("click", function () {
+submitTaskButton.addEventListener("click", async function () {
   // Vai buscar os valores dos inputs do titulo, descrição e prioridade da tarefa e guarda-os nas variáveis titulo, descricao e priority
   const titulo = document.getElementById("taskTitle").value;
   const descricao = document.getElementById("taskDescription").value;
@@ -178,29 +178,54 @@ submitTaskButton.addEventListener("click", function () {
     //Adiciona o escurecimento do fundo da página
     document.getElementById("modalOverlay2").style.display = "block";
   } else {
-    //Gera um id único para a tarefa e guarda-o na variável identificador
-    const identificador = generateUniqueID();
+    let user = {
+      username: localStorage.getItem("username"),
+      password: localStorage.getItem("password"),
+    };
+    const headers = new Headers();
+    headers.append("username", user.username);
+    headers.append("password", user.password);
+    headers.append("Content-Type", "application/json");
 
-    //Cria um objecto com o identificador, o titulo e a descrição da tarefa
-    const task = {
-      identificador: identificador,
-      titulo: titulo,
-      descricao: descricao,
-      prioridade: priority,
+    const taskk = {
+      title: titulo,
+      description: descricao,
     };
 
-    //Adiciona esse objecto à lista de tarefas ToDoTasks
-    ToDoTasks.push(task);
+    await fetch("http://localhost:8080/backEnd/rest/users/addTask", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(taskk),
+    }).then(function (response) {
+      if (response.status == 405) {
+        alert("Não autorizado.");
+      } else if (response.status == 200) {
+        alert("HERE");
+        //Gera um id único para a tarefa e guarda-o na variável identificador
+        const identificador = generateUniqueID();
 
-    //Guarda a lista de tarefas ToDoTasks na localStorage
-    localStorage.setItem("ToDoTasks", JSON.stringify(ToDoTasks));
+        //Cria um objecto com o identificador, o titulo e a descrição da tarefa
+        const task = {
+          identificador: identificador,
+          titulo: titulo,
+          descricao: descricao,
+          prioridade: priority,
+        };
 
-    //Chama a função para mostrar as tarefas com a nova tarefa adicionada
-    displayTasks();
+        //Adiciona esse objecto à lista de tarefas ToDoTasks
+        ToDoTasks.push(task);
 
-    //Fecha a modal de nova tarefa e remove o escurecimento do fundo da página
-    newTaskModal.style.display = "none";
-    document.body.classList.remove("modal-open");
+        //Guarda a lista de tarefas ToDoTasks na localStorage
+        //localStorage.setItem("ToDoTasks", JSON.stringify(ToDoTasks));
+
+        //Chama a função para mostrar as tarefas com a nova tarefa adicionada
+        displayTasks();
+
+        //Fecha a modal de nova tarefa e remove o escurecimento do fundo da página
+        newTaskModal.style.display = "none";
+        document.body.classList.remove("modal-open");
+      }
+    });
   }
 });
 
