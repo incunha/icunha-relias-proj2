@@ -61,7 +61,8 @@ public class UserService {
 
     @POST
     @Path("/register")
-    @Consumes(MediaType.APPLICATION_JSON) public Response addUser(User a) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addUser(User a) {
         if(userBean.usernameExists(a.getUsername()) || userBean.emailExists(a.getEmail())){
             return Response.status(401).entity("Username ou mail já existe.").build();
         }else if (!userBean.validateFields(a)) {
@@ -75,7 +76,7 @@ public class UserService {
     @GET
     @Path("/verifyLogin")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response verifyLogin(@QueryParam("username") String username, @QueryParam("password") String password) {
+    public Response verifyLogin(@HeaderParam("username") String username, @HeaderParam("password") String password) {
         User verifiedUser = userBean.verifyLogin(username, password);
         System.out.println(username+"------"+password);
         if (verifiedUser == null) {

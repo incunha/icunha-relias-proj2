@@ -102,7 +102,7 @@ public class UserBean {
         return null;
     }
 
-    public boolean userUpdate(String username) {
+    /*public boolean userUpdate(String username) {
         User user = getUser(username);
 
         for (User u : users) {
@@ -118,7 +118,7 @@ public class UserBean {
             }
         }
         return false;
-    }
+    } */
 
     public boolean AuthorizeUser(String username, String password) {
         for (User user : users) {
