@@ -138,7 +138,6 @@ public class UserBean {
         }
         return false;
     }
-    
 
 
     public void addTask(String username, Task t) {
@@ -177,6 +176,19 @@ public class UserBean {
         u.setProfilePhoto(user.getProfilePhoto());
     }
 
+    public void updateTask(String username, String id, Task t) {
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
+                for (Task task : u.getTasks()) {
+                    if (task.getId().equals(id)) {
+                        System.out.println(task.getId());
+                        task.updateTask(t);
+                        writeIntoJsonFile();
+                    }
+                }
+            }
+        }
+    }
 }
 
 

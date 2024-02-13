@@ -40,7 +40,7 @@ public class UserService {
             System.out.println(username+" "+password);
             return Response.status(405).entity("Forbidden.").build();
         } else {
-            t.createId();
+            t.createId();t.inicialStatus();
             userBean.addTask(username, t);
             return Response.status(200).entity("A new task is created").build();
         }
@@ -113,6 +113,19 @@ public class UserService {
             return Response.status(405).entity("Forbidden.").build();
         } else {
             return Response.status(200).entity(userBean.getAllTasks(username)).build();
+        }
+    }
+
+    @PUT
+    @Path("/task/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @QueryParam("id")String id, Task t) {
+        if(!userBean.AuthorizeUser(username, password)){
+            return Response.status(405).entity("Forbidden.").build();
+        } else {
+            userBean.updateTask(username, id, t);
+            return Response.status(200).entity("Task updated.").build();
         }
     }
 
