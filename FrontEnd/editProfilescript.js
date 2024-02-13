@@ -26,17 +26,14 @@ window.onload = async function () {
 
   document.getElementById("passwordInput").value = password;
 
-  await fetch(
-    `http://localhost:8080/backEnd/rest/user/userbyusername?username=${user.username}`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    }
-  )
+  await fetch(`http://localhost:8080/backEnd/rest/users/${user.username}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+  })
     .then(function (response) {
       if (response.status == 404) {
         console.log(user.username);
@@ -79,7 +76,7 @@ document
 async function saveNewInfos(userData) {
   try {
     const response = await fetch(
-      "http://localhost:8080/backEnd/rest/user/updateUser",
+      `http://localhost:8080/backEnd/rest/users/username/update`,
       {
         method: "PUT",
         headers: {
@@ -94,6 +91,7 @@ async function saveNewInfos(userData) {
     if (response.status == 200) {
       console.log("Informações do utilizador atualizadas com sucesso!");
       alert("Info changed with sucess!");
+      window.location.href = "interface.html";
     } else if (response.status == 404) {
       console.error(
         `Erro ao atualizar informações do utilizador. Status: ${response.status}`

@@ -102,7 +102,7 @@ public class UserBean {
         return null;
     }
 
-    public boolean userUpdate(String username) {
+    /*public boolean userUpdate(String username) {
         User user = getUser(username);
 
         for (User u : users) {
@@ -118,7 +118,7 @@ public class UserBean {
             }
         }
         return false;
-    }
+    } */
 
     public boolean AuthorizeUser(String username, String password) {
         for (User user : users) {
@@ -147,14 +147,13 @@ public class UserBean {
         }
     }
 
-    public User updateUserToNew (User u, User user) {
+    public void updateUserToNew (User u, User user) {
         u.setEmail(user.getEmail());
         u.setFirstName(user.getFirstName());
         u.setLastName(user.getLastName());
         u.setPassword(user.getPassword());
         u.setPhoneNumber(user.getPhoneNumber());
         u.setProfilePhoto(user.getProfilePhoto());
-        return u;
     }
 }
 

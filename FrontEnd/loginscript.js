@@ -5,29 +5,24 @@ async function loginVerified(form) {
   };
   console.log(JSON.stringify(user));
 
-  await fetch(
-    `http://localhost:8080/backEnd/rest/user/verifyLogin?username=${user.username}&password=${user.password}`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "*/*",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    }
-  ).then(function (response) {
+  const headers = new Headers();
+  headers.append("username", user.username);
+  headers.append("password", user.password);
+
+  await fetch("http://localhost:8080/backEnd/rest/users/verifyLogin", {
+    method: "GET",
+    headers: headers,
+  }).then(function (response) {
     if (response.status == 401) {
       alert("username or password incorrect");
     } else if (response.status == 200) {
       alert("Bem-vindo," + user.username + "!");
-      //Armazena o username na sessionStorage
-      const username = form.username.value;
-      sessionStorage.setItem("username", username);
-      //Armazena o username na localStorage
-      localStorage.setItem("username", username);
-      //Armazena a password na localStorage
+
+      // Armazena o username na localStorage
+      localStorage.setItem("username", user.username);
+      // Armazena a password na localStorage
       localStorage.setItem("password", user.password);
-      //Redireciona para a página de interface
+      // Redireciona para a página de interface
       window.location.href = "interface.html";
     }
   });

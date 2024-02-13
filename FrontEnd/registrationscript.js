@@ -9,54 +9,50 @@ async function addUser(form) {
     profilePhoto: form.photo.value,
   };
 
-  console.log(JSON.stringify(user));
+  console.log("User data:", JSON.stringify(user));
 
-  await fetch("http://localhost:8080/backEnd/rest/user/validate", {
-    method: "POST",
-    headers: {
-      Accept: "*/*",
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-    },
-    body: JSON.stringify(user),
-  }).then(async function (response) {
-    if (response.status == 401) {
-      alert("please fill all fields:)");
-    } else if (response.status == 200) {
-      await fetch(
-        `http://localhost:8080/backEnd/rest/user/verifyUsername?username=${user.username}`,
-        {
+  if (
+    user.username.trim() === "" ||
+    user.password.trim() === "" ||
+    user.email.trim() === "" ||
+    user.firstName.trim() === "" ||
+    user.lastName.trim() === "" ||
+    user.phoneNumber.trim() === ""
+  ) {
+    alert("Please fill all fields:)");
+  } else {
+    console.log("HERE");
+    await fetch(`http://localhost:8080/backEnd/rest/users/${user.username}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    }).then(async function (response) {
+      console.log("GET Response:", response);
+      if (response.status === 404) {
+        alert("Username available");
+        await fetch("http://localhost:8080/backEnd/rest/users/register", {
           method: "POST",
           headers: {
-            Accept: "*/*",
+            Accept: "application/json",
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
           },
           body: JSON.stringify(user),
-        }
-      ).then(async function (response) {
-        if (response.status == 200) {
-          alert("username already exists" + user.username);
-        } else if (response.status == 404) {
-          alert("USERNAME DISPONÍVEL" + response.status);
-          await fetch("http://localhost:8080/backEnd/rest/user/register", {
-            method: "POST",
-            headers: {
-              Accept: "*/*",
-              "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "*",
-            },
-            body: JSON.stringify(user),
-          }).then(function (response) {
-            if (response.status == 200) {
-              alert("user is added successfully :)");
-              window.location.href = "index.html";
-            } else {
-              alert("ERRO TESTE:" + response.status);
-            }
-          });
-        }
-      });
-    }
-  });
+        }).then(function (response) {
+          console.log("POST Response:", response);
+          if (response.status === 200) {
+            alert("User is added successfully :)");
+            window.location.href = "index.html";
+          } else {
+            alert("Error: " + response.status);
+          }
+        });
+      } else {
+        alert("Username already exists: " + user.username);
+      }
+    });
+  }
 }
