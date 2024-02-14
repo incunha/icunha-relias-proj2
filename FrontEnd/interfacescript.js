@@ -22,11 +22,6 @@ const newTaskModal = document.getElementById("newTaskModal");
 //Obtem o botao para cancelar a adição de uma nova tarefa
 const cancelButtonAddTaskModal = document.getElementById("cancelTaskButton");
 
-//Cria as 3 listas de objectos para as tarefas
-const ToDoTasks = JSON.parse(localStorage.getItem("ToDoTasks")) || [];
-const DoingTasks = JSON.parse(localStorage.getItem("DoingTasks")) || [];
-const DoneTasks = JSON.parse(localStorage.getItem("DoneTasks")) || [];
-
 //Obtem as 3 secções para as tarefas serem colocadas
 const todoSection = document.getElementById("todo");
 const doingSection = document.getElementById("doing");
@@ -165,6 +160,7 @@ doneSection.addEventListener("dragover", function (event) {
   event.preventDefault();
 });
 
+const tasksContainer = document.getElementById("teste");
 // Listener para quando o botão de adicionar uma nova tarefa é clicado
 submitTaskButton.addEventListener("click", async function () {
   // Vai buscar os valores dos inputs do titulo, descrição e prioridade da tarefa e guarda-os nas variáveis titulo, descricao e priority
@@ -211,11 +207,25 @@ submitTaskButton.addEventListener("click", async function () {
             alert("HERE2");
             const tasksArray = await response.json();
             console.log(tasksArray);
+
+            console.log(tasksContainer);
+
             for (let i = 0; i < tasksArray.length; i++) {
               const task = tasksArray[i];
-              console.log(task);
+              const taskElement = document.createElement("div");
+              taskElement.classList.add("task");
+              taskElement.innerHTML = `
+      <h3>${task.title}</h3>
+    <p>${task.description}</p>
+  `;
+              console.log(taskElement);
+
+              // Adicione a tarefa à 'tasks-container'
+              tasksContainer.appendChild(taskElement);
             }
-            displayTasks();
+            todoSection.appendChild(tasksContainer);
+            tasksContainer.style.display = "block";
+
             // Fecha a modal de nova tarefa e remove o escurecimento do fundo da página
             newTaskModal.style.display = "none";
             document.body.classList.remove("modal-open");
