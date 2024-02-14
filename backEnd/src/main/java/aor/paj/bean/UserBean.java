@@ -80,16 +80,13 @@ public class UserBean {
     }
 
     public boolean validateFields(User a) {
-        if (a == null ||
-                a.getFirstName() == null || a.getFirstName().isEmpty() ||
-                a.getLastName() == null || a.getLastName().isEmpty() ||
-                a.getEmail() == null || a.getEmail().isEmpty() ||
-                a.getPassword() == null || a.getPassword().isEmpty() ||
-                a.getPhoneNumber() == null || a.getPhoneNumber().isEmpty() ||
-                a.getUsername() == null || a.getUsername().isEmpty()) {
-            return false;
-        }
-        return true;
+        return a != null &&
+                a.getFirstName() != null && !a.getFirstName().isEmpty() &&
+                a.getLastName() != null && !a.getLastName().isEmpty() &&
+                a.getEmail() != null && !a.getEmail().isEmpty() &&
+                a.getPassword() != null && !a.getPassword().isEmpty() &&
+                a.getPhoneNumber() != null && !a.getPhoneNumber().isEmpty() &&
+                a.getUsername() != null && !a.getUsername().isEmpty();
     }
 
     public User verifyLogin(String username, String password) {
@@ -111,26 +108,8 @@ public class UserBean {
         return null;
     }
 
-    /*public boolean userUpdate(String username) {
-        User user = getUser(username);
 
-        for (User u : users) {
-            if (u.getUsername().equals(username)) {
-                u.setPassword(user.getPassword());
-                u.setFirstName(user.getFirstName());
-                u.setLastName(user.getLastName());
-                u.setEmail(user.getEmail());
-                u.setPhoneNumber(user.getPhoneNumber());
-                u.setProfilePhoto(user.getProfilePhoto());
-                writeIntoJsonFile();
-                return true;
-            }
-        }
-        return false;
-    } */
-
-
-    public boolean AuthorizeUser(String username, String password) {
+    public boolean authorizeUser(String username, String password) {
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 return true;
@@ -138,7 +117,6 @@ public class UserBean {
         }
         return false;
     }
-    
 
 
     public void addTask(String username, Task t) {
@@ -177,6 +155,19 @@ public class UserBean {
         u.setProfilePhoto(user.getProfilePhoto());
     }
 
+    public void updateTask(String username, String id, Task t) {
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
+                for (Task task : u.getTasks()) {
+                    if (task.getId().equals(id)) {
+                        System.out.println(task.getId());
+                        task.updateTask(t);
+                        writeIntoJsonFile();
+                    }
+                }
+            }
+        }
+    }
 }
 
 

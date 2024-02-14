@@ -36,11 +36,11 @@ public class UserService {
     @POST
     @Path("/addTask")
     @Consumes(MediaType.APPLICATION_JSON) public Response addTask(@HeaderParam("username")String username,@HeaderParam("password")String password, Task t) {
-        if(!userBean.AuthorizeUser(username, password)){
+        if(!userBean.authorizeUser(username, password)){
             System.out.println(username+" "+password);
             return Response.status(405).entity("Forbidden.").build();
         } else {
-            t.createId();
+            t.createId();t.inicialStatus();
             userBean.addTask(username, t);
             return Response.status(200).entity("A new task is created").build();
         }
@@ -48,7 +48,7 @@ public class UserService {
     @DELETE
     @Path("/deleteTask")
     @Produces(MediaType.APPLICATION_JSON) public Response removeTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @QueryParam("id")String id) {
-        if(!userBean.AuthorizeUser(username, password)){
+        if(!userBean.authorizeUser(username, password)){
             return Response.status(405).entity("Forbidden.").build();
         } else {
             userBean.removeTask(username, id);
@@ -109,10 +109,23 @@ public class UserService {
     @Path("/tasks")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllTasks(@HeaderParam("username")String username,@HeaderParam("password")String password) {
-        if(!userBean.AuthorizeUser(username, password)){
+        if(!userBean.authorizeUser(username, password)){
             return Response.status(405).entity("Forbidden.").build();
         } else {
             return Response.status(200).entity(userBean.getAllTasks(username)).build();
+        }
+    }
+
+    @PUT
+    @Path("/task/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @QueryParam("id")String id, Task t) {
+        if(!userBean.authorizeUser(username, password)){
+            return Response.status(405).entity("Forbidden.").build();
+        } else {
+            userBean.updateTask(username, id, t);
+            return Response.status(200).entity("Task updated.").build();
         }
     }
 
