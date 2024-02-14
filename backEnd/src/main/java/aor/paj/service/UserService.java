@@ -33,6 +33,18 @@ public class UserService {
             return Response.status(200).entity(user).build();
         }
     }
+
+    @GET
+    @Path("/profilePhoto")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProfilePhoto(@HeaderParam("username") String username) {
+        User user = userBean.getUser(username);
+        if (user == null) {
+            return Response.status(404).entity("User não encontrado.").build();
+        } else {
+            return Response.status(200).entity(user.getProfilePhoto()).build();
+        }
+    }
     @POST
     @Path("/addTask")
     @Consumes(MediaType.APPLICATION_JSON) public Response addTask(@HeaderParam("username")String username,@HeaderParam("password")String password, Task t) {

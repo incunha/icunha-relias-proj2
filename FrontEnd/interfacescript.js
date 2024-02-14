@@ -2,10 +2,13 @@
 window.onload = function () {
   //Obtém o username da sessionStorage
   const username = localStorage.getItem("username");
+  const password = localStorage.getItem("password");
   //Vai buscar o elemento que mostra o username
   let labelUsername = document.getElementById("displayUsername");
   //Coloca o username no elemento
   labelUsername.textContent = username;
+
+  getPhotoUrl(username, password);
 
   displayDateTime(); // Adiciona a exibição da data e hora
   setInterval(displayDateTime, 1000); // Atualiza a cada segundo
@@ -533,4 +536,36 @@ function displayDateTime() {
 
   // Atualiza o conteúdo do elemento
   dateTimeDisplay.textContent = dateTimeString;
+}
+
+async function getPhotoUrl(username, password) {
+
+  let photoUrlRequest = "http://localhost:8080/backEnd/rest/users/profilePhoto";
+    
+    try {
+        const response = await fetch(photoUrlRequest, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/JSON',
+                'Accept': 'application/JSON',
+                username: username,
+                password: password
+            },    
+        });
+
+        if (response.ok) {
+
+          const data = await response.text();
+          document.getElementById("userIcon").src = data;
+
+        } else if (response.status === 401) {
+            alert("Invalid credentials")
+        } else if (response.status === 404) {
+          alert("teste 404")
+        }
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert("Something went wrong");
+    }
 }

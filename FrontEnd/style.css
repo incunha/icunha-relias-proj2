@@ -188,9 +188,10 @@ footer a {
 #userIcon {
   position: fixed;
   top: 0.5rem;
-  right: 1rem;
-  width: 5rem;
-  height: 3.2rem;
+  right: 2rem;
+  width: 3.2rem;
+  height: 3rem;
+  border-radius: 50%;
 }
 /*botão de logout*/
 #logoutButton {
@@ -475,7 +476,7 @@ footer a {
 /*caracteristicas do modal adicionar tarefa*/
 #newTaskModal {
   justify-content: center;
-  height: 57%;
+  height: 82%;
   width: 40%;
   z-index: 3;
 }
@@ -489,11 +490,29 @@ footer a {
 .modal textarea#taskDescription {
   height: 170px;
 }
+/* container das datas no modal de adicionar tarefa*/
+.date-container {
+  margin-bottom: 40px;
+  margin-left: 50px;
+}
+/*margem entre os campos de data*/
+#inicialDate {
+  margin-right: 100px; 
+}
+
 /*container dos botões do modal*/
 .buttons-container {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+#cancelTaskButton {
+  margin-left: 40px; 
+}
+
+#submitTaskButton {
+  margin-left: 110px; 
 }
 
 /*caracteristicas do modal de detalhes da tarefa*/
@@ -899,6 +918,22 @@ aside::after {
   text-align: left;
   margin-top: 30px;
   margin-left: 50px;
+}
+
+#profilePreviewContainer {
+  position: fixed;
+  right: 10%; 
+  top: 20%; 
+  text-align: center;
+  color: #205d88;
+}
+
+#profilePreview {
+  border: 5px solid #205d88; /* Adicione um contorno */
+  border-radius: 50%; /* Faça o div circular */
+  background-size: cover; /* Faça a imagem cobrir todo o div */
+  width: 250px; /* Ajuste este valor conforme necessário */
+  height: 250px; /* Ajuste este valor conforme necessário */
 }
 
 #goBackButton {
