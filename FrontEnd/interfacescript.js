@@ -218,7 +218,9 @@ submitTaskButton.addEventListener("click", async function () {
       <h3>${task.title}</h3>
     <p>${task.description}</p>
   `;
+              taskElement;
               console.log(taskElement);
+              taskElement.setAttribute("draggable", "true");
 
               // Adicione a tarefa à 'tasks-container'
               tasksContainer.appendChild(taskElement);
