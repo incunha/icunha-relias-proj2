@@ -215,13 +215,33 @@ submitTaskButton.addEventListener("click", async function () {
               const taskElement = document.createElement("div");
               taskElement.classList.add("task");
               taskElement.innerHTML = `
-      <h3>${task.title}</h3>
+              <h3 id="task-${i}" title="${task.title}">${task.title}</h3>
     <p>${task.description}</p>
   `;
               taskElement;
               console.log(taskElement);
               taskElement.setAttribute("draggable", "true");
 
+              taskElement.addEventListener("dragstart", function (event) {
+                event.dataTransfer.setData("data_id", event.target.id);
+                console.log(event.target.id);
+                trashIcon.classList.add("show");
+              });
+
+              taskElement.addEventListener("dragend", function (e) {
+                trashIcon.classList.remove("show");
+              });
+
+              //Adiciona um listener para quando o elemento div é clicado duas vezes
+              taskElement.addEventListener("dblclick", function () {
+                //Coloca no modal os detalhes da tarefa o titulo e a descrição
+                modalTaskTitle.textContent = task.title;
+                modalTaskDescription.textContent = task.description;
+
+                //Mostra o modal escurecendo o fundo da página
+                taskDetailsModal.style.display = "block";
+                document.body.classList.add("modal-open");
+              });
               // Adicione a tarefa à 'tasks-container'
               tasksContainer.appendChild(taskElement);
             }
@@ -449,8 +469,8 @@ function displayTasks() {
     //Adiciona um listener para quando o elemento div é clicado duas vezes
     taskElement.addEventListener("dblclick", function () {
       //Coloca no modal os detalhes da tarefa o titulo e a descrição
-      modalTaskTitle.textContent = task.titulo;
-      modalTaskDescription.textContent = task.descricao;
+      modalTaskTitle.textContent = task.title;
+      modalTaskDescription.textContent = task.description;
 
       //Mostra o modal escurecendo o fundo da página
       taskDetailsModal.style.display = "block";
