@@ -7,7 +7,7 @@ window.onload = function () {
   let labelUsername = document.getElementById("displayUsername");
   //Coloca o username no elemento
   labelUsername.textContent = username;
-
+//Chama a função para mostrar a foto de perfil
   getPhotoUrl(username, password);
 
   displayDateTime(); // Adiciona a exibição da data e hora
@@ -537,9 +537,8 @@ function displayDateTime() {
   // Atualiza o conteúdo do elemento
   dateTimeDisplay.textContent = dateTimeString;
 }
-
+//Função que vai buscar a foto de perfil do utilizador
 async function getPhotoUrl(username, password) {
-
   let photoUrlRequest = "http://localhost:8080/backEnd/rest/users/profilePhoto";
     
     try {

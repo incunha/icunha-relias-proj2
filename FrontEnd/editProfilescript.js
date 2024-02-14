@@ -1,3 +1,4 @@
+
 document.getElementById("goBackButton").addEventListener("click", function () {
   window.location.href = "interface.html";
 });
@@ -22,7 +23,10 @@ window.onload = async function () {
 
   let user = {
     username: username,
+
   };
+
+  getPhotoUrl(username, password);
 
   document.getElementById("passwordInput").value = password;
 
@@ -56,6 +60,55 @@ window.onload = async function () {
       console.error("Error fetching user information:", error);
     });
 };
+
+async function getPhotoUrl(username, password) {
+  let photoUrlRequest = "http://localhost:8080/backEnd/rest/users/profilePhoto";
+    
+  try {
+    const response = await fetch(photoUrlRequest, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/JSON',
+        'Accept': 'application/JSON',
+        username: username,
+        password: password
+      },    
+    });
+
+    if (response.ok) {
+      const data = await response.text();
+
+      // Defina a imagem de fundo do profilePreview para a URL da imagem
+      var div = document.getElementById('profilePreview');
+      div.style.backgroundImage = 'url(' + data + ')';
+
+      // Defina o valor do campo de entrada photoInput para a URL da imagem
+      var photoInput = document.getElementById('photoInput');
+      photoInput.value = data;
+
+      // Adicione um ouvinte de evento ao campo de entrada photoInput para atualizar a imagem de fundo do profilePreview
+      // sempre que o valor do campo de entrada for alterado
+      photoInput.addEventListener('input', function() {
+        div.style.backgroundImage = 'url(' + this.value + ')';
+      });
+
+    } else if (response.status === 401) {
+      alert("Invalid credentials")
+    } else if (response.status === 404) {
+      alert("teste 404")
+    }
+
+  } catch (error) {
+    console.error('Error:', error);
+    alert("Something went wrong");
+  }
+}
+
+
+document.getElementById('photoInput').addEventListener('input', function() {
+  var div = document.getElementById('profilePreview');
+  div.style.backgroundImage = 'url(' + this.value + ')';
+});
 
 document
   .getElementById("saveButton")
@@ -101,3 +154,5 @@ async function saveNewInfos(userData) {
     console.error("Erro durante a requisição:", error);
   }
 }
+
+
