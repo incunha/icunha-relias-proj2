@@ -213,18 +213,19 @@ submitTaskButton.addEventListener("click", async function () {
             for (let i = 0; i < tasksArray.length; i++) {
               const task = tasksArray[i];
               const taskElement = document.createElement("div");
+              taskElement.setAttribute("id", i);
               taskElement.classList.add("task");
               taskElement.innerHTML = `
-              <h3 id="task-${i}" title="${task.title}">${task.title}</h3>
+              <h3 title="${task.title}">${task.title}</h3>
     <p>${task.description}</p>
   `;
-              taskElement;
+
               console.log(taskElement);
               taskElement.setAttribute("draggable", "true");
 
               taskElement.addEventListener("dragstart", function (event) {
                 event.dataTransfer.setData("data_id", event.target.id);
-                console.log(event.target.id);
+                console.log(event);
                 trashIcon.classList.add("show");
               });
 
@@ -277,11 +278,6 @@ yesButton.addEventListener("click", function () {
   }
   //Remove a tarefa da lista onde se encontrava
   taskList.splice(taskIndex, 1); // Remove the task from its current list
-
-  //Guarda as 3 listas de tarefas na localStorage
-  localStorage.setItem("ToDoTasks", JSON.stringify(ToDoTasks));
-  localStorage.setItem("DoingTasks", JSON.stringify(DoingTasks));
-  localStorage.setItem("DoneTasks", JSON.stringify(DoneTasks));
 
   //Chama a função para mostrar as tarefas
   displayTasks();
@@ -347,11 +343,16 @@ function drop(event) {
   //Evita o comportamento padrão do browser
   event.preventDefault();
 
+  alert("OLÁ");
+
   //Obtem o identificador da tarefa que foi largada sobre o elemento e guarda-o na variável taskId
   const taskId = event.dataTransfer.getData("data_id");
 
   //Obtem o elemento div da tarefa através do identificador da tarefa
   const taskElement = document.getElementById(taskId);
+  console.log(taskElement);
+  console.log(event.dataTransfer.getData("data_id"));
+  console.log(event.dataTransfer);
 
   //Obtem a secção onde a tarefa foi largada
   let targetSection = event.target;
