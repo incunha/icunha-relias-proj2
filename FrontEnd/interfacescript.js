@@ -165,7 +165,7 @@ doneSection.addEventListener("dragover", function (event) {
   event.preventDefault();
 });
 
-//Listener para quando o botão de adicionar uma nova tarefa é clicado
+// Listener para quando o botão de adicionar uma nova tarefa é clicado
 submitTaskButton.addEventListener("click", async function () {
   // Vai buscar os valores dos inputs do titulo, descrição e prioridade da tarefa e guarda-os nas variáveis titulo, descricao e priority
   const titulo = document.getElementById("taskTitle").value;
@@ -173,9 +173,9 @@ submitTaskButton.addEventListener("click", async function () {
   const priority = document.getElementById("editTaskPriority").value;
 
   if (titulo === "" || descricao === "") {
-    //Mostra o modal de aviso
+    // Mostra o modal de aviso
     warningModal.style.display = "block";
-    //Adiciona o escurecimento do fundo da página
+    // Adiciona o escurecimento do fundo da página
     document.getElementById("modalOverlay2").style.display = "block";
   } else {
     let user = {
@@ -196,34 +196,31 @@ submitTaskButton.addEventListener("click", async function () {
       method: "POST",
       headers: headers,
       body: JSON.stringify(taskk),
-    }).then(function (response) {
+    }).then(async function (response) {
       if (response.status == 405) {
         alert("Não autorizado.");
       } else if (response.status == 200) {
         alert("HERE");
-        //Gera um id único para a tarefa e guarda-o na variável identificador
-        const identificador = generateUniqueID();
-
-        //Cria um objecto com o identificador, o titulo e a descrição da tarefa
-        const task = {
-          identificador: identificador,
-          titulo: titulo,
-          descricao: descricao,
-          prioridade: priority,
-        };
-
-        //Adiciona esse objecto à lista de tarefas ToDoTasks
-        ToDoTasks.push(task);
-
-        //Guarda a lista de tarefas ToDoTasks na localStorage
-        //localStorage.setItem("ToDoTasks", JSON.stringify(ToDoTasks));
-
-        //Chama a função para mostrar as tarefas com a nova tarefa adicionada
-        displayTasks();
-
-        //Fecha a modal de nova tarefa e remove o escurecimento do fundo da página
-        newTaskModal.style.display = "none";
-        document.body.classList.remove("modal-open");
+        await fetch("http://localhost:8080/backEnd/rest/users/tasks", {
+          method: "GET",
+          headers: headers,
+        }).then(async function (response) {
+          if (response.status == 405) {
+            alert("Não autorizado");
+          } else if (response.status == 200) {
+            alert("HERE2");
+            const tasksArray = await response.json();
+            console.log(tasksArray);
+            for (let i = 0; i < tasksArray.length; i++) {
+              const task = tasksArray[i];
+              console.log(task);
+            }
+            displayTasks();
+            // Fecha a modal de nova tarefa e remove o escurecimento do fundo da página
+            newTaskModal.style.display = "none";
+            document.body.classList.remove("modal-open");
+          }
+        });
       }
     });
   }
