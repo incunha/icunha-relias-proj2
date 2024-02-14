@@ -22,11 +22,6 @@ const newTaskModal = document.getElementById("newTaskModal");
 //Obtem o botao para cancelar a adição de uma nova tarefa
 const cancelButtonAddTaskModal = document.getElementById("cancelTaskButton");
 
-//Cria as 3 listas de objectos para as tarefas
-const ToDoTasks = JSON.parse(localStorage.getItem("ToDoTasks")) || [];
-const DoingTasks = JSON.parse(localStorage.getItem("DoingTasks")) || [];
-const DoneTasks = JSON.parse(localStorage.getItem("DoneTasks")) || [];
-
 //Obtem as 3 secções para as tarefas serem colocadas
 const todoSection = document.getElementById("todo");
 const doingSection = document.getElementById("doing");
@@ -165,42 +160,81 @@ doneSection.addEventListener("dragover", function (event) {
   event.preventDefault();
 });
 
-//Listener para quando o botão de adicionar uma nova tarefa é clicado
-submitTaskButton.addEventListener("click", function () {
+const tasksContainer = document.getElementById("teste");
+// Listener para quando o botão de adicionar uma nova tarefa é clicado
+submitTaskButton.addEventListener("click", async function () {
   // Vai buscar os valores dos inputs do titulo, descrição e prioridade da tarefa e guarda-os nas variáveis titulo, descricao e priority
   const titulo = document.getElementById("taskTitle").value;
   const descricao = document.getElementById("taskDescription").value;
   const priority = document.getElementById("editTaskPriority").value;
 
   if (titulo === "" || descricao === "") {
-    //Mostra o modal de aviso
+    // Mostra o modal de aviso
     warningModal.style.display = "block";
-    //Adiciona o escurecimento do fundo da página
+    // Adiciona o escurecimento do fundo da página
     document.getElementById("modalOverlay2").style.display = "block";
   } else {
-    //Gera um id único para a tarefa e guarda-o na variável identificador
-    const identificador = generateUniqueID();
+    let user = {
+      username: localStorage.getItem("username"),
+      password: localStorage.getItem("password"),
+    };
+    const headers = new Headers();
+    headers.append("username", user.username);
+    headers.append("password", user.password);
+    headers.append("Content-Type", "application/json");
 
-    //Cria um objecto com o identificador, o titulo e a descrição da tarefa
-    const task = {
-      identificador: identificador,
-      titulo: titulo,
-      descricao: descricao,
-      prioridade: priority,
+    const taskk = {
+      title: titulo,
+      description: descricao,
     };
 
-    //Adiciona esse objecto à lista de tarefas ToDoTasks
-    ToDoTasks.push(task);
+    await fetch("http://localhost:8080/backEnd/rest/users/addTask", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(taskk),
+    }).then(async function (response) {
+      if (response.status == 405) {
+        alert("Não autorizado.");
+      } else if (response.status == 200) {
+        alert("HERE");
+        await fetch("http://localhost:8080/backEnd/rest/users/tasks", {
+          method: "GET",
+          headers: headers,
+        }).then(async function (response) {
+          if (response.status == 405) {
+            alert("Não autorizado");
+          } else if (response.status == 200) {
+            alert("HERE2");
+            const tasksArray = await response.json();
+            console.log(tasksArray);
 
-    //Guarda a lista de tarefas ToDoTasks na localStorage
-    localStorage.setItem("ToDoTasks", JSON.stringify(ToDoTasks));
+            console.log(tasksContainer);
 
-    //Chama a função para mostrar as tarefas com a nova tarefa adicionada
-    displayTasks();
+            for (let i = 0; i < tasksArray.length; i++) {
+              const task = tasksArray[i];
+              const taskElement = document.createElement("div");
+              taskElement.classList.add("task");
+              taskElement.innerHTML = `
+      <h3>${task.title}</h3>
+    <p>${task.description}</p>
+  `;
+              taskElement;
+              console.log(taskElement);
+              taskElement.setAttribute("draggable", "true");
 
-    //Fecha a modal de nova tarefa e remove o escurecimento do fundo da página
-    newTaskModal.style.display = "none";
-    document.body.classList.remove("modal-open");
+              // Adicione a tarefa à 'tasks-container'
+              tasksContainer.appendChild(taskElement);
+            }
+            todoSection.appendChild(tasksContainer);
+            tasksContainer.style.display = "block";
+
+            // Fecha a modal de nova tarefa e remove o escurecimento do fundo da página
+            newTaskModal.style.display = "none";
+            document.body.classList.remove("modal-open");
+          }
+        });
+      }
+    });
   }
 });
 
