@@ -407,7 +407,6 @@ function createTaskElements(tasksArray) {
 
     taskElement.innerHTML = `
     <h3 title="${task.title}">${task.title}</h3>
-<p>${task.description}</p>
 `;
 
     //console.log(taskElement);
