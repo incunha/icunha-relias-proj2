@@ -374,6 +374,8 @@ function displayTasks(tasks) {
 
 function createTaskElements(tasksArray) {
   let todoTasksContainer = document.getElementById("todo");
+  let doingTasksContainer = document.getElementById("doing");
+  let doneTasksContainer = document.getElementById("done");
 
   console.log("*****" + tasksArray);
 
@@ -416,8 +418,13 @@ function createTaskElements(tasksArray) {
       taskDetailsModal.style.display = "block";
       document.body.classList.add("modal-open");
     });
-    // Adicione a tarefa à 'tasks-container'
-    todoTasksContainer.appendChild(taskElement);
+    if (task.status == "todo") {
+      todoTasksContainer.appendChild(taskElement);
+    } else if (task.status == "doing") {
+      doingTasksContainer.appendChild(taskElement);
+    } else if (task.status == "done") {
+      doneTasksContainer.appendChild(taskElement);
+    }
   }
   //todoSection.appendChild(tasksContainer);
   //tasksContainer.style.display = "block";
