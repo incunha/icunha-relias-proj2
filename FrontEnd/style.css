@@ -907,7 +907,7 @@ aside::after {
 }
 
 .profile-content {
-  margin-left: 600px; /* ajuste este valor conforme necessário */
+  margin-left: 600px; 
 }
 
 #editProfileTitle {
@@ -946,7 +946,7 @@ aside::after {
 }
 
 button[type="submit"] {
-  margin-left: 470px;
+  margin-left: 255px;
   width: 100px;
   height: 30px;
   color: white;
