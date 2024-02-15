@@ -316,8 +316,6 @@ function drop(event) {
   //Evita o comportamento padrão do browser
   event.preventDefault();
 
-  alert("DROP!");
-
   //Obtem o identificador da tarefa que foi largada sobre o elemento e guarda-o na variável taskId
   const taskId = event.dataTransfer.getData("data_id");
 
@@ -363,21 +361,6 @@ function drop(event) {
     displayTasks();
   }
 }
-
-//Função que gera um id único para uma tarefa
-function generateUniqueID() {
-  let id;
-  //Gera um id aleatório e verifica se esse id já existe nas 3 listas de tarefas
-  do {
-    id = Math.floor(Math.random() * 1000000);
-  } while (
-    ToDoTasks.some((task) => task.identificador === id) ||
-    DoingTasks.some((task) => task.identificador === id) ||
-    DoneTasks.some((task) => task.identificador === id)
-  );
-  return id;
-}
-
 //Função que imprime as tarefas nas secções correspondentes
 function displayTasks(tasks) {
   //Limpa todas as secções de tarefas
