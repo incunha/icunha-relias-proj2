@@ -70,34 +70,42 @@ document
       phoneNumber: document.getElementById("phoneNumberInput").value,
       profilePhoto: document.getElementById("photoInput").value,
     };
-    saveNewInfos(userData);
-  });
 
-async function saveNewInfos(userData) {
-  try {
-    const response = await fetch(
-      `http://localhost:8080/backEnd/rest/users/username/update`,
-      {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify(userData),
-      }
-    );
-
-    if (response.status == 200) {
-      console.log("Informações do utilizador atualizadas com sucesso!");
-      alert("Info changed with sucess!");
-      window.location.href = "interface.html";
-    } else if (response.status == 404) {
-      console.error(
-        `Erro ao atualizar informações do utilizador. Status: ${response.status}`
-      );
+    if (
+      userData.username.trim() === "" ||
+      userData.password.trim() === "" ||
+      userData.email.trim() === "" ||
+      userData.firstName.trim() === "" ||
+      userData.lastName.trim() === "" ||
+      userData.phoneNumber.trim() === "" ||
+      userData.profilePhoto.trim() === ""
+    ) {
+      alert("pls fill all the fields");
+    } else {
+      saveNewInfos(userData);
     }
-  } catch (error) {
-    console.error("Erro durante a requisição:", error);
+  });
+async function saveNewInfos(userData) {
+  const response = await fetch(
+    `http://localhost:8080/backEnd/rest/users/username/update`,
+    {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(userData),
+    }
+  );
+
+  if (response.status == 200) {
+    console.log("Informações do utilizador atualizadas com sucesso!");
+    alert("Info changed with sucess!");
+    window.location.href = "interface.html";
+  } else if (response.status == 404) {
+    console.error(
+      `Erro ao atualizar informações do utilizador. Status: ${response.status}`
+    );
   }
 }

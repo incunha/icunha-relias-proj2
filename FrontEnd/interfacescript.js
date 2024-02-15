@@ -224,7 +224,6 @@ async function gettasks() {
     if (response.status == 405) {
       alert("Não autorizado");
     } else if (response.status == 200) {
-      alert("HERE2");
       const tasks = await response.json();
       console.log(tasks);
       displayTasks(tasks);
@@ -358,7 +357,7 @@ function drop(event) {
       doneSection.appendChild(task);
     }
     //Volta a chamar a função para mostrar as tarefas
-    displayTasks();
+    gettasks();
   }
 }
 //Função que imprime as tarefas nas secções correspondentes
@@ -418,11 +417,11 @@ function createTaskElements(tasksArray) {
       taskDetailsModal.style.display = "block";
       document.body.classList.add("modal-open");
     });
-    if (task.status == "todo") {
+    if (task.status == 100) {
       todoTasksContainer.appendChild(taskElement);
-    } else if (task.status == "doing") {
+    } else if (task.status == 200) {
       doingTasksContainer.appendChild(taskElement);
-    } else if (task.status == "done") {
+    } else if (task.status == 300) {
       doneTasksContainer.appendChild(taskElement);
     }
   }

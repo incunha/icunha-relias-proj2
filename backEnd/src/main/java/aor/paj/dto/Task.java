@@ -9,7 +9,7 @@ public class Task {
     String id;
     String title;
     String description;
-    String status;
+    int status;
     LocalDate initialDate;
     LocalDate finalDate;
 
@@ -17,7 +17,7 @@ public class Task {
 
     }
 
-    public Task(String id, String title, String description, String status, LocalDate initialDate, LocalDate finalDate) {
+    public Task(String id, String title, String description, int status, LocalDate initialDate, LocalDate finalDate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -40,16 +40,16 @@ public class Task {
     }
 
     @XmlElement
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
     public void inicialStatus() {
-        this.status = "todo";
+        this.status = 100;
     }
 
     @XmlElement
