@@ -4,6 +4,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @XmlRootElement
 public class User {
@@ -103,10 +104,14 @@ public class User {
     }
 
     public void removeTask(String id){
+        List<Task> tasksToRemove = new ArrayList<>();
+
         for(Task t: tasks){
             if(t.getId().equals(id)){
-                tasks.remove(t);
+                tasksToRemove.add(t);
             }
         }
+
+        tasks.removeAll(tasksToRemove);
     }
 }

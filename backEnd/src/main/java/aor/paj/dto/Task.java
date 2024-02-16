@@ -9,21 +9,24 @@ public class Task {
     String id;
     String title;
     String description;
-    String status;
+    int status;
     LocalDate initialDate;
     LocalDate finalDate;
+
+    String priority;
 
     public Task(){
 
     }
 
-    public Task(String id, String title, String description, String status, LocalDate initialDate, LocalDate finalDate) {
+    public Task(String id, String title, String description, int status, LocalDate initialDate, LocalDate finalDate) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.status = status;
         this.initialDate = initialDate;
         this.finalDate = finalDate;
+        this.priority = priority;
     }
 
     @XmlElement
@@ -40,16 +43,16 @@ public class Task {
     }
 
     @XmlElement
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
     public void inicialStatus() {
-        this.status = "todo";
+        this.status = 100;
     }
 
     @XmlElement
@@ -87,6 +90,15 @@ public class Task {
     public void setFinalDate(LocalDate finalDate) {
         this.finalDate = finalDate;
      }
+
+    @XmlElement
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
 
     public void updateTask(Task task) {
         this.title = task.getTitle();
