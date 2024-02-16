@@ -22,9 +22,9 @@ public class UserService {
         return userBean.getUsers();
     }
     @GET
-    @Path("/{username}")
+    @Path("/getUser")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUser(@PathParam("username") String username) {
+    public Response getUser(@HeaderParam("username") String username) {
         System.out.println(username);
         User user = userBean.getUser(username);
         if (user == null) {
@@ -48,18 +48,19 @@ public class UserService {
     @POST
     @Path("/addTask")
     @Consumes(MediaType.APPLICATION_JSON) public Response addTask(@HeaderParam("username")String username,@HeaderParam("password")String password, Task t) {
+        System.out.println(username+"        "+password);
         if(!userBean.authorizeUser(username, password)){
-            System.out.println(username+" "+password);
             return Response.status(405).entity("Forbidden.").build();
         } else {
             t.createId();t.inicialStatus();
+            System.out.println(t.getId()+" "+t.getStatus()+" "+t.getTitle());
             userBean.addTask(username, t);
             return Response.status(200).entity("A new task is created").build();
         }
     }
     @DELETE
-    @Path("/deleteTask/{id}")
-    @Produces(MediaType.APPLICATION_JSON) public Response removeTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @PathParam("id") String id) {
+    @Path("/deleteTask")
+    @Produces(MediaType.APPLICATION_JSON) public Response removeTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @HeaderParam("id") String id) {
         if(!userBean.authorizeUser(username, password)){
             return Response.status(405).entity("Forbidden.").build();
         } else {
@@ -104,14 +105,14 @@ public class UserService {
         }
     }
     @PUT
-    @Path("/username/update")
+    @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUser(User user) {
+    public Response updateUser(@HeaderParam("username")String username,@HeaderParam("password")String password, User user) {
         List<User> users = userBean.getUsers();
         for (User u : users) {
-            if (user.getUsername().equals(u.getUsername())) {
-                userBean.updateUserToNew(u, user);
+            if (username.equals(u.getUsername())) {
+                userBean.updateUserToNew(u,user);
                 return Response.status(200).entity("Info changed.").build();
             }
         }
@@ -121,7 +122,6 @@ public class UserService {
     @Path("/tasks")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllTasks(@HeaderParam("username")String username,@HeaderParam("password")String password) {
-        System.out.println(username+" "+password);
         if(!userBean.authorizeUser(username, password)){
             return Response.status(405).entity("Forbidden.").build();
         } else {
@@ -139,6 +139,22 @@ public class UserService {
         } else {
             userBean.updateTask(username, id, t);
             return Response.status(200).entity("Task updated.").build();
+        }
+    }
+
+    @GET
+    @Path("/getTask")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @HeaderParam("id") String id) {
+        if(!userBean.authorizeUser(username, password)){
+            return Response.status(405).entity("Forbidden.").build();
+        } else {
+            Task task = userBean.getTask(username, id);
+            if (task == null) {
+                return Response.status(404).entity("Task não encontrada.").build();
+            } else {
+                return Response.status(200).entity(task).build();
+            }
         }
     }
 

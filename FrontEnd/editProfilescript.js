@@ -30,9 +30,10 @@ window.onload = async function () {
 
   document.getElementById("passwordInput").value = password;
 
-  await fetch(`http://localhost:8080/backEnd/rest/users/${user.username}`, {
+  await fetch(`http://localhost:8080/backEnd/rest/users/getUser`, {
     method: "GET",
     headers: {
+      username: username,
       Accept: "application/json",
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
@@ -110,8 +111,7 @@ document.getElementById('photoInput').addEventListener('input', function() {
   div.style.backgroundImage = 'url(' + this.value + ')';
 });
 
-document
-  .getElementById("saveButton")
+document.getElementById("saveButton")
   .addEventListener("click", function (event) {
     event.preventDefault();
     const userData = {
@@ -140,10 +140,12 @@ document
   });
 async function saveNewInfos(userData) {
   const response = await fetch(
-    `http://localhost:8080/backEnd/rest/users/username/update`,
+    `http://localhost:8080/backEnd/rest/users/update`,
     {
       method: "PUT",
       headers: {
+        username: localStorage.getItem("username"),
+        password: localStorage.getItem("password"),
         Accept: "application/json",
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",

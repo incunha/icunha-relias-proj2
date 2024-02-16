@@ -2,16 +2,46 @@
 window.onload = function () {
   const username = localStorage.getItem("username"); //Obtém o nome de utilizador da localStorage
 
+  //Chama a função para mostrar a foto de perfil
+  //getPhotoUrl(username, password);
+
   document.getElementById("displayUsername").textContent = username;
 
   //Obtém a tarefa a ser editada da sessionStorage
-  const task = JSON.parse(sessionStorage.getItem("taskToEdit"));
+  const taskID = sessionStorage.getItem("taskToEdite");
+  getTask(taskID);
+
+async function getTask(taskId) {
+
+  let userUsado = {
+    username: localStorage.getItem("username"),
+    password: localStorage.getItem("password"),
+  };
+  const headerss = new Headers();
+  headerss.append("username", userUsado.username);
+  headerss.append("password", userUsado.password);
+  headerss.append("id", taskId);
+  headerss.append("Content-Type", "application/json");
+  await fetch("http://localhost:8080/backEnd/rest/users/getTask", {
+    method: "GET",
+    headers: headerss,
+  }).then(async function (response) {
+    if (response.status == 404) {
+      alert("erro");
+    } else if (response.status == 200) {
+      const taskEdit = await response.json();
+      console.log(taskEdit);
+    document.getElementById("editarTarefaTitulo").textContent = taskEdit.title;
+    document.getElementById("editarTarefaDescricao").textContent = taskEdit.description;
+    document.getElementById("editTaskPriority").textContent = taskEdit.priority;
+    document.getElementById("editTaskStatus").textContent = sessionStorage.getItem("sectionName");
+    }
+  });
+}
+
   //Preenche os campos do formulário com os detalhes da tarefa a editar
-  document.getElementById("editarTarefaTitulo").value = task.titulo;
-  document.getElementById("editarTarefaDescricao").value = task.descricao;
-  document.getElementById("editTaskPriority").value = task.prioridade;
-  document.getElementById("editTaskStatus").value =
-    sessionStorage.getItem("sectionName");
+
+  
   //Mostra o modal de edição e escurece o fundo
   document.getElementById("editTaskModal").style.display = "block";
   document.body.classList.add("modal-open");
