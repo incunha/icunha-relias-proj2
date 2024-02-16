@@ -17,7 +17,8 @@ async function addUser(form) {
     user.email.trim() === "" ||
     user.firstName.trim() === "" ||
     user.lastName.trim() === "" ||
-    user.phoneNumber.trim() === ""
+    user.phoneNumber.trim() === "" ||
+    user.profilePhoto.trim() === ""
   ) {
     alert("Please fill all fields:)");
   } else {
@@ -56,3 +57,7 @@ async function addUser(form) {
     });
   }
 }
+document.getElementById('photoReg').addEventListener('input', function() {
+  var div = document.getElementById('profilePreview');
+  div.style.backgroundImage = 'url(' + this.value + ')';
+});

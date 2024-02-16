@@ -13,6 +13,8 @@ public class Task {
     LocalDate initialDate;
     LocalDate finalDate;
 
+    String priority;
+
     public Task(){
 
     }
@@ -24,6 +26,7 @@ public class Task {
         this.status = status;
         this.initialDate = initialDate;
         this.finalDate = finalDate;
+        this.priority = priority;
     }
 
     @XmlElement
@@ -87,6 +90,15 @@ public class Task {
     public void setFinalDate(LocalDate finalDate) {
         this.finalDate = finalDate;
      }
+
+    @XmlElement
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
 
     public void updateTask(Task task) {
         this.title = task.getTitle();

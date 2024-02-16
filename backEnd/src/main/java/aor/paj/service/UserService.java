@@ -33,6 +33,18 @@ public class UserService {
             return Response.status(200).entity(user).build();
         }
     }
+
+    @GET
+    @Path("/profilePhoto")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProfilePhoto(@HeaderParam("username") String username) {
+        User user = userBean.getUser(username);
+        if (user == null) {
+            return Response.status(404).entity("User não encontrado.").build();
+        } else {
+            return Response.status(200).entity(user.getProfilePhoto()).build();
+        }
+    }
     @POST
     @Path("/addTask")
     @Consumes(MediaType.APPLICATION_JSON) public Response addTask(@HeaderParam("username")String username,@HeaderParam("password")String password, Task t) {
@@ -46,8 +58,8 @@ public class UserService {
         }
     }
     @DELETE
-    @Path("/deleteTask")
-    @Produces(MediaType.APPLICATION_JSON) public Response removeTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @QueryParam("id")String id) {
+    @Path("/deleteTask/{id}")
+    @Produces(MediaType.APPLICATION_JSON) public Response removeTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @PathParam("id") String id) {
         if(!userBean.authorizeUser(username, password)){
             return Response.status(405).entity("Forbidden.").build();
         } else {
@@ -109,6 +121,7 @@ public class UserService {
     @Path("/tasks")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllTasks(@HeaderParam("username")String username,@HeaderParam("password")String password) {
+        System.out.println(username+" "+password);
         if(!userBean.authorizeUser(username, password)){
             return Response.status(405).entity("Forbidden.").build();
         } else {
@@ -120,7 +133,7 @@ public class UserService {
     @Path("/task/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @QueryParam("id")String id, Task t) {
+    public Response updateTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @HeaderParam("id") String id, Task t) {
         if(!userBean.authorizeUser(username, password)){
             return Response.status(405).entity("Forbidden.").build();
         } else {

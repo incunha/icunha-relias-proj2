@@ -99,6 +99,7 @@ public class UserBean {
         return null;
     }
 
+
     public User logout(String username) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {

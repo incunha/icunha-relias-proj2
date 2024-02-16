@@ -5,10 +5,13 @@ let alltasks = [];
 window.onload = function () {
   //Obtém o username da sessionStorage
   const username = localStorage.getItem("username");
+  const password = localStorage.getItem("password");
   //Vai buscar o elemento que mostra o username
   let labelUsername = document.getElementById("displayUsername");
   //Coloca o username no elemento
   labelUsername.textContent = username;
+//Chama a função para mostrar a foto de perfil
+  getPhotoUrl(username, password);
 
   displayDateTime(); // Adiciona a exibição da data e hora
   setInterval(displayDateTime, 1000); // Atualiza a cada segundo
@@ -25,6 +28,11 @@ const addTaskButton = document.getElementById("addTaskButton");
 const newTaskModal = document.getElementById("newTaskModal");
 //Obtem o botao para cancelar a adição de uma nova tarefa
 const cancelButtonAddTaskModal = document.getElementById("cancelTaskButton");
+
+//Cria as 3 listas de objectos para as tarefas
+const ToDoTasks = JSON.parse(localStorage.getItem("ToDoTasks")) || [];
+const DoingTasks = JSON.parse(localStorage.getItem("DoingTasks")) || [];
+const DoneTasks = JSON.parse(localStorage.getItem("DoneTasks")) || [];
 
 //Obtem as 3 secções para as tarefas serem colocadas
 const todoSection = document.getElementById("todo");
@@ -164,32 +172,28 @@ doneSection.addEventListener("dragover", function (event) {
   event.preventDefault();
 });
 
-const tasksContainer = document.getElementById("teste");
-// Listener para quando o botão de adicionar uma nova tarefa é clicado
-submitTaskButton.addEventListener("click", async function () {
+//Listener para quando o botão de adicionar uma nova tarefa é clicado
+submitTaskButton.addEventListener("click", function () {
   // Vai buscar os valores dos inputs do titulo, descrição e prioridade da tarefa e guarda-os nas variáveis titulo, descricao e priority
   const titulo = document.getElementById("taskTitle").value;
   const descricao = document.getElementById("taskDescription").value;
   const priority = document.getElementById("editTaskPriority").value;
 
   if (titulo === "" || descricao === "") {
-    // Mostra o modal de aviso
+    //Mostra o modal de aviso
     warningModal.style.display = "block";
-    // Adiciona o escurecimento do fundo da página
+    //Adiciona o escurecimento do fundo da página
     document.getElementById("modalOverlay2").style.display = "block";
   } else {
-    let user = {
-      username: localStorage.getItem("username"),
-      password: localStorage.getItem("password"),
-    };
-    const headers = new Headers();
-    headers.append("username", user.username);
-    headers.append("password", user.password);
-    headers.append("Content-Type", "application/json");
+    //Gera um id único para a tarefa e guarda-o na variável identificador
+    const identificador = generateUniqueID();
 
-    const taskk = {
-      title: titulo,
-      description: descricao,
+    //Cria um objecto com o identificador, o titulo e a descrição da tarefa
+    const task = {
+      identificador: identificador,
+      titulo: titulo,
+      descricao: descricao,
+      prioridade: priority,
     };
 
     await fetch("http://localhost:8080/backEnd/rest/users/addTask", {
@@ -552,4 +556,36 @@ function displayDateTime() {
 
   // Atualiza o conteúdo do elemento
   dateTimeDisplay.textContent = dateTimeString;
+}
+
+//Função que vai buscar a foto de perfil do utilizador
+async function getPhotoUrl(username, password) {
+  let photoUrlRequest = "http://localhost:8080/backEnd/rest/users/profilePhoto";
+    
+    try {
+        const response = await fetch(photoUrlRequest, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/JSON',
+                'Accept': 'application/JSON',
+                username: username,
+                password: password
+            },    
+        });
+
+        if (response.ok) {
+
+          const data = await response.text();
+          document.getElementById("userIcon").src = data;
+
+        } else if (response.status === 401) {
+            alert("Invalid credentials")
+        } else if (response.status === 404) {
+          alert("teste 404")
+        }
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert("Something went wrong");
+    }
 }
