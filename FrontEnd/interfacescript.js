@@ -8,7 +8,7 @@ window.onload = function () {
   let labelUsername = document.getElementById("displayUsername");
   //Coloca o username no elemento
   labelUsername.textContent = username;
-//Chama a função para mostrar a foto de perfil
+  //Chama a função para mostrar a foto de perfil
   getPhotoUrl(username, password);
 
   displayDateTime(); // Adiciona a exibição da data e hora
@@ -18,8 +18,6 @@ window.onload = function () {
   gettasks();
 };
 
-//Obtem os trash icon
-const trashIcon = document.getElementById("trashIcon");
 //Obtem o botão Add Task
 const addTaskButton = document.getElementById("addTaskButton");
 //Obtem a modal para adicionar uma nova tarefa
@@ -85,44 +83,6 @@ window.addEventListener("click", function (event) {
   }
 });
 
-//Função que determina o que acontece quando o cursor está sobre trashIcon
-trashIcon.ondragover = function (event) {
-  //Permite que uma tarefa seja largada sobre o ícone do lixo
-  allowDrop(event);
-  //Atribui um highliht ao icone do lixo aberto
-  trashIcon.classList.add("highlightTrash");
-  //Muda a imagem do icone do lixo para o icone do lixo aberto
-  trashIcon.src = "resources/Icons/trashOpen.png";
-};
-
-//Função que determina o que acontece quando o cursor sai de cima do trashIcon
-trashIcon.ondragleave = function () {
-  //Remove o highlight do icone do lixo aberto
-  trashIcon.classList.remove("highlightTrash");
-  //Muda a imagem do icone do lixo para o icone do lixo fechado
-  trashIcon.src = "resources/Icons/trash.png";
-};
-
-//Função que determina o que acontece quando uma tarefa é largada sobre o trashIcon
-trashIcon.ondrop = function (event) {
-  //Permite que uma tarefa seja largada sobre o ícone do lixo, evitando o comportamento padrão
-  event.preventDefault();
-
-  //Obtem o id da tarefa que foi largada sobre o trashIcon
-  const taskId = event.dataTransfer.getData("data_id");
-
-  //Guarda o id da tarefa no atributo data-task-id do deleteWarning modal
-  deleteWarning.setAttribute("data-task-id", taskId);
-
-  //Mostra o deleteWarning modal
-  deleteWarning.style.display = "block";
-  //Escura o fundo da página
-  document.body.classList.add("modal-open");
-
-  //Muda a imagem do icone do lixo para o icone do lixo fechado
-  trashIcon.src = "resources/Icons/trash.png";
-};
-
 //Listener para quando o botão de logout é clicado
 botaoLogout.addEventListener("click", function () {
   localStorage.clear();
@@ -177,7 +137,7 @@ submitTaskButton.addEventListener("click", async function () {
   const titulo = document.getElementById("taskTitle").value;
   const descricao = document.getElementById("taskDescription").value;
   const priority = document.getElementById("editTaskPriority").value;
-  const inicalDate= document.getElementById("initialDate").value;
+  const inicalDate = document.getElementById("initialDate").value;
   const finalDate = document.getElementById("finalDate").value;
   const status = document.getElementById("status").value;
 
@@ -234,7 +194,6 @@ async function gettasks() {
       alert("Não autorizado");
     } else if (response.status == 200) {
       const tasks = await response.json();
-      console.log(tasks);
       displayTasks(tasks);
     }
   });
@@ -319,18 +278,42 @@ function allowDrop(event) {
   event.preventDefault();
 }
 
+async function getTaskById(taskID) {
+  let userUsado = {
+    username: localStorage.getItem("username"),
+    password: localStorage.getItem("password"),
+  };
+  const headerss = new Headers();
+  headerss.append("username", userUsado.username);
+  headerss.append("password", userUsado.password);
+  headerss.append("id", taskID);
+  headerss.append("Content-Type", "application/json");
+  await fetch("http://localhost:8080/backEnd/rest/users/getTask", {
+    method: "GET",
+    headers: headerss,
+  }).then(async function (response) {
+    if (response.status == 404) {
+      alert("erro");
+    } else if (response.status == 200) {
+      const taskMoved = await response.json();
+      console.log(taskMoved);
+      return taskMoved;
+    }
+  });
+}
+
 //Função que define o que acontece quando uma tarefa é largada sobre um determinado elemento
-function drop(event) {
+async function drop(event) {
   //Evita o comportamento padrão do browser
   event.preventDefault();
 
   //Obtem o identificador da tarefa que foi largada sobre o elemento e guarda-o na variável taskId
   const taskId = event.dataTransfer.getData("data_id");
 
-  //Obtem o elemento div da tarefa através do identificador da tarefa
-  const taskElement = document.getElementById(taskId);
-  console.log(taskElement);
-  console.log(event.dataTransfer.getData("data_id"));
+  const tasK = await getTaskById(taskId);
+
+  console.log(tasK);
+  //console.log(event.dataTransfer.getData("data_id"));
 
   //Obtem a secção onde a tarefa foi largada
   let targetSection = event.target;
@@ -357,33 +340,25 @@ function drop(event) {
 
     //Remove a tarefa da lista onde se encontrava
     const task = taskList.splice(taskIndex, 1)[0];
-
-
-;
-  };
-   
-    //Volta a chamar a função para mostrar as tarefas
-    gettasks();
   }
 
+  //Volta a chamar a função para mostrar as tarefas
+  gettasks();
+}
 
+async function updateStatusTask(task) {
+  let username = localStorage.getItem("username");
+  let password = localStorage.getItem("password");
 
-
-  async function updateStatusTask(task) {
-
-    let username = localStorage.getItem("username");
-    let password = localStorage.getItem("password");
-
-    const headers = new Headers();
-    headers.append("username", username);
-    headers.append("password", password);
-    headers.append("id", task.id);
-    headers.append("Content-Type", "application/json");
-  
+  const headers = new Headers();
+  headers.append("username", username);
+  headers.append("password", password);
+  headers.append("id", task.id);
+  headers.append("Content-Type", "application/json");
 
   await fetch(`http://localhost:8080/backEnd/rest/users/task/update`, {
     method: "PUT",
-    headers: headers
+    headers: headers,
   })
     .then(function (response) {
       if (response.status == 404) {
@@ -402,25 +377,19 @@ function drop(event) {
       document.getElementById("finalDate").value = taskData.finalDate;
       if (targetSection.id === "todo") {
         todoSection.appendChild(task);
-      document.getElementById ("status").value = 100;
+        document.getElementById("status").value = 100;
       } else if (targetSection.id === "doing") {
         doingSection.appendChild(task);
-      document.getElementById("status").value = 200;
+        document.getElementById("status").value = 200;
       } else if (targetSection.id === "done") {
         doneSection.appendChild(task);
-      document.getElementById("status").value = 300;
+        document.getElementById("status").value = 300;
       }
-     
     })
     .catch(function (error) {
       console.error("Error fetching user information:", error);
     });
-  }
-
-
-
-
-
+}
 
 //Função que imprime as tarefas nas secções correspondentes
 function displayTasks(tasks) {
@@ -438,14 +407,11 @@ function createTaskElements(tasksArray) {
   let doingTasksContainer = document.getElementById("doing");
   let doneTasksContainer = document.getElementById("done");
 
-  console.log("*****" + tasksArray);
-
   for (let i = 0; i < tasksArray.length; i++) {
     const task = tasksArray[i];
-    console.log("*****" + task.title);
 
     const taskElement = document.createElement("div");
-    taskElement.setAttribute("id", i);
+    taskElement.setAttribute("id", task.id);
     //tasksContainer.style.display = "flex";
     //tasksContainer.style.flexWrap = "wrap";
     taskElement.style.margin = "10px";
@@ -461,12 +427,7 @@ function createTaskElements(tasksArray) {
 
     taskElement.addEventListener("dragstart", function (event) {
       event.dataTransfer.setData("data_id", event.target.id);
-      console.log(event);
-      trashIcon.classList.add("show");
-    });
-
-    taskElement.addEventListener("dragend", function (e) {
-      trashIcon.classList.remove("show");
+      console.log("---", target.id);
     });
 
     //Adiciona um listener para quando o elemento div é clicado duas vezes
@@ -535,12 +496,6 @@ function createTaskElement(task) {
   //Define que a informação do elemento arrastável é o id da tarefa
   taskElement.addEventListener("dragstart", function (event) {
     event.dataTransfer.setData("data_id", event.target.id);
-    trashIcon.classList.add("show");
-  });
-
-  //Define que o icon do lixo é escondido quando o elemento arrastável é largado
-  taskElement.addEventListener("dragend", function (e) {
-    trashIcon.classList.remove("show");
   });
 
   //Adiciona um listener para quando o elemento div é clicado duas vezes
@@ -595,9 +550,6 @@ function createTaskElement(task) {
   return taskElement;
 }
 
-
-
-
 //Função que mostra a data e hora
 function displayDateTime() {
   const currentDate = new Date();
@@ -622,31 +574,28 @@ function displayDateTime() {
 //Função que vai buscar a foto de perfil do utilizador
 async function getPhotoUrl(username, password) {
   let photoUrlRequest = "http://localhost:8080/backEnd/rest/users/profilePhoto";
-    
-    try {
-        const response = await fetch(photoUrlRequest, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/JSON',
-                'Accept': 'application/JSON',
-                username: username,
-                password: password
-            },    
-        });
 
-        if (response.ok) {
+  try {
+    const response = await fetch(photoUrlRequest, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/JSON",
+        Accept: "application/JSON",
+        username: username,
+        password: password,
+      },
+    });
 
-          const data = await response.text();
-          document.getElementById("userIcon").src = data;
-
-        } else if (response.status === 401) {
-            alert("Invalid credentials")
-        } else if (response.status === 404) {
-          alert("teste 404")
-        }
-
-    } catch (error) {
-        console.error('Error:', error);
-        alert("Something went wrong");
+    if (response.ok) {
+      const data = await response.text();
+      document.getElementById("userIcon").src = data;
+    } else if (response.status === 401) {
+      alert("Invalid credentials");
+    } else if (response.status === 404) {
+      alert("teste 404");
     }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Something went wrong");
+  }
 }

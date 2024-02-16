@@ -142,4 +142,20 @@ public class UserService {
         }
     }
 
+    @GET
+    @Path("/getTask")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @HeaderParam("id") String id) {
+        if(!userBean.authorizeUser(username, password)){
+            return Response.status(405).entity("Forbidden.").build();
+        } else {
+            Task task = userBean.getTask(username, id);
+            if (task == null) {
+                return Response.status(404).entity("Task não encontrada.").build();
+            } else {
+                return Response.status(200).entity(task).build();
+            }
+        }
+    }
+
 }

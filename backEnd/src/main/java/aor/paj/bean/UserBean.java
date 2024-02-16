@@ -168,6 +168,19 @@ public class UserBean {
             }
         }
     }
+
+    public Task getTask(String username, String id) {
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
+                for (Task task : u.getTasks()) {
+                    if (task.getId().equals(id)) {
+                        return task;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 }
 
 
