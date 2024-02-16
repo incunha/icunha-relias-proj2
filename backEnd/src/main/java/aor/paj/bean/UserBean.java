@@ -133,6 +133,7 @@ public class UserBean {
         for (User u : users) {
             if (u.getUsername().equals(username)) {
                 u.removeTask(id);
+                writeIntoJsonFile();
             }
         }
     }
@@ -153,6 +154,7 @@ public class UserBean {
         u.setPassword(user.getPassword());
         u.setPhoneNumber(user.getPhoneNumber());
         u.setProfilePhoto(user.getProfilePhoto());
+        writeIntoJsonFile();
     }
 
     public void updateTask(String username, String id, Task t) {
@@ -167,6 +169,19 @@ public class UserBean {
                 }
             }
         }
+    }
+
+    public Task getTask(String username, String id) {
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
+                for (Task task : u.getTasks()) {
+                    if (task.getId().equals(id)) {
+                        return task;
+                    }
+                }
+            }
+        }
+        return null;
     }
 }
 

@@ -179,7 +179,7 @@ submitTaskButton.addEventListener("click", async function () {
   const priority = document.getElementById("editTaskPriority").value;
   const inicalDate= document.getElementById("initialDate").value;
   const finalDate = document.getElementById("finalDate").value;
-  const status = document.getElementById("status").value;
+
 
   if (titulo === "" || descricao === "") {
     //Mostra o modal de aviso
@@ -187,24 +187,25 @@ submitTaskButton.addEventListener("click", async function () {
     //Adiciona o escurecimento do fundo da página
     document.getElementById("modalOverlay2").style.display = "block";
   } else {
-    //Gera um id único para a tarefa e guarda-o na variável identificador
-    const identificador = generateUniqueID();
 
     //Cria um objecto com o identificador, o titulo e a descrição da tarefa
     const task = {
-      identificador: identificador,
-      titulo: titulo,
-      descricao: descricao,
-      prioridade: priority,
-      inicalDate: inicalDate,
-      finalDate: finalDate,
-      status: 100,
-    };
 
+      title: titulo,
+      description: descricao,
+      priority: priority,
+      initialDate: inicalDate,
+      finalDate: finalDate,
+    };
+      const headers = new Headers();
+      headers.append("username", localStorage.getItem("username"));
+      headers.append("password", localStorage.getItem("password"));
+      headers.append("Content-Type", "application/json");
     await fetch("http://localhost:8080/backEnd/rest/users/addTask", {
       method: "POST",
       headers: headers,
-      body: JSON.stringify(taskk),
+            
+      body: JSON.stringify(task),
     }).then(async function (response) {
       if (response.status == 405) {
         alert("Não autorizado.");
@@ -240,10 +241,40 @@ async function gettasks() {
   });
 }
 
+
 //Listener para quando o botão de "Yes" do deleteWarning modal é clicado
-yesButton.addEventListener("click", function () {
+yesButton.addEventListener("click", async function () {
+
+    // Close the deleteWarning modal and remove the background overlay
+    deleteWarning.style.display = "none";
+    document.body.classList.remove("modal-open");
+
   //Obtem o identificador da tarefa que foi guardado no atributo data-task-id do deleteWarning modal
   const taskId = deleteWarning.getAttribute("data-task-id");
+
+
+  let userUsado = {
+    username: localStorage.getItem("username"),
+    password: localStorage.getItem("password"),
+  };
+  const headerss = new Headers();
+  headerss.append("username", userUsado.username);
+  headerss.append("password", userUsado.password);
+  headerss.append("id", taskId);
+  headerss.append("Content-Type", "application/json");
+  await fetch("http://localhost:8080/backEnd/rest/users/getTask", {
+    method: "GET",
+    headers: headerss,
+  }).then(async function (response) {
+    if (response.status == 404) {
+      alert("erro");
+    } else if (response.status == 200) {
+      const taskMoved = await response.json();
+      console.log(taskMoved);
+      deleteTask(taskMoved);
+    }
+  });
+  
 
   //Percorre as 3 listas de tarefas para encontrar o index da tarefa que foi largada e guarda a taskList onde a tarefa se encontra
   let taskIndex = ToDoTasks.findIndex((task) => task.identificador == taskId);
@@ -263,9 +294,9 @@ yesButton.addEventListener("click", function () {
   //Chama a função para mostrar as tarefas
   displayTasks();
 
-  //Esconde o deleteWarning modal e remove o escurecimento do fundo da página
-  deleteWarning.style.display = "none";
-  document.body.classList.remove("modal-open");
+
+
+  
 });
 
 noButton.addEventListener("click", function () {
@@ -273,6 +304,10 @@ noButton.addEventListener("click", function () {
   deleteWarning.style.display = "none";
   document.body.classList.remove("modal-open");
 });
+
+
+
+
 
 //Listener para quando o botão de "Delete" do popup menu é clicado
 deleteTaskOption.addEventListener("click", () => {
@@ -291,10 +326,19 @@ deleteTaskOption.addEventListener("click", () => {
 });
 
 //Listener para quando o botão de "Edit" do popup menu é clicado
-editTaskOption.addEventListener("click", () => {
+editTaskOption.addEventListener("click", async () => {
   //Esconde o popup menu
   contextMenu.style.display = "none";
 
+    //Obtem o identificador da tarefa que foi guardado no atributo data-task-id do popup menu
+    const taskId = contextMenu.getAttribute("data-task-id");
+    sessionStorage.setItem("taskToEdite", taskId);
+    
+
+    
+  
+
+  
   //Redireciona para a página de editar tarefa
   window.location.href = "editTaskPage.html";
 });
@@ -459,6 +503,27 @@ function createTaskElements(tasksArray) {
 
     taskElement.setAttribute("draggable", "true");
 
+
+      //Adiciona um listener para quando o elemento div é clicado com o botão direito
+  taskElement.addEventListener("contextmenu", (e) => {
+    //Previnir o comportamento padrão do browser
+    e.preventDefault();
+
+
+    contextMenu.style.top = `${e.pageY}px`;
+    contextMenu.style.left = `${e.pageX}px`;
+
+
+    //Guarda o identificador e a prioridade da tarefa
+    contextMenu.setAttribute("data-task-id", task.id);
+
+    //Guarda o identificador da tarefa no sessionStorage
+    sessionStorage.setItem("taskID", task.id);
+
+    //Mostra o popup menu
+    contextMenu.style.display = "block";
+  });
+
     taskElement.addEventListener("dragstart", function (event) {
       event.dataTransfer.setData("data_id", event.target.id);
       console.log(event);
@@ -498,6 +563,7 @@ function createTaskElements(tasksArray) {
 function createTaskElement(task) {
   //Cria um elemento div para a tarefa
   const taskElement = document.createElement("div");
+  taskElement.id= task.id;
   taskElement.classList.add("task-element");
 
   //Cria um elemento div para o titulo da tarefa para que o mesmo possa ser estilizado
@@ -593,6 +659,34 @@ function createTaskElement(task) {
   });
   //Retorna o elemento div
   return taskElement;
+}
+
+
+async function deleteTask(task) {
+
+  let username = localStorage.getItem("username");
+  let password = localStorage.getItem("password");
+
+  const headers = new Headers();
+  headers.append("username", username);
+  headers.append("password", password);
+  headers.append("id", task.id);
+  headers.append("Content-Type", "application/json");
+
+
+await fetch(`http://localhost:8080/backEnd/rest/users/deleteTask`, {
+  method: "DELETE",
+  headers: headers
+})
+  .then(function (response) {
+    if (response.status == 404) {
+      console.log(user.username);
+      alert("Information not found");
+    } else if (response.status == 200) {
+      console.log("task deleted");
+      gettasks();
+    }
+  })
 }
 
 
