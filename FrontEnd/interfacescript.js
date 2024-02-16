@@ -1,7 +1,5 @@
 //Listener para quando todas as acções de quando a página carrega
 
-let alltasks = [];
-
 window.onload = function () {
   //Obtém o username da sessionStorage
   const username = localStorage.getItem("username");
@@ -28,12 +26,10 @@ const addTaskButton = document.getElementById("addTaskButton");
 const newTaskModal = document.getElementById("newTaskModal");
 //Obtem o botao para cancelar a adição de uma nova tarefa
 const cancelButtonAddTaskModal = document.getElementById("cancelTaskButton");
-
 //Cria as 3 listas de objectos para as tarefas
 const ToDoTasks = JSON.parse(localStorage.getItem("ToDoTasks")) || [];
 const DoingTasks = JSON.parse(localStorage.getItem("DoingTasks")) || [];
 const DoneTasks = JSON.parse(localStorage.getItem("DoneTasks")) || [];
-
 //Obtem as 3 secções para as tarefas serem colocadas
 const todoSection = document.getElementById("todo");
 const doingSection = document.getElementById("doing");
@@ -146,6 +142,9 @@ addTaskButton.addEventListener("click", function () {
   //Limpas os campos de input da modal
   document.getElementById("taskTitle").value = "";
   document.getElementById("taskDescription").value = "";
+  document.getElementById("editTaskPriority").value = "";
+  document.getElementById("initialDate").value = "";
+  document.getElementById("finalDate").value = "";
 
   //Mostra a modal
   newTaskModal.style.display = "block";
@@ -173,11 +172,14 @@ doneSection.addEventListener("dragover", function (event) {
 });
 
 //Listener para quando o botão de adicionar uma nova tarefa é clicado
-submitTaskButton.addEventListener("click", function () {
+submitTaskButton.addEventListener("click", async function () {
   // Vai buscar os valores dos inputs do titulo, descrição e prioridade da tarefa e guarda-os nas variáveis titulo, descricao e priority
   const titulo = document.getElementById("taskTitle").value;
   const descricao = document.getElementById("taskDescription").value;
   const priority = document.getElementById("editTaskPriority").value;
+  const inicalDate= document.getElementById("initialDate").value;
+  const finalDate = document.getElementById("finalDate").value;
+  const status = document.getElementById("status").value;
 
   if (titulo === "" || descricao === "") {
     //Mostra o modal de aviso
@@ -194,6 +196,9 @@ submitTaskButton.addEventListener("click", function () {
       titulo: titulo,
       descricao: descricao,
       prioridade: priority,
+      inicalDate: inicalDate,
+      finalDate: finalDate,
+      status: 100,
     };
 
     await fetch("http://localhost:8080/backEnd/rest/users/addTask", {
@@ -335,6 +340,8 @@ function drop(event) {
     //Adiciona a tarefa à secção onde foi largada
     targetSection.appendChild(taskElement);
 
+    updateStatusTask(taskElement);
+
     //Percorre as 3 listas de tarefas para encontrar o index da tarefa que foi largada e guarda a taskList onde a tarefa se encontra
     let taskIndex = ToDoTasks.findIndex((task) => task.identificador == taskId);
     let taskList = ToDoTasks;
@@ -351,19 +358,70 @@ function drop(event) {
     //Remove a tarefa da lista onde se encontrava
     const task = taskList.splice(taskIndex, 1)[0];
 
-    //Através da secção onde a tarefa foi largada, adiciona a tarefa à lista correspondente
-    if (targetSection.id === "todo") {
-      todoSection.appendChild(task);
-    } else if (targetSection.id === "doing") {
-      let taskMoved = {};
-      doingSection.appendChild(task);
-    } else if (targetSection.id === "done") {
-      doneSection.appendChild(task);
-    }
+
+;
+  };
+   
     //Volta a chamar a função para mostrar as tarefas
     gettasks();
   }
-}
+
+
+
+
+  async function updateStatusTask(task) {
+
+    let username = localStorage.getItem("username");
+    let password = localStorage.getItem("password");
+
+    const headers = new Headers();
+    headers.append("username", username);
+    headers.append("password", password);
+    headers.append("id", task.id);
+    headers.append("Content-Type", "application/json");
+  
+
+  await fetch(`http://localhost:8080/backEnd/rest/users/task/update`, {
+    method: "PUT",
+    headers: headers
+  })
+    .then(function (response) {
+      if (response.status == 404) {
+        console.log(user.username);
+        alert("Information not found");
+      } else if (response.status == 200) {
+        return response.json(); // Processa o corpo da resposta como JSON
+      }
+    })
+    .then(function (taskData) {
+      alert("Information found");
+
+      document.getElementById("taskTitle").value = taskData.title;
+      document.getElementById("taskDescription").value = taskData.description;
+      document.getElementById("initialDate").value = taskData.inicalDate;
+      document.getElementById("finalDate").value = taskData.finalDate;
+      if (targetSection.id === "todo") {
+        todoSection.appendChild(task);
+      document.getElementById ("status").value = 100;
+      } else if (targetSection.id === "doing") {
+        doingSection.appendChild(task);
+      document.getElementById("status").value = 200;
+      } else if (targetSection.id === "done") {
+        doneSection.appendChild(task);
+      document.getElementById("status").value = 300;
+      }
+     
+    })
+    .catch(function (error) {
+      console.error("Error fetching user information:", error);
+    });
+  }
+
+
+
+
+
+
 //Função que imprime as tarefas nas secções correspondentes
 function displayTasks(tasks) {
   //Limpa todas as secções de tarefas
@@ -536,6 +594,9 @@ function createTaskElement(task) {
   //Retorna o elemento div
   return taskElement;
 }
+
+
+
 
 //Função que mostra a data e hora
 function displayDateTime() {
