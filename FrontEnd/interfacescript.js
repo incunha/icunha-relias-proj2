@@ -327,8 +327,17 @@ async function drop(event) {
       const taskMoved = await response.json();
       // console.log(taskMoved);
       let targetSection = event.target;
-      targetSection.appendChild(taskElement);
 
+      if (targetSection.id === "todo") {
+        taskMoved.status = 100;
+        targetSection.appendChild(taskElement);
+      } else if (targetSection.id === "doing") {
+        taskMoved.status = 200;
+        targetSection.appendChild(taskElement);
+      } else if (targetSection.id === "done") {
+        taskMoved.status = 300;
+        targetSection.appendChild(taskElement);
+      }
       console.log(targetSection);
 
       updateStatusTask(taskMoved);
@@ -383,39 +392,28 @@ async function updateStatusTask(task) {
   headers.append("id", task.id);
   headers.append("Content-Type", "application/json");
 
+  const taskkk = {
+    title: task.title,
+    description: task.description,
+    id: task.id,
+    priority: task.priority,
+    status: task.status,
+    initialDate: task.inicalDate,
+    finalDate: task.finalDate,
+  };
+
   await fetch(`http://localhost:8080/backEnd/rest/users/task/update`, {
     method: "PUT",
     headers: headers,
-  })
-    .then(function (response) {
-      if (response.status == 404) {
-        console.log(user.username);
-        alert("Information not found");
-      } else if (response.status == 200) {
-        return response.json(); // Processa o corpo da resposta como JSON
-      }
-    })
-    .then(function (taskData) {
-      alert("Information found");
-
-      document.getElementById("taskTitle").value = taskData.title;
-      document.getElementById("taskDescription").value = taskData.description;
-      document.getElementById("initialDate").value = taskData.inicalDate;
-      document.getElementById("finalDate").value = taskData.finalDate;
-      if (targetSection.id === "todo") {
-        todoSection.appendChild(task);
-        document.getElementById("status").value = 100;
-      } else if (targetSection.id === "doing") {
-        doingSection.appendChild(task);
-        document.getElementById("status").value = 200;
-      } else if (targetSection.id === "done") {
-        doneSection.appendChild(task);
-        document.getElementById("status").value = 300;
-      }
-    })
-    .catch(function (error) {
-      console.error("Error fetching user information:", error);
-    });
+    body: JSON.stringify(taskkk),
+  }).then(function (response) {
+    if (response.status == 404) {
+      console.log(user.username);
+      alert("Information not found");
+    } else if (response.status == 200) {
+      alert("Task status updated");
+    }
+  });
 }
 
 //Função que imprime as tarefas nas secções correspondentes
