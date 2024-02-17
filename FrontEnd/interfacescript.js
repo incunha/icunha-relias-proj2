@@ -141,6 +141,8 @@ submitTaskButton.addEventListener("click", async function () {
     warningModal.style.display = "block";
     //Adiciona o escurecimento do fundo da página
     document.getElementById("modalOverlay2").style.display = "block";
+  } else if (finalDate < inicalDate) {
+    dateError.style.display = "block";
   } else {
     //Cria um objecto com o identificador, o titulo e a descrição da tarefa
     const task = {
