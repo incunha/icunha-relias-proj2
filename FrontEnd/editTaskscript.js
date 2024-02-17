@@ -11,37 +11,43 @@ window.onload = function () {
   const taskID = sessionStorage.getItem("taskToEdite");
   getTask(taskID);
 
-async function getTask(taskId) {
-
-  let userUsado = {
-    username: localStorage.getItem("username"),
-    password: localStorage.getItem("password"),
-  };
-  const headerss = new Headers();
-  headerss.append("username", userUsado.username);
-  headerss.append("password", userUsado.password);
-  headerss.append("id", taskId);
-  headerss.append("Content-Type", "application/json");
-  await fetch("http://localhost:8080/backEnd/rest/users/getTask", {
-    method: "GET",
-    headers: headerss,
-  }).then(async function (response) {
-    if (response.status == 404) {
-      alert("erro");
-    } else if (response.status == 200) {
-      const taskEdit = await response.json();
-      console.log(taskEdit);
-    document.getElementById("editarTarefaTitulo").textContent = taskEdit.title;
-    document.getElementById("editarTarefaDescricao").textContent = taskEdit.description;
-    document.getElementById("editTaskPriority").textContent = taskEdit.priority;
-    document.getElementById("editTaskStatus").textContent = sessionStorage.getItem("sectionName");
-    }
-  });
-}
+  async function getTask(taskId) {
+    let userUsado = {
+      username: localStorage.getItem("username"),
+      password: localStorage.getItem("password"),
+    };
+    const headerss = new Headers();
+    headerss.append("username", userUsado.username);
+    headerss.append("password", userUsado.password);
+    headerss.append("id", taskId);
+    headerss.append("Content-Type", "application/json");
+    await fetch("http://localhost:8080/backEnd/rest/users/getTask", {
+      method: "GET",
+      headers: headerss,
+    }).then(async function (response) {
+      if (response.status == 404) {
+        alert("erro");
+      } else if (response.status == 200) {
+        const taskEdit = await response.json();
+        console.log(taskEdit);
+        document.getElementById("editarTarefaTitulo").textContent =
+          taskEdit.title;
+        document.getElementById("editarTarefaDescricao").textContent =
+          taskEdit.description;
+        document.getElementById("editTaskPriority").value = taskEdit.priority;
+        if (taskEdit.status == 100) {
+          document.getElementById("editTaskStatus").value = "ToDo";
+        } else if (taskEdit.status == 200) {
+          document.getElementById("editTaskStatus").value = "Doing";
+        } else if (taskEdit.status == 300) {
+          document.getElementById("editTaskStatus").value = "DoneDoing";
+        }
+      }
+    });
+  }
 
   //Preenche os campos do formulário com os detalhes da tarefa a editar
 
-  
   //Mostra o modal de edição e escurece o fundo
   document.getElementById("editTaskModal").style.display = "block";
   document.body.classList.add("modal-open");
@@ -100,7 +106,9 @@ cancelEditButton.addEventListener("click", function () {
 guardaEditarTarefaButton.addEventListener("click", function () {
   //Obtem os valores dos campos que podem ser editados
   const editedTitulo = document.getElementById("editarTarefaTitulo").value;
-  const editedDescricao = document.getElementById("editarTarefaDescricao").value;
+  const editedDescricao = document.getElementById(
+    "editarTarefaDescricao"
+  ).value;
   const selectedSectionName = document.getElementById("editTaskStatus").value;
   const selectedPriority = document.getElementById("editTaskPriority").value;
 

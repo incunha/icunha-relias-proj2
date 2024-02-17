@@ -383,6 +383,14 @@ function createTaskElements(tasksArray) {
     taskElement.style.margin = "10px";
     taskElement.classList.add("task");
 
+    if (task.priority == "low") {
+      taskElement.style.backgroundColor = "green";
+    } else if (task.priority == "medium") {
+      taskElement.style.backgroundColor = "yellow";
+    } else if (task.priority == "high") {
+      taskElement.style.backgroundColor = "red";
+    }
+
     taskElement.innerHTML = `
     <h3 title="${task.title}">${task.title}</h3>
 `;
