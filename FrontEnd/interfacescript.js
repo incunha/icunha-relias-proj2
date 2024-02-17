@@ -136,6 +136,7 @@ submitTaskButton.addEventListener("click", async function () {
   const inicalDate = document.getElementById("initialDate").value;
   const finalDate = document.getElementById("finalDate").value;
 
+  dateErrorPriority.style.display = "none";
   if (titulo === "" || descricao === "") {
     //Mostra o modal de aviso
     warningModal.style.display = "block";
@@ -143,6 +144,8 @@ submitTaskButton.addEventListener("click", async function () {
     document.getElementById("modalOverlay2").style.display = "block";
   } else if (finalDate < inicalDate) {
     dateError.style.display = "block";
+  } else if (priority === "") {
+    dateErrorPriority.style.display = "block";
   } else {
     //Cria um objecto com o identificador, o titulo e a descrição da tarefa
     const task = {
@@ -166,6 +169,10 @@ submitTaskButton.addEventListener("click", async function () {
         alert("Não autorizado.");
       } else if (response.status == 200) {
         createTaskElements(gettasks());
+        //Fecha a modal
+        newTaskModal.style.display = "none";
+        //Remove o escurecimento do fundo da página
+        document.body.classList.remove("modal-open");
       }
     });
   }
