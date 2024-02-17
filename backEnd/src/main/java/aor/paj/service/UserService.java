@@ -25,7 +25,7 @@ public class UserService {
     @Path("/getUser")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@HeaderParam("username") String username) {
-        System.out.println(username);
+
         User user = userBean.getUser(username);
         if (user == null) {
             return Response.status(404).entity("User não encontrado.").build();
@@ -48,7 +48,7 @@ public class UserService {
     @POST
     @Path("/addTask")
     @Consumes(MediaType.APPLICATION_JSON) public Response addTask(@HeaderParam("username")String username,@HeaderParam("password")String password, Task t) {
-        System.out.println(username+"        "+password);
+
         if(!userBean.authorizeUser(username, password)){
             return Response.status(405).entity("Forbidden.").build();
         } else {
@@ -86,7 +86,7 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response verifyLogin(@HeaderParam("username") String username, @HeaderParam("password") String password) {
         User verifiedUser = userBean.verifyLogin(username, password);
-        System.out.println(username+"------"+password);
+
         if (verifiedUser == null) {
             return Response.status(401).entity("Username ou password incorretos.").build();
         } else {
@@ -132,12 +132,13 @@ public class UserService {
     @PUT
     @Path("/task/update")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response updateTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @HeaderParam("id") String id, Task t) {
+        System.out.println("FODA-SE");
         if(!userBean.authorizeUser(username, password)){
             return Response.status(405).entity("Forbidden.").build();
         } else {
             userBean.updateTask(username, id, t);
+            System.out.println("t.getStatus() = " + t.getStatus());
             return Response.status(200).entity("Task updated.").build();
         }
     }
