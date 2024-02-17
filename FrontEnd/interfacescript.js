@@ -389,7 +389,7 @@ function createTaskElements(tasksArray) {
 
     const taskElement = document.createElement("div");
     taskElement.setAttribute("id", task.id);
-    taskElement.style.margin = "10px";
+    taskElement.style.margin = "5px 10px"; // Update the margin property to make the rectangle less tall
     taskElement.classList.add("task");
 
     if (task.priority == 100) {
