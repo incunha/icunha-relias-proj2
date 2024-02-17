@@ -393,11 +393,11 @@ function createTaskElements(tasksArray) {
     taskElement.classList.add("task");
 
     if (task.priority == 100) {
-      taskElement.style.backgroundColor = "green";
+      taskElement.style.backgroundColor = "#5cbf8a"; // Dark green
     } else if (task.priority == 200) {
-      taskElement.style.backgroundColor = "yellow";
+      taskElement.style.backgroundColor = "#d4d17a"; // Darker yellow
     } else if (task.priority == 300) {
-      taskElement.style.backgroundColor = "red";
+      taskElement.style.backgroundColor = "#f58a8a"; // Dark red
     }
 
     taskElement.innerHTML = `
