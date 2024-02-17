@@ -30,7 +30,15 @@ document.addEventListener("DOMContentLoaded", function () {
           taskEdit.title;
         document.getElementById("editarTarefaDescricao").textContent =
           taskEdit.description;
-        document.getElementById("editTaskPriority").value = taskEdit.priority;
+        
+        if (taskEdit.priority == 100) {
+          document.getElementById("editTaskPriority").value = "low";
+        } else if (taskEdit.priority == 200) {
+          document.getElementById("editTaskPriority").value = "medium";
+        } else if (taskEdit.priority == 300){
+          document.getElementById("editTaskPriority").value = "high";
+        }
+
         if (taskEdit.status == 100) {
           document.getElementById("editTaskStatus").value = "ToDo";
         } else if (taskEdit.status == 200) {
@@ -46,44 +54,130 @@ document.addEventListener("DOMContentLoaded", function () {
         guardaEditarTarefaButton.addEventListener("click", function () {
           if (document.getElementById("editTaskStatus").value === "ToDo") {
             let statusS = 100;
-            const newTask = {
-              title: document.getElementById("editarTarefaTitulo").value,
-              description: document.getElementById("editarTarefaDescricao")
-                .value,
-              priority: document.getElementById("editTaskPriority").value,
-              status: statusS,
-              id: taskEdit.id,
-            };
 
-            updateTask(newTask);
+            if (document.getElementById("editTaskPriority").value === "low") {
+              let priorityS = 100;
+              const newTask = {
+                title: document.getElementById("editarTarefaTitulo").value,
+                description: document.getElementById("editarTarefaDescricao")
+                  .value,
+                priority: priorityS,
+                status: statusS,
+                id: taskEdit.id,
+              };
+  
+              updateTask(newTask);
+            } else if (document.getElementById("editTaskPriority").value === "medium") {
+              let priorityS = 200;
+              const newTask = {
+                title: document.getElementById("editarTarefaTitulo").value,
+                description: document.getElementById("editarTarefaDescricao")
+                  .value,
+                priority: priorityS,
+                status: statusS,
+                id: taskEdit.id,
+              };
+  
+              updateTask(newTask);
+            } else if (document.getElementById("editTaskPriority").value === "high") {
+              let priorityS = 300;
+              const newTask = {
+                title: document.getElementById("editarTarefaTitulo").value,
+                description: document.getElementById("editarTarefaDescricao")
+                  .value,
+                priority: priorityS,
+                status: statusS,
+                id: taskEdit.id,
+              };
+  
+              updateTask(newTask);
+            }
           } else if (
             document.getElementById("editTaskStatus").value === "Doing"
           ) {
             let statusS = 200;
-            const newTask = {
-              title: document.getElementById("editarTarefaTitulo").value,
-              description: document.getElementById("editarTarefaDescricao")
-                .value,
-              priority: document.getElementById("editTaskPriority").value,
-              status: statusS,
-              id: taskEdit.id,
-            };
 
-            updateTask(newTask);
+            if (document.getElementById("editTaskPriority").value === "low") {
+              let priorityS = 100;
+              const newTask = {
+                title: document.getElementById("editarTarefaTitulo").value,
+                description: document.getElementById("editarTarefaDescricao")
+                  .value,
+                priority: priorityS,
+                status: statusS,
+                id: taskEdit.id,
+              };
+  
+              updateTask(newTask);
+            } else if (document.getElementById("editTaskPriority").value === "medium") {
+              let priorityS = 200;
+              const newTask = {
+                title: document.getElementById("editarTarefaTitulo").value,
+                description: document.getElementById("editarTarefaDescricao")
+                  .value,
+                priority: priorityS,
+                status: statusS,
+                id: taskEdit.id,
+              };
+  
+              updateTask(newTask);
+            } else if (document.getElementById("editTaskPriority").value === "high") {
+              let priorityS = 300;
+              const newTask = {
+                title: document.getElementById("editarTarefaTitulo").value,
+                description: document.getElementById("editarTarefaDescricao")
+                  .value,
+                priority: priorityS,
+                status: statusS,
+                id: taskEdit.id,
+              };
+  
+              updateTask(newTask);
+            }
+           
+
           } else if (
             document.getElementById("editTaskStatus").value === "Done"
           ) {
             let statusS = 300;
-            const newTask = {
-              title: document.getElementById("editarTarefaTitulo").value,
-              description: document.getElementById("editarTarefaDescricao")
-                .value,
-              priority: document.getElementById("editTaskPriority").value,
-              status: statusS,
-              id: taskEdit.id,
-            };
-
-            updateTask(newTask);
+            
+            if (document.getElementById("editTaskPriority").value === "low") {
+              let priorityS = 100;
+              const newTask = {
+                title: document.getElementById("editarTarefaTitulo").value,
+                description: document.getElementById("editarTarefaDescricao")
+                  .value,
+                priority: priorityS,
+                status: statusS,
+                id: taskEdit.id,
+              };
+  
+              updateTask(newTask);
+            } else if (document.getElementById("editTaskPriority").value === "medium") {
+              let priorityS = 200;
+              const newTask = {
+                title: document.getElementById("editarTarefaTitulo").value,
+                description: document.getElementById("editarTarefaDescricao")
+                  .value,
+                priority: priorityS,
+                status: statusS,
+                id: taskEdit.id,
+              };
+  
+              updateTask(newTask);
+            } else if (document.getElementById("editTaskPriority").value === "high") {
+              let priorityS = 300;
+              const newTask = {
+                title: document.getElementById("editarTarefaTitulo").value,
+                description: document.getElementById("editarTarefaDescricao")
+                  .value,
+                priority: priorityS,
+                status: statusS,
+                id: taskEdit.id,
+              };
+  
+              updateTask(newTask);
+            }
           }
           window.location.href = "interface.html";
         });
