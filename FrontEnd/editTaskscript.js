@@ -65,6 +65,8 @@ document.addEventListener("DOMContentLoaded", function () {
                   .value,
                 priority: priorityS,
                 status: statusS,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
                 id: taskEdit.id,
               };
 
@@ -80,6 +82,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
 
               updateTask(newTask);
@@ -94,6 +98,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
 
               updateTask(newTask);
@@ -112,6 +118,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
 
               updateTask(newTask);
@@ -126,6 +134,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
 
               updateTask(newTask);
@@ -140,6 +150,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
 
               updateTask(newTask);
@@ -158,6 +170,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
 
               updateTask(newTask);
@@ -172,6 +186,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
 
               updateTask(newTask);
@@ -186,6 +202,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
 
               updateTask(newTask);
@@ -210,8 +228,8 @@ document.addEventListener("DOMContentLoaded", function () {
             //id: task.id,
             priority: task.priority,
             status: task.status,
-            //initialDate: task.inicalDate,
-            //finalDate: task.finalDate,
+            initialDate: task.initialDate,
+            finalDate: task.finalDate,
           };
 
           console.log(taskkk.priority);
