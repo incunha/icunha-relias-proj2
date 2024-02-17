@@ -19,7 +19,7 @@ public class Task {
 
     }
 
-    public Task(String id, String title, String description, int status, LocalDate initialDate, LocalDate finalDate) {
+    public Task(String id, String title, String description, int status, LocalDate initialDate, LocalDate finalDate, String priority) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -106,5 +106,6 @@ public class Task {
         this.status = task.getStatus();
         this.priority = task.getPriority();
     }
+
 
 }

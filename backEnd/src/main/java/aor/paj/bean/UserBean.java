@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 @ApplicationScoped
 public class UserBean {
@@ -183,7 +184,12 @@ public class UserBean {
         }
         return null;
     }
+
+    public void orderTasks(String username, ArrayList<Task> tasks) {
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
+            u.getTasks().sort(Comparator.comparing(Task::getPriority,Comparator.reverseOrder()).thenComparing(Task::getInitialDate).thenComparing(Task::getFinalDate));
+        }
+    }
+    }
 }
-
-
-
