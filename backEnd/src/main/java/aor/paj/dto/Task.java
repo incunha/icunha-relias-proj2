@@ -105,6 +105,8 @@ public class Task {
         this.description = task.getDescription();
         this.status = task.getStatus();
         this.priority = task.getPriority();
+        this.initialDate = task.getInitialDate();
+        this.finalDate = task.getFinalDate();
     }
 
 
