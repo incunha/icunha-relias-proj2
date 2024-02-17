@@ -133,7 +133,7 @@ public class UserService {
     @Path("/task/update")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @HeaderParam("id") String id, Task t) {
-        System.out.println("FODA-SE");
+
         if(!userBean.authorizeUser(username, password)){
             return Response.status(405).entity("Forbidden.").build();
         } else {
