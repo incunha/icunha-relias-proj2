@@ -433,6 +433,10 @@ function createTaskElements(tasksArray) {
       //Coloca no modal os detalhes da tarefa o titulo e a descrição
       modalTaskTitle.textContent = task.title;
       modalTaskDescription.textContent = task.description;
+      console.log(task.initialDate);
+      document.getElementById("taskInitialDateinfo").textContent = task.initialDate;
+      console.log(task.finalDate);
+      document.getElementById("taskFinalDateinfo").textContent = task.finalDate;
 
       //Mostra o modal escurecendo o fundo da página
       taskDetailsModal.style.display = "block";
