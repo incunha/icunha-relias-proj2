@@ -13,13 +13,13 @@ public class Task {
     LocalDate initialDate;
     LocalDate finalDate;
 
-    String priority;
+    int priority;
 
     public Task(){
 
     }
 
-    public Task(String id, String title, String description, int status, LocalDate initialDate, LocalDate finalDate, String priority) {
+    public Task(String id, String title, String description, int status, LocalDate initialDate, LocalDate finalDate, int priority) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -92,11 +92,11 @@ public class Task {
      }
 
     @XmlElement
-    public String getPriority() {
+    public int getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(int priority) {
         this.priority = priority;
     }
 
