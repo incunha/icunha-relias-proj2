@@ -8,6 +8,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/users")
@@ -125,7 +126,9 @@ public class UserService {
         if(!userBean.authorizeUser(username, password)){
             return Response.status(405).entity("Forbidden.").build();
         } else {
-            return Response.status(200).entity(userBean.getAllTasks(username)).build();
+            ArrayList<Task> tasks = userBean.getAllTasks(username);
+            userBean.orderTasks(username,tasks);
+            return Response.status(200).entity(tasks).build();
         }
     }
 

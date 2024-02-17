@@ -48,6 +48,7 @@ const taskDetailsModal = document.getElementById("taskDetailsModal");
 const modalTaskTitle = document.getElementById("taskTitleinfo");
 //Obtem o label para a descrição da tarefa
 const modalTaskDescription = document.getElementById("taskDescriptioninfo");
+
 //Obtem o botão para fechar a modal de detalhes da tarefa
 const modalOkButton = document.getElementById("modalOkButton");
 
@@ -147,11 +148,19 @@ submitTaskButton.addEventListener("click", async function () {
   } else if (priority === "") {
     dateErrorPriority.style.display = "block";
   } else {
+    let priorityupdate;
+    if (priority == "low") {
+      priorityupdate = 100
+    } else if (priority == "medium") {
+      priorityupdate = 200
+    } else {
+      priorityupdate = 300
+    }
     //Cria um objecto com o identificador, o titulo e a descrição da tarefa
     const task = {
       title: titulo,
       description: descricao,
-      priority: priority,
+      priority: priorityupdate,
       initialDate: inicalDate,
       finalDate: finalDate,
     };
@@ -383,11 +392,11 @@ function createTaskElements(tasksArray) {
     taskElement.style.margin = "10px";
     taskElement.classList.add("task");
 
-    if (task.priority == "low") {
+    if (task.priority == 100) {
       taskElement.style.backgroundColor = "green";
-    } else if (task.priority == "medium") {
+    } else if (task.priority == 200) {
       taskElement.style.backgroundColor = "yellow";
-    } else if (task.priority == "high") {
+    } else if (task.priority == 300) {
       taskElement.style.backgroundColor = "red";
     }
 
@@ -429,6 +438,7 @@ function createTaskElements(tasksArray) {
       taskDetailsModal.style.display = "block";
       document.body.classList.add("modal-open");
     });
+
     if (task.status == 100) {
       todoTasksContainer.appendChild(taskElement);
     } else if (task.status == 200) {
@@ -512,3 +522,4 @@ async function getPhotoUrl(username, password) {
     alert("Something went wrong");
   }
 }
+
