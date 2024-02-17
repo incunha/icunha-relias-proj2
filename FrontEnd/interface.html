@@ -15,11 +15,7 @@
       <div id="dateTimeDisplay"></div>
       <div id="userDisplay">
         <span id="labelUser">Welcome, </span><span id="displayUsername"></span>
-        <img
-        id="userIcon"
-        alt="User Icon"
-        draggable="false"
-      />
+        <img id="userIcon" alt="User Icon" draggable="false" />
         <button id="logoutButton">Logout<i class="bx bx-power-off"></i></button>
       </div>
     </header>
@@ -153,6 +149,7 @@
             id="taskTitle"
             name="taskTitle"
             placeholder="Insert title here"
+            maxlength="19"
             required
           ></textarea>
         </div>
@@ -175,9 +172,9 @@
         </div>
         <div class="date-container">
           <label for="initialDate">Initial Date:</label>
-          <input type="date" id="initialDate" name="initialDate" required>
+          <input type="date" id="initialDate" name="initialDate" required />
           <label for="finalDate">Final Date:</label>
-          <input type="date" id="finalDate" name="finalDate" required>
+          <input type="date" id="finalDate" name="finalDate" required />
         </div>
         <div class="buttons-container">
           <button id="cancelTaskButton">Cancel</button>
