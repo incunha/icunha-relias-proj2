@@ -30,12 +30,14 @@ document.addEventListener("DOMContentLoaded", function () {
           taskEdit.title;
         document.getElementById("editarTarefaDescricao").textContent =
           taskEdit.description;
-        
+        document.getElementById("initialDateEdit").value = taskEdit.initialDate;
+        document.getElementById("finalDateEdit").value = taskEdit.finalDate;
+
         if (taskEdit.priority == 100) {
           document.getElementById("editTaskPriority").value = "low";
         } else if (taskEdit.priority == 200) {
           document.getElementById("editTaskPriority").value = "medium";
-        } else if (taskEdit.priority == 300){
+        } else if (taskEdit.priority == 300) {
           document.getElementById("editTaskPriority").value = "high";
         }
 
@@ -63,11 +65,15 @@ document.addEventListener("DOMContentLoaded", function () {
                   .value,
                 priority: priorityS,
                 status: statusS,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
                 id: taskEdit.id,
               };
-  
+
               updateTask(newTask);
-            } else if (document.getElementById("editTaskPriority").value === "medium") {
+            } else if (
+              document.getElementById("editTaskPriority").value === "medium"
+            ) {
               let priorityS = 200;
               const newTask = {
                 title: document.getElementById("editarTarefaTitulo").value,
@@ -76,10 +82,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
-  
+
               updateTask(newTask);
-            } else if (document.getElementById("editTaskPriority").value === "high") {
+            } else if (
+              document.getElementById("editTaskPriority").value === "high"
+            ) {
               let priorityS = 300;
               const newTask = {
                 title: document.getElementById("editarTarefaTitulo").value,
@@ -88,8 +98,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
-  
+
               updateTask(newTask);
             }
           } else if (
@@ -106,10 +118,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
-  
+
               updateTask(newTask);
-            } else if (document.getElementById("editTaskPriority").value === "medium") {
+            } else if (
+              document.getElementById("editTaskPriority").value === "medium"
+            ) {
               let priorityS = 200;
               const newTask = {
                 title: document.getElementById("editarTarefaTitulo").value,
@@ -118,10 +134,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
-  
+
               updateTask(newTask);
-            } else if (document.getElementById("editTaskPriority").value === "high") {
+            } else if (
+              document.getElementById("editTaskPriority").value === "high"
+            ) {
               let priorityS = 300;
               const newTask = {
                 title: document.getElementById("editarTarefaTitulo").value,
@@ -130,17 +150,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
-  
+
               updateTask(newTask);
             }
-           
-
           } else if (
             document.getElementById("editTaskStatus").value === "Done"
           ) {
             let statusS = 300;
-            
+
             if (document.getElementById("editTaskPriority").value === "low") {
               let priorityS = 100;
               const newTask = {
@@ -150,10 +170,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
-  
+
               updateTask(newTask);
-            } else if (document.getElementById("editTaskPriority").value === "medium") {
+            } else if (
+              document.getElementById("editTaskPriority").value === "medium"
+            ) {
               let priorityS = 200;
               const newTask = {
                 title: document.getElementById("editarTarefaTitulo").value,
@@ -162,10 +186,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
-  
+
               updateTask(newTask);
-            } else if (document.getElementById("editTaskPriority").value === "high") {
+            } else if (
+              document.getElementById("editTaskPriority").value === "high"
+            ) {
               let priorityS = 300;
               const newTask = {
                 title: document.getElementById("editarTarefaTitulo").value,
@@ -174,8 +202,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 id: taskEdit.id,
+                initialDate: document.getElementById("initialDateEdit").value,
+                finalDate: document.getElementById("finalDateEdit").value,
               };
-  
+
               updateTask(newTask);
             }
           }
@@ -198,8 +228,8 @@ document.addEventListener("DOMContentLoaded", function () {
             //id: task.id,
             priority: task.priority,
             status: task.status,
-            //initialDate: task.inicalDate,
-            //finalDate: task.finalDate,
+            initialDate: task.initialDate,
+            finalDate: task.finalDate,
           };
 
           console.log(taskkk.priority);

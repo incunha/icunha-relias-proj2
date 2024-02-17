@@ -54,6 +54,16 @@
           <option value="high">High</option>
         </select>
       </div>
+      <div class="date-container">
+        <label for="initialDate">Initial Date:</label>
+        <input type="date" id="initialDateEdit" name="initialDate" required />
+        <label for="finalDate">Final Date:</label>
+        <input type="date" id="finalDateEdit" name="finalDate" required />
+        <p id="dateError" style="color: red; display: none">
+          Final Date should not be before Initial Date.
+        </p>
+      </div>
+
       <div class="modal-footer">
         <button type="button" id="CancelaEditarTarefa">Cancel</button>
         <button type="button" id="GuardaEditarTarefa">Save</button>
