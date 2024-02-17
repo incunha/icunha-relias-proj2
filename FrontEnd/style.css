@@ -486,6 +486,9 @@ footer a {
   flex-direction: column;
   margin: 3% 0;
 }
+
+
+
 /*tamanho do campo de entrada da descrição da tarefa*/
 .modal textarea#taskDescription {
   height: 170px;

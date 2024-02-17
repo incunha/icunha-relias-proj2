@@ -1,7 +1,9 @@
 //Função chamada cada vez que a página é carregada
 document.addEventListener("DOMContentLoaded", function () {
   const username = localStorage.getItem("username");
+  const password = localStorage.getItem("password");
   document.getElementById("displayUsername").textContent = username;
+  getPhotoUrl(username, password);
 
   //Obtém a tarefa a ser editada da sessionStorage
   const taskID = sessionStorage.getItem("taskToEdite");
@@ -252,3 +254,31 @@ document.addEventListener("DOMContentLoaded", function () {
     dateTimeDisplay.textContent = dateTimeString;
   }
 });
+
+async function getPhotoUrl(username, password) {
+  let photoUrlRequest = "http://localhost:8080/backEnd/rest/users/profilePhoto";
+
+  try {
+    const response = await fetch(photoUrlRequest, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/JSON",
+        Accept: "application/JSON",
+        username: username,
+        password: password,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.text();
+      document.getElementById("userIcon").src = data;
+    } else if (response.status === 401) {
+      alert("Invalid credentials");
+    } else if (response.status === 404) {
+      alert("teste 404");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Something went wrong");
+  }
+}
