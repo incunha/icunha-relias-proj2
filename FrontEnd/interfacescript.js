@@ -163,7 +163,6 @@ submitTaskButton.addEventListener("click", async function () {
       if (response.status == 405) {
         alert("Não autorizado.");
       } else if (response.status == 200) {
-        alert("HERE");
         createTaskElements(gettasks());
       }
     });
