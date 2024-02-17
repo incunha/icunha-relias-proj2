@@ -104,6 +104,7 @@ public class Task {
         this.title = task.getTitle();
         this.description = task.getDescription();
         this.status = task.getStatus();
+        this.priority = task.getPriority();
     }
 
 }

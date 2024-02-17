@@ -102,11 +102,13 @@ document.addEventListener("DOMContentLoaded", function () {
             title: task.title,
             description: task.description,
             //id: task.id,
-            //priority: task.priority,
+            priority: task.priority,
             status: task.status,
             //initialDate: task.inicalDate,
             //finalDate: task.finalDate,
           };
+
+          console.log(taskkk.priority);
 
           await fetch(`http://localhost:8080/backEnd/rest/users/task/update`, {
             method: "PUT",
