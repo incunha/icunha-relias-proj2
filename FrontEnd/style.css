@@ -304,11 +304,11 @@ footer a {
 
 /* botão de editar perfil */
 #editProfileButton {
-  position: relative;/* Define a posição */
-  top: 16rem;/* Define a posição em relação ao topo */
+  position: relative; /* Define a posição */
+  top: 16rem; /* Define a posição em relação ao topo */
   left: 0%;
   margin-left: 0;
-  width: 12rem;/* Define a largura */
+  width: 12rem; /* Define a largura */
   font-family: inherit;
   font-size: inherit;
   background: white;
@@ -366,7 +366,6 @@ footer a {
   box-shadow: -10px 0 20px rgba(0, 0, 0, 0.5), -1px 0 0 0 black;
   padding-top: 10px;
 }
-
 
 /*caracteristicas da area onde cada tarefa é exibida*/
 .taskArea > div {
@@ -462,7 +461,6 @@ footer a {
   margin: 3% 0;
 }
 
-
 /*tamanho do campo de entrada da descrição da tarefa*/
 .modal textarea#taskDescription {
   height: 170px;
@@ -474,7 +472,7 @@ footer a {
 }
 /*margem entre os campos de data*/
 #inicialDate {
-  margin-right: 100px; 
+  margin-right: 100px;
 }
 
 /*container dos botões do modal*/
@@ -485,11 +483,11 @@ footer a {
 }
 
 #cancelTaskButton {
-  margin-left: 40px; 
+  margin-left: 40px;
 }
 
 #submitTaskButton {
-  margin-left: 110px; 
+  margin-left: 110px;
 }
 
 /*caracteristicas do modal de detalhes da tarefa*/
@@ -839,7 +837,7 @@ aside::after {
 }
 
 .input-group input {
-  width: 390px;
+  width: 250px;
   box-sizing: border-box;
   padding: 10px;
   border: none;
@@ -859,7 +857,7 @@ aside::after {
 }
 /*posição do container do formulário de edição de perfil*/
 .profile-content {
-  margin-left: 600px; 
+  margin-left: 600px;
 }
 #goBackButton {
   background-color: #205d88;
@@ -881,18 +879,18 @@ aside::after {
 /*container do formulário de edição de perfil*/
 #profilePreviewContainer {
   position: fixed;
-  right: 10%; 
-  top: 20%; 
+  right: 10%;
+  top: 20%;
   text-align: center;
   color: #205d88;
 }
 /*caracteristicas do container do avatar do user*/
 #profilePreview {
-  border: 5px solid #205d88; 
-  border-radius: 50%; 
-  background-size: cover; 
-  width: 250px; 
-  height: 250px; 
+  border: 5px solid #205d88;
+  border-radius: 50%;
+  background-size: cover;
+  width: 250px;
+  height: 250px;
 }
 /*caracteristicas do botão de voltar*/
 #goBackButton {
