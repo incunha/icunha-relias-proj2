@@ -78,12 +78,28 @@ window.addEventListener("click", function (event) {
   }
 });
 
-//Listener para quando o botão de logout é clicado
-botaoLogout.addEventListener("click", function () {
+
+async function logout() {
+
+  const headers = new Headers();
+  headers.append("username", localStorage.getItem("username"));
+  headers.append("Content-Type", "application/json");
+  await fetch("http://localhost:8080/backEnd/rest/users/logout", {
+    method: "GET",
+    headers: headers,
+  }).then(async function (response) {
+  if (response.status == 200) {
   localStorage.clear();
   //Redireciona para a página de login
   window.location.href = "index.html";
+  } else if (response.status == 404) {
+    alert("user not found.");
+  }else (alert(response.status));
 });
+}
+
+//Listener para quando o botão de logout é clicado
+botaoLogout.addEventListener("click", logout);
 
 //Listener para quando o botão de editar perfil é clicado
 document

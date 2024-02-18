@@ -6,15 +6,13 @@ import java.time.LocalDate;
 
 @XmlRootElement
 public class Task {
-    String id;
-    String title;
-    String description;
-    int status;
-    LocalDate initialDate;
-    LocalDate finalDate;
-
-    int priority;
-
+    private String id;
+    private String title;
+    private String description;
+    private int status;
+    private LocalDate initialDate;
+    private LocalDate finalDate;
+    private int priority;
     public Task(){
 
     }

@@ -42,9 +42,9 @@ public class UserService {
     public Response getProfilePhoto(@HeaderParam("username") String username, @HeaderParam("password") String password) {
         User user = userBean.getUser(username);
         if (!userBean.authorizeUser(username, password)) {
-            return Response.status(403).entity("Forbidden.").build();
+            return Response.status(403).entity("Forbidden").build();
         } else if (user == null) {
-            return Response.status(404).entity("User não encontrado.").build();
+            return Response.status(404).entity("User not found").build();
         } else {
             return Response.status(200).entity(user.getProfilePhoto()).build();
         }
@@ -91,12 +91,12 @@ public class UserService {
     public Response addUser(User a) {
         try {
             if (userBean.usernameExists(a.getUsername()) || userBean.emailExists(a.getEmail())) {
-                return Response.status(409).entity("Username or email already exists.").build();
+                return Response.status(409).entity("Username or email already exists").build();
             } else if (!userBean.validateFields(a)) {
-                return Response.status(400).entity("Required fields not filled.").build();
+                return Response.status(400).entity("Required fields not filled").build();
             } else {
                 userBean.addUser(a);
-                return Response.status(201).entity("User created successfully.").build();
+                return Response.status(201).entity("User created successfully").build();
             }
         } catch (Exception e) {
             return Response.status(500).entity("Internal server error:"  + e.getMessage()).build();
@@ -110,7 +110,7 @@ public class UserService {
             User verifiedUser = userBean.verifyLogin(username, password);
 
             if (verifiedUser == null) {
-                return Response.status(401).entity("Incorrect username or password.").build();
+                return Response.status(401).entity("Incorrect username or password").build();
             } else {
                 return Response.status(200).entity(verifiedUser).build();
             }
@@ -124,9 +124,10 @@ public class UserService {
     public Response logout(@HeaderParam("username")String username) {
         User user = userBean.logout(username);
         if (user == null) {
-            return Response.status(404).entity("User não encontrado.").build();
+            return Response.status(404).entity("User not found").build();
         } else {
-            return Response.status(200).entity("Logout efetuado.").build();
+            userBean.writeIntoJsonFile();
+            return Response.status(200).entity("Logout successfully").build();
         }
     }
     @PUT
@@ -136,11 +137,11 @@ public class UserService {
     public Response updateUser(@HeaderParam("username") String username, @HeaderParam("password") String password, User updatedUser) {
 
         if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
-            return Response.status(400).entity("The 'username' and 'password' headers are required.").build();
+            return Response.status(400).entity("The 'username' and 'password' headers are required").build();
         }
 
         if (!userBean.authorizeUser(username, password)) {
-            return Response.status(403).entity("User is not authorized.").build();
+            return Response.status(403).entity("User is not authorized").build();
         }
 
         List<User> users = userBean.getUsers();
@@ -148,7 +149,7 @@ public class UserService {
             if (username.equals(u.getUsername())) {
 
                 userBean.updateUserToNew(u, updatedUser);
-                return Response.status(200).entity("Information updated.").build();
+                return Response.status(200).entity("Information updated").build();
             }
         }
 
@@ -159,7 +160,7 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllTasks(@HeaderParam("username")String username,@HeaderParam("password")String password) {
         if (!userBean.authorizeUser(username, password)) {
-            return Response.status(403).entity("User is not authorized.").build();
+            return Response.status(403).entity("User is not authorized").build();
         } else {
             ArrayList<Task> tasks = userBean.getAllTasks(username);
             userBean.orderTasks(username, tasks);
@@ -172,11 +173,11 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @HeaderParam("id") String id, Task t) {
         if (!userBean.authorizeUser(username, password)) {
-            return Response.status(403).entity("Forbidden.").build();
+            return Response.status(403).entity("Forbidden").build();
         } else {
             userBean.updateTask(username, id, t);
             System.out.println("Updated task status: " + t.getStatus());
-            return Response.status(200).entity("Task updated successfully.").build();
+            return Response.status(200).entity("Task updated successfully").build();
         }
     }
 
@@ -185,11 +186,11 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @HeaderParam("id") String id) {
         if (!userBean.authorizeUser(username, password)) {
-            return Response.status(403).entity("Forbidden.").build();
+            return Response.status(403).entity("Forbidden").build();
         } else {
             Task task = userBean.getTask(username, id);
             if (task == null) {
-                return Response.status(404).entity("Task not found.").build();
+                return Response.status(404).entity("Task not found").build();
             } else {
                 return Response.status(200).entity(task).build();
             }

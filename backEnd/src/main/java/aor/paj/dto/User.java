@@ -8,15 +8,15 @@ import java.util.List;
 
 @XmlRootElement
 public class User {
-    String username;
-    String password;
-    String email;
-    String firstName;
-    String lastName;
-    String phoneNumber;
-    String profilePhoto;
+    private String username;
+    private String password;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String profilePhoto;
 
-    ArrayList<Task> tasks = new ArrayList<>();
+    private ArrayList<Task> tasks = new ArrayList<>();
 
     public ArrayList<Task> getTasks() {
         return tasks;
