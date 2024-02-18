@@ -1,0 +1,920 @@
+{
+	"info": {
+		"_postman_id": "fce51cdc-bba5-4427-b7cb-7786082b0680",
+		"name": "2ºProjeto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32787936"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Verify Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Schema is valid\", function () {\r",
+									"  var schema = {\r",
+									"    type: \"object\",\r",
+									"    properties: {\r",
+									"      email: { type: \"string\" },\r",
+									"      firstName: { type: \"string\" },\r",
+									"      lastName: { type: \"string\" },\r",
+									"      password: { type: \"string\" },\r",
+									"      phoneNumber: { type: \"string\" },\r",
+									"      profilePhoto: { type: \"string\" },\r",
+									"      tasks: {\r",
+									"        type: \"array\",\r",
+									"        items: {\r",
+									"          type: \"object\",\r",
+									"          properties: {\r",
+									"            description: { type: \"string\" },\r",
+									"            finalDate: { type: \"string\" },\r",
+									"            id: { type: \"string\" },\r",
+									"            initialDate: { type: \"string\" },\r",
+									"            priority: { type: \"number\" },\r",
+									"            status: { type: \"number\" },\r",
+									"            title: { type: \"string\" },\r",
+									"          },\r",
+									"        },\r",
+									"      },\r",
+									"      username: { type: \"string\" },\r",
+									"    },\r",
+									"    required: [\"email\", \"firstName\", \"lastName\", \"password\", \"phoneNumber\", \"profilePhoto\", \"tasks\", \"username\"],\r",
+									"  };\r",
+									"\r",
+									"  var response = pm.response.json();\r",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "username",
+								"value": "toy",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "password",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/backEnd/rest/users/verifyLogin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backEnd",
+								"rest",
+								"users",
+								"verifyLogin"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Schema is valid\", function () {\r",
+									"  var schema = {\r",
+									"    type: \"array\",\r",
+									"    items: {\r",
+									"      type: \"object\",\r",
+									"      properties: {\r",
+									"        email: { type: \"string\" },\r",
+									"        firstName: { type: \"string\" },\r",
+									"        lastName: { type: \"string\" },\r",
+									"        phoneNumber: { type: \"string\" },\r",
+									"        profilePhoto: { type: \"string\" },\r",
+									"        tasks: {\r",
+									"          type: \"array\",\r",
+									"          items: {\r",
+									"            type: \"object\",\r",
+									"            properties: {\r",
+									"              description: { type: \"string\" },\r",
+									"              finalDate: { type: \"string\" },\r",
+									"              id: { type: \"string\" },\r",
+									"              initialDate: { type: \"string\" },\r",
+									"              priority: { type: \"number\" },\r",
+									"              status: { type: \"number\" },\r",
+									"              title: { type: \"string\" }\r",
+									"            },\r",
+									"            required: [\"description\", \"finalDate\", \"id\", \"initialDate\", \"priority\", \"status\", \"title\"]\r",
+									"          }\r",
+									"        },\r",
+									"        username: { type: \"string\" }\r",
+									"      },\r",
+									"      required: [\"email\", \"firstName\", \"lastName\", \"phoneNumber\", \"profilePhoto\", \"tasks\", \"username\"]\r",
+									"    }\r",
+									"  };\r",
+									"\r",
+									"  var response = pm.response.json();\r",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/backEnd/rest/users/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backEnd",
+								"rest",
+								"users",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Schema is valid\", function () {\r",
+									"  var schema = {\r",
+									"    type: \"object\",\r",
+									"    properties: {\r",
+									"      email: { type: \"string\" },\r",
+									"      firstName: { type: \"string\" },\r",
+									"      lastName: { type: \"string\" },\r",
+									"      password: { type: \"string\" },\r",
+									"      phoneNumber: { type: \"string\" },\r",
+									"      profilePhoto: { type: [\"string\", \"null\"] },\r",
+									"      tasks: {\r",
+									"        type: \"array\",\r",
+									"        items: {\r",
+									"          type: \"object\",\r",
+									"          properties: {\r",
+									"            description: { type: \"string\" },\r",
+									"            finalDate: { type: \"string\" },\r",
+									"            id: { type: \"string\" },\r",
+									"            initialDate: { type: \"string\" },\r",
+									"            priority: { type: \"number\" },\r",
+									"            status: { type: \"number\" },\r",
+									"            title: { type: \"string\" },\r",
+									"          },\r",
+									"        },\r",
+									"      },\r",
+									"      username: { type: \"string\" },\r",
+									"    },\r",
+									"    required: [\"email\", \"firstName\", \"lastName\", \"password\", \"phoneNumber\", \"tasks\", \"username\"],\r",
+									"  };\r",
+									"\r",
+									"  var response = pm.response.json();\r",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "username",
+								"value": "toy",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/backEnd/rest/users/getUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backEnd",
+								"rest",
+								"users",
+								"getUser"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "toy",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Content-Type is present\", function(){\r",
+									"    pm.response.to.have.header(\"Content-type\");\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"email\": \"sdfghjk@gmil.com\",\r\n        \"firstName\": \"Toni\",\r\n        \"lastName\": \"Carreira\",\r\n        \"password\": \"password\",\r\n        \"phoneNumber\": \"912345678\",\r\n        \"profilePhoto\": \"\",\r\n        \"username\": \"dfghj\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/backEnd/rest/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backEnd",
+								"rest",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"username is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"username\");\r",
+									"});\r",
+									"pm.test(\"password is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"password\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "username",
+								"value": "toy",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "password",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"toni@gmail.com\",\r\n    \"firstName\": \"Toni\",\r\n    \"lastName\": \"Carreira\",\r\n    \"password\": \"password\",\r\n    \"phoneNumber\": \"912345678\",\r\n    \"profilePhoto\": \"https://infocul.pt/wp-content/uploads/2021/02/toy.jpg\",\r\n    \"tasks\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/backEnd/rest/users/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backEnd",
+								"rest",
+								"users",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile Photo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"username is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"username\");\r",
+									"});\r",
+									"pm.test(\"password is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"password\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "username",
+								"value": "toy",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "password",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/backEnd/rest/users/profilePhoto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backEnd",
+								"rest",
+								"users",
+								"profilePhoto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"username is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"username\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "username",
+								"value": "toy",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/backEnd/rest/users/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backEnd",
+								"rest",
+								"users",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tasks",
+			"item": [
+				{
+					"name": "All tasks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"array\",",
+									"    items: {",
+									"      type: \"object\",",
+									"      properties: {",
+									"        description: { type: \"string\" },",
+									"        finalDate: { type: \"string\" },",
+									"        id: { type: \"string\" },",
+									"        initialDate: { type: \"string\" },",
+									"        priority: { type: \"number\" },",
+									"        status: { type: \"number\" },",
+									"        title: { type: \"string\" },",
+									"      },",
+									"      required: [\"description\", \"finalDate\", \"id\", \"initialDate\", \"priority\", \"status\", \"title\"],",
+									"    },",
+									"  };",
+									"",
+									"  var response = pm.response.json();",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;",
+									"});",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "username",
+								"value": "toy",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "password",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/backEnd/rest/users/tasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backEnd",
+								"rest",
+								"users",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddTask",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Content-Type is present\", function(){\r",
+									"    pm.response.to.have.header(\"Content-type\");\r",
+									"})\r",
+									"pm.test(\"username is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"username\");\r",
+									"})\r",
+									"pm.test(\"password is present in the request headers\", function(){\r",
+									"        pm.request.headers.has(\"password\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "username",
+								"value": "toy",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "password",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"isto é uma tarefa\",\r\n    \"finalDate\": \"2024-05-12\",\r\n    \"id\": \"task357.8930110499766\",\r\n    \"initialDate\": \"2024-04-12\",\r\n    \"priority\": \"100\",\r\n    \"title\": \"tarefa1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/backEnd/rest/users/addTask",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backEnd",
+								"rest",
+								"users",
+								"addTask"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"username is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"username\");\r",
+									"});\r",
+									"pm.test(\"password is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"password\");\r",
+									"});\r",
+									"pm.test(\"id is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"id\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "username",
+								"value": "toy",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "password",
+								"type": "text"
+							},
+							{
+								"key": "id",
+								"value": "task598.7909214834665",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"estamos tramados\",\r\n        \"finalDate\": \"2024-05-12\",\r\n        \"id\": \"task598.7909214834665\",\r\n        \"initialDate\": \"2024-04-12\",\r\n        \"status\": 300,\r\n        \"priority\": 100,\r\n        \"title\": \"OLAAAA\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/backEnd/rest/users/task/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backEnd",
+								"rest",
+								"users",
+								"task",
+								"update"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "task346.36129887624645",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTask",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"username is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"username\");\r",
+									"});\r",
+									"pm.test(\"password is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"password\");\r",
+									"});\r",
+									"pm.test(\"id is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"id\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "username",
+								"value": "toy",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "password",
+								"type": "text"
+							},
+							{
+								"key": "id",
+								"value": "task625.8227825268826",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/backEnd/rest/users/getTask",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backEnd",
+								"rest",
+								"users",
+								"getTask"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Task",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"username is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"username\");\r",
+									"})\r",
+									"pm.test(\"password is present in the request headers\", function(){\r",
+									"        pm.request.headers.has(\"password\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "username",
+								"value": "toy",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "password",
+								"type": "text"
+							},
+							{
+								"key": "id",
+								"value": "task472.95771295141697",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/backEnd/rest/users/deleteTask",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"backEnd",
+								"rest",
+								"users",
+								"deleteTask"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "task989.9586763816707",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
