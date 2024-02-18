@@ -163,7 +163,7 @@ public class UserService {
         } else {
             ArrayList<Task> tasks = userBean.getAllTasks(username);
             userBean.orderTasks(username, tasks);
-            return Response.status(200).entity(tasks).entity("Tasks retrieved successfully.").build();
+            return Response.status(200).entity(tasks).build();
         }
     }
 
