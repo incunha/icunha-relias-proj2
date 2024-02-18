@@ -3,9 +3,9 @@ const register = require("./registo");
 // *****Test for user created******
 test("User is created", () => {
   const mockForm = {
-    username: { value: "Ricardo12" },
-    password: { value: "123" },
-    email: { value: "123@gmail.qweqwept" },
+    username: { value: "Ricardo12312312312312313" },
+    password: { value: "123313" },
+    email: { value: "123@gmai12313l.qweqwept" },
     firstName: { value: "Ricardo" },
     lastName: { value: "Elias" },
     phoneNumber: { value: "934951893" },
@@ -20,7 +20,7 @@ test("User is created", () => {
 });
 
 // *****Username or email already exists******
-/*test("Username or email already exists", () => {
+test("Username or email already exists", () => {
   const mockForm = {
     username: { value: "Ines" },
     password: { value: "123" },
@@ -36,10 +36,10 @@ test("User is created", () => {
   register.addUser(mockForm).then((response) => {
     expect(response).toBe(409);
   });
-});*/
+});
 
 // *****Fields******
-/*test("Campos vazios", () => {
+test("Campos vazios", () => {
   const mockForm = {
     username: { value: "" },
     password: { value: "123" },
@@ -55,4 +55,4 @@ test("User is created", () => {
   register.addUser(mockForm).then((response) => {
     expect(response).toBe(400);
   });
-});*/
+});
