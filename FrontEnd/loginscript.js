@@ -16,7 +16,7 @@ async function loginVerified(form) {
     if (response.status == 401) {
       alert("username or password incorrect");
     } else if (response.status == 200) {
-      alert("Bem-vindo," + user.username + "!");
+      alert("Welcome" + user.username + "!");
 
       // Armazena o username na localStorage
       localStorage.setItem("username", user.username);

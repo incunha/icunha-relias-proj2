@@ -20,44 +20,31 @@ async function addUser(form) {
     user.phoneNumber.trim() === "" ||
     user.profilePhoto.trim() === ""
   ) {
-    alert("Please fill all fields:)");
+    alert("Please fill all fields");
   } else {
-    console.log("HERE");
-    await fetch(`http://localhost:8080/backEnd/rest/users/${user.username}`, {
-      method: "GET",
+    await fetch("http://localhost:8080/backEnd/rest/users/register", {
+      method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-    }).then(async function (response) {
-      console.log("GET Response:", response);
-      if (response.status === 404) {
-        alert("Username available");
-        await fetch("http://localhost:8080/backEnd/rest/users/register", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-          body: JSON.stringify(user),
-        }).then(function (response) {
-          console.log("POST Response:", response);
-          if (response.status === 200) {
-            alert("User is added successfully :)");
-            window.location.href = "index.html";
-          } else {
-            alert("Error: " + response.status);
-          }
-        });
-      } else {
-        alert("Username already exists: " + user.username);
+      body: JSON.stringify(user),
+    }).then(function (response) {
+      console.log("POST Response:", response);
+      if (response.status === 201) {
+        alert("User created");
+        window.location.href = "index.html";
+      } else if (response.status === 409) {
+        alert("Username or email already exists");
+      } else if (response.status === 400) {
+        alert("Please fill all fields");
       }
     });
   }
 }
-document.getElementById('photoReg').addEventListener('input', function() {
-  var div = document.getElementById('profilePreview');
-  div.style.backgroundImage = 'url(' + this.value + ')';
+
+document.getElementById("photoReg").addEventListener("input", function () {
+  var div = document.getElementById("profilePreview");
+  div.style.backgroundImage = "url(" + this.value + ")";
 });

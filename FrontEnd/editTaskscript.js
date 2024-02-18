@@ -33,8 +33,10 @@ document.addEventListener("DOMContentLoaded", function () {
       method: "GET",
       headers: headerss,
     }).then(async function (response) {
-      if (response.status == 404) {
-        alert("erro");
+      if (response.status == 403) {
+        alert("Acess Denied");
+      } else if (response.status == 404) {
+        alert("Task not found");
       } else if (response.status == 200) {
         const taskEdit = await response.json();
         console.log(taskEdit);
@@ -298,9 +300,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 body: JSON.stringify(taskkk),
               }
             ).then(function (response) {
-              if (response.status == 404) {
-                console.log(user.username);
-                alert("Information not found");
+              if (response.status == 403) {
+                alert("Acess Denied");
               } else if (response.status == 200) {
                 console.log("Task updated.");
               }
@@ -357,13 +358,13 @@ async function getPhotoUrl(username, password) {
       },
     });
 
-    if (response.ok) {
+    if (response.status === 200) {
       const data = await response.text();
       document.getElementById("userIcon").src = data;
-    } else if (response.status === 401) {
-      alert("Invalid credentials");
+    } else if (response.status === 403) {
+      alert("Acess Denied");
     } else if (response.status === 404) {
-      alert("teste 404");
+      alert("User not found");
     }
   } catch (error) {
     console.error("Error:", error);
@@ -385,7 +386,7 @@ async function getUserData(username) {
   })
     .then(async function (response) {
       if (response.status == 404) {
-        alert("erro");
+        alert("User not found");
       } else if (response.status == 200) {
         const userData = await response.json();
         console.log(userData);

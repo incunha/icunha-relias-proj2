@@ -40,7 +40,7 @@ window.onload = async function () {
     .then(function (response) {
       if (response.status == 404) {
         console.log(user.username);
-        alert("Information not found");
+        alert("User not found");
       } else if (response.status == 200) {
         return response.json(); // Processa o corpo da resposta como JSON
       }
@@ -74,7 +74,7 @@ async function getPhotoUrl(username, password) {
       },
     });
 
-    if (response.ok) {
+    if (response.status === 200) {
       const data = await response.text();
 
       // Defina a imagem de fundo do profilePreview para a URL da imagem
@@ -90,10 +90,10 @@ async function getPhotoUrl(username, password) {
       photoInput.addEventListener("input", function () {
         div.style.backgroundImage = "url(" + this.value + ")";
       });
-    } else if (response.status === 401) {
-      alert("Invalid credentials");
+    } else if (response.status === 403) {
+      alert("Acess Denied");
     } else if (response.status === 404) {
-      alert("teste 404");
+      alert("User not found");
     }
   } catch (error) {
     console.error("Error:", error);
@@ -158,11 +158,12 @@ async function saveNewInfos(userData) {
 
   if (response.status == 200) {
     console.log("Informações do utilizador atualizadas com sucesso!");
-    alert("Info changed with sucess!");
     window.location.href = "interface.html";
+  } else if (response.status == 403) {
+    alert("Acess Denied");
   } else if (response.status == 404) {
-    console.error(
-      `Erro ao atualizar informações do utilizador. Status: ${response.status}`
-    );
+    alert("Username not found");
+  } else if (response.status == 400) {
+    alert("Username and password are required");
   }
 }

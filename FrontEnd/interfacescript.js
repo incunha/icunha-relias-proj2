@@ -78,9 +78,7 @@ window.addEventListener("click", function (event) {
   }
 });
 
-
 async function logout() {
-
   const headers = new Headers();
   headers.append("username", localStorage.getItem("username"));
   headers.append("Content-Type", "application/json");
@@ -88,15 +86,15 @@ async function logout() {
     method: "GET",
     headers: headers,
   }).then(async function (response) {
-  if (response.status == 200) {
-  localStorage.clear();
-  sessionStorage.clear();
-  //Redireciona para a página de login
-  window.location.href = "index.html";
-  } else if (response.status == 404) {
-    alert("user not found.");
-  }else (alert(response.status));
-});
+    if (response.status == 200) {
+      localStorage.clear();
+      sessionStorage.clear();
+      //Redireciona para a página de login
+      window.location.href = "index.html";
+    } else if (response.status == 404) {
+      alert("user not found.");
+    } else alert(response.status);
+  });
 }
 
 //Listener para quando o botão de logout é clicado
@@ -188,8 +186,8 @@ submitTaskButton.addEventListener("click", async function () {
 
       body: JSON.stringify(task),
     }).then(async function (response) {
-      if (response.status == 405) {
-        alert("Não autorizado.");
+      if (response.status == 403) {
+        alert("Acess Denied");
       } else if (response.status == 200) {
         createTaskElements(gettasks());
         //Fecha a modal
@@ -215,8 +213,8 @@ async function gettasks() {
     method: "GET",
     headers: headers,
   }).then(async function (response) {
-    if (response.status == 405) {
-      alert("Não autorizado");
+    if (response.status == 403) {
+      alert("Acess Denied");
     } else if (response.status == 200) {
       const tasks = await response.json();
       displayTasks(tasks);
@@ -246,8 +244,10 @@ yesButton.addEventListener("click", async function () {
     method: "GET",
     headers: headerss,
   }).then(async function (response) {
-    if (response.status == 404) {
-      alert("erro");
+    if (response.status == 403) {
+      alert("Acess Denied");
+    } else if (response.status == 404) {
+      alert("Task not found");
     } else if (response.status == 200) {
       const taskMoved = await response.json();
       deleteTask(taskMoved);
@@ -324,8 +324,10 @@ async function drop(event) {
     method: "GET",
     headers: headerss,
   }).then(async function (response) {
-    if (response.status == 404) {
-      alert("erro");
+    if (response.status == 403) {
+      alert("Acess Denied");
+    } else if (response.status == 404) {
+      alert("Task not found");
     } else if (response.status == 200) {
       const taskMoved = await response.json();
 
@@ -373,11 +375,11 @@ async function updateStatusTask(task) {
     headers: headers,
     body: JSON.stringify(taskkk),
   }).then(function (response) {
-    if (response.status == 404) {
+    if (response.status == 403) {
       console.log(user.username);
-      alert("Information not found");
+      alert("Acess Denied");
     } else if (response.status == 200) {
-      console.log("Task updated.");
+      console.log("Task updated");
     }
   });
 }
@@ -482,9 +484,9 @@ async function deleteTask(task) {
     method: "DELETE",
     headers: headers,
   }).then(function (response) {
-    if (response.status == 404) {
+    if (response.status == 403) {
       console.log(user.username);
-      alert("Information not found");
+      alert("Acess Denied");
     } else if (response.status == 200) {
       console.log("task deleted");
       gettasks();
@@ -528,13 +530,13 @@ async function getPhotoUrl(username, password) {
       },
     });
 
-    if (response.ok) {
+    if (response.status == 200) {
       const data = await response.text();
       document.getElementById("userIcon").src = data;
-    } else if (response.status === 401) {
-      alert("Invalid credentials");
+    } else if (response.status === 403) {
+      alert("Acess Denied");
     } else if (response.status === 404) {
-      alert("teste 404");
+      alert("User not found");
     }
   } catch (error) {
     console.error("Error:", error);
@@ -555,7 +557,7 @@ async function getUserData(username) {
   })
     .then(async function (response) {
       if (response.status == 404) {
-        alert("erro");
+        alert("User not found");
       } else if (response.status == 200) {
         const userData = await response.json();
         console.log(userData);
