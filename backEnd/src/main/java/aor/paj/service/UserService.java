@@ -52,49 +52,70 @@ public class UserService {
 
     @POST
     @Path("/addTask")
-    @Consumes(MediaType.APPLICATION_JSON) public Response addTask(@HeaderParam("username")String username,@HeaderParam("password")String password, Task t) {
-        if(!userBean.authorizeUser(username, password)){
-            return Response.status(405).entity("Forbidden.").build();
-        } else {
-            t.createId();t.inicialStatus();
-            System.out.println(t.getId()+" "+t.getStatus()+" "+t.getTitle());
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addTask(@HeaderParam("username")String username,@HeaderParam("password")String password, Task t) {
+        try {
+            if (!userBean.authorizeUser(username, password)) {
+                return Response.status(403).entity("Forbidden: Access Denied").build();
+            }
+
+            t.createId();
+            t.inicialStatus();
             userBean.addTask(username, t);
-            return Response.status(200).entity("A new task is created").build();
+
+            return Response.status(200).entity("A new task has been created").build();
+        } catch (Exception e) {
+            return Response.status(500).entity("Internal Server Error: " + e.getMessage()).build();
         }
     }
+
     @DELETE
     @Path("/deleteTask")
-    @Produces(MediaType.APPLICATION_JSON) public Response removeTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @HeaderParam("id") String id) {
-        if(!userBean.authorizeUser(username, password)){
-            return Response.status(405).entity("Forbidden.").build();
-        } else {
-            userBean.removeTask(username, id);
-            return Response.status(200).entity("Task is removed").build();
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @HeaderParam("id") String id) {
+        try {
+            if (!userBean.authorizeUser(username, password)) {
+                return Response.status(403).entity("Forbidden: Access Denied").build();
+            } else {
+                userBean.removeTask(username, id);
+                return Response.status(200).entity("Task has been removed").build();
+            }
+        } catch (Exception e) {
+            return Response.status(500).entity("Internal Server Error: " + e.getMessage()).build();
         }
     }
+
     @POST
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUser(User a) {
-        if(userBean.usernameExists(a.getUsername()) || userBean.emailExists(a.getEmail())){
-            return Response.status(401).entity("Username ou mail já existe.").build();
-        }else if (!userBean.validateFields(a)) {
-            return Response.status(401).entity("Campos obrigatórios não preenchidos.").build();
-        }else {
-            userBean.addUser(a);
-            return Response.status(200).entity("Usuário criado.").build();
+        try {
+            if (userBean.usernameExists(a.getUsername()) || userBean.emailExists(a.getEmail())) {
+                return Response.status(409).entity("Username or email already exists.").build();
+            } else if (!userBean.validateFields(a)) {
+                return Response.status(400).entity("Required fields not filled.").build();
+            } else {
+                userBean.addUser(a);
+                return Response.status(201).entity("User created successfully.").build();
+            }
+        } catch (Exception e) {
+            return Response.status(500).entity("Internal server error:"  + e.getMessage()).build();
         }
     }
     @GET
     @Path("/verifyLogin")
     @Produces(MediaType.APPLICATION_JSON)
     public Response verifyLogin(@HeaderParam("username") String username, @HeaderParam("password") String password) {
-        User verifiedUser = userBean.verifyLogin(username, password);
+        try {
+            User verifiedUser = userBean.verifyLogin(username, password);
 
-        if (verifiedUser == null) {
-            return Response.status(401).entity("Username ou password incorretos.").build();
-        } else {
-            return Response.status(200).entity(verifiedUser).build();
+            if (verifiedUser == null) {
+                return Response.status(401).entity("Incorrect username or password.").build();
+            } else {
+                return Response.status(200).entity(verifiedUser).build();
+            }
+        } catch (Exception e) {
+            return Response.status(500).entity("Internal server error: " + e.getMessage()).build();
         }
     }
     @GET
@@ -112,26 +133,37 @@ public class UserService {
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUser(@HeaderParam("username")String username,@HeaderParam("password")String password, User user) {
+    public Response updateUser(@HeaderParam("username") String username, @HeaderParam("password") String password, User updatedUser) {
+
+        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+            return Response.status(400).entity("The 'username' and 'password' headers are required.").build();
+        }
+
+        if (!userBean.authorizeUser(username, password)) {
+            return Response.status(403).entity("User is not authorized.").build();
+        }
+
         List<User> users = userBean.getUsers();
         for (User u : users) {
             if (username.equals(u.getUsername())) {
-                userBean.updateUserToNew(u,user);
-                return Response.status(200).entity("Info changed.").build();
+
+                userBean.updateUserToNew(u, updatedUser);
+                return Response.status(200).entity("Information updated.").build();
             }
         }
+
         return Response.status(404).entity("User with this username is not found").build();
     }
     @GET
     @Path("/tasks")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllTasks(@HeaderParam("username")String username,@HeaderParam("password")String password) {
-        if(!userBean.authorizeUser(username, password)){
-            return Response.status(405).entity("Forbidden.").build();
+        if (!userBean.authorizeUser(username, password)) {
+            return Response.status(403).entity("User is not authorized.").build();
         } else {
             ArrayList<Task> tasks = userBean.getAllTasks(username);
-            userBean.orderTasks(username,tasks);
-            return Response.status(200).entity(tasks).build();
+            userBean.orderTasks(username, tasks);
+            return Response.status(200).entity(tasks).entity("Tasks retrieved successfully.").build();
         }
     }
 
@@ -139,13 +171,12 @@ public class UserService {
     @Path("/task/update")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @HeaderParam("id") String id, Task t) {
-
-        if(!userBean.authorizeUser(username, password)){
-            return Response.status(405).entity("Forbidden.").build();
+        if (!userBean.authorizeUser(username, password)) {
+            return Response.status(403).entity("Forbidden.").build();
         } else {
             userBean.updateTask(username, id, t);
-            System.out.println("t.getStatus() = " + t.getStatus());
-            return Response.status(200).entity("Task updated.").build();
+            System.out.println("Updated task status: " + t.getStatus());
+            return Response.status(200).entity("Task updated successfully.").build();
         }
     }
 
@@ -153,16 +184,15 @@ public class UserService {
     @Path("/getTask")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @HeaderParam("id") String id) {
-        if(!userBean.authorizeUser(username, password)){
-            return Response.status(405).entity("Forbidden.").build();
+        if (!userBean.authorizeUser(username, password)) {
+            return Response.status(403).entity("Forbidden.").build();
         } else {
             Task task = userBean.getTask(username, id);
             if (task == null) {
-                return Response.status(404).entity("Task não encontrada.").build();
+                return Response.status(404).entity("Task not found.").build();
             } else {
                 return Response.status(200).entity(task).build();
             }
         }
     }
-
 }
