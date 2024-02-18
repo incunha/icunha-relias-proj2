@@ -38,7 +38,7 @@ public class UserService {
         if (user == null) {
             return Response.status(404).entity("User not found").build();
         } else {
-            return Response.status(200).entity(user.toUserDTO()).build();
+            return Response.status(200).entity(user).build();
         }
     }
 

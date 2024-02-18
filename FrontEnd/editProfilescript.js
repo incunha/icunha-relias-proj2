@@ -46,8 +46,6 @@ window.onload = async function () {
       }
     })
     .then(function (userData) {
-      alert("Information found");
-
       document.getElementById("usernameInput").value = userData.username;
       document.getElementById("emailInput").value = userData.email;
       document.getElementById("firstNameInput").value = userData.firstName;
@@ -74,7 +72,7 @@ async function getPhotoUrl(username, password) {
       },
     });
 
-    if (response.status === 200) {
+    if (response.status == 200) {
       const data = await response.text();
 
       // Defina a imagem de fundo do profilePreview para a URL da imagem
@@ -90,9 +88,9 @@ async function getPhotoUrl(username, password) {
       photoInput.addEventListener("input", function () {
         div.style.backgroundImage = "url(" + this.value + ")";
       });
-    } else if (response.status === 403) {
-      alert("Acess Denied");
-    } else if (response.status === 404) {
+    } else if (response.status == 403) {
+      alert("+++++++++++++++Acess Denied");
+    } else if (response.status == 404) {
       alert("User not found");
     }
   } catch (error) {
@@ -158,9 +156,10 @@ async function saveNewInfos(userData) {
 
   if (response.status == 200) {
     console.log("Informações do utilizador atualizadas com sucesso!");
+    localStorage.setItem("password", userData.password);
     window.location.href = "interface.html";
   } else if (response.status == 403) {
-    alert("Acess Denied");
+    alert("|||||||||Acess Denied");
   } else if (response.status == 404) {
     alert("Username not found");
   } else if (response.status == 400) {
