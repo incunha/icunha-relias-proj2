@@ -1,14 +1,9 @@
-const deleteTask = require("./deleteTask");
+const profilePhoto = require("./profilePhoto");
 
-/* Acess Denied */
-test("Access Denied", async () => {
+test("Acess Denied", async () => {
   const mockForm = {
     username: { value: "Ricardo12" },
     password: { value: "123" },
-  };
-
-  const task = {
-    id: { value: 12 },
   };
 
   const headers = new global.Headers();
@@ -16,6 +11,6 @@ test("Access Denied", async () => {
   headers.append("username", mockForm.username.value);
   headers.append("password", mockForm.password.value);
 
-  const response = await deleteTask.deleteTask(mockForm, headers, task.id);
+  const response = await profilePhoto.getPhotoUrl(headers);
   expect(response).toBe(403);
 });
