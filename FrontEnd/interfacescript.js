@@ -90,6 +90,7 @@ async function logout() {
   }).then(async function (response) {
   if (response.status == 200) {
   localStorage.clear();
+  sessionStorage.clear();
   //Redireciona para a página de login
   window.location.href = "index.html";
   } else if (response.status == 404) {
