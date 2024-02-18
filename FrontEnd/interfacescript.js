@@ -148,13 +148,12 @@ submitTaskButton.addEventListener("click", async function () {
   } else {
     let priorityupdate;
     if (priority == "low") {
-      priorityupdate = 100
+      priorityupdate = 100;
     } else if (priority == "medium") {
-      priorityupdate = 200
+      priorityupdate = 200;
     } else {
-      priorityupdate = 300
+      priorityupdate = 300;
     }
-    //Cria um objecto com o identificador, o titulo e a descrição da tarefa
     const task = {
       title: titulo,
       description: descricao,
@@ -348,7 +347,7 @@ async function updateStatusTask(task) {
     id: task.id,
     priority: task.priority,
     status: task.status,
-    initialDate: task.inicalDate,
+    initialDate: task.initialDate,
     finalDate: task.finalDate,
   };
 
@@ -432,7 +431,8 @@ function createTaskElements(tasksArray) {
       modalTaskTitle.textContent = task.title;
       modalTaskDescription.textContent = task.description;
       console.log(task.initialDate);
-      document.getElementById("taskInitialDateinfo").textContent = task.initialDate;
+      document.getElementById("taskInitialDateinfo").textContent =
+        task.initialDate;
       console.log(task.finalDate);
       document.getElementById("taskFinalDateinfo").textContent = task.finalDate;
 
@@ -542,11 +542,11 @@ async function getUserData(username) {
       } else if (response.status == 200) {
         const userData = await response.json();
         console.log(userData);
-        document.getElementById("displayUsername").textContent = userData.firstName;
+        document.getElementById("displayUsername").textContent =
+          userData.firstName;
       }
     })
     .catch(function (error) {
       console.error("Error fetching user information:", error);
     });
 }
-

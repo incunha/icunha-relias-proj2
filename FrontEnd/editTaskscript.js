@@ -9,6 +9,16 @@ document.addEventListener("DOMContentLoaded", function () {
   const taskID = sessionStorage.getItem("taskToEdite");
   getTask(taskID);
 
+  function verifyDate(task) {
+    if (task.initialDate > task.finalDate) {
+      return false;
+    } else return true;
+  }
+
+  function refresh() {
+    window.location.href = "interface.html";
+  }
+
   async function getTask(taskId) {
     let userUsado = {
       username: localStorage.getItem("username"),
@@ -71,8 +81,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 finalDate: document.getElementById("finalDateEdit").value,
                 id: taskEdit.id,
               };
-
-              updateTask(newTask);
+              if (verifyDate(newTask)) {
+                updateTask(newTask);
+                refresh();
+              } else {
+                dateError.style.display = "block";
+              }
             } else if (
               document.getElementById("editTaskPriority").value === "medium"
             ) {
@@ -87,8 +101,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 initialDate: document.getElementById("initialDateEdit").value,
                 finalDate: document.getElementById("finalDateEdit").value,
               };
-
-              updateTask(newTask);
+              if (verifyDate(newTask)) {
+                updateTask(newTask);
+                refresh();
+              } else {
+                dateError.style.display = "block";
+              }
             } else if (
               document.getElementById("editTaskPriority").value === "high"
             ) {
@@ -104,7 +122,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 finalDate: document.getElementById("finalDateEdit").value,
               };
 
-              updateTask(newTask);
+              if (verifyDate(newTask)) {
+                updateTask(newTask);
+                refresh();
+              } else {
+                dateError.style.display = "block";
+              }
             }
           } else if (
             document.getElementById("editTaskStatus").value === "Doing"
@@ -124,7 +147,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 finalDate: document.getElementById("finalDateEdit").value,
               };
 
-              updateTask(newTask);
+              if (verifyDate(newTask)) {
+                updateTask(newTask);
+                refresh();
+              } else {
+                dateError.style.display = "block";
+              }
             } else if (
               document.getElementById("editTaskPriority").value === "medium"
             ) {
@@ -140,7 +168,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 finalDate: document.getElementById("finalDateEdit").value,
               };
 
-              updateTask(newTask);
+              if (verifyDate(newTask)) {
+                updateTask(newTask);
+                refresh();
+              } else {
+                dateError.style.display = "block";
+              }
             } else if (
               document.getElementById("editTaskPriority").value === "high"
             ) {
@@ -155,8 +188,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 initialDate: document.getElementById("initialDateEdit").value,
                 finalDate: document.getElementById("finalDateEdit").value,
               };
-
-              updateTask(newTask);
+              if (verifyDate(newTask)) {
+                updateTask(newTask);
+                refresh();
+              } else {
+                dateError.style.display = "block";
+              }
             }
           } else if (
             document.getElementById("editTaskStatus").value === "Done"
@@ -176,7 +213,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 finalDate: document.getElementById("finalDateEdit").value,
               };
 
-              updateTask(newTask);
+              if (verifyDate(newTask)) {
+                updateTask(newTask);
+                refresh();
+              } else {
+                dateError.style.display = "block";
+              }
             } else if (
               document.getElementById("editTaskPriority").value === "medium"
             ) {
@@ -192,7 +234,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 finalDate: document.getElementById("finalDateEdit").value,
               };
 
-              updateTask(newTask);
+              if (verifyDate(newTask)) {
+                updateTask(newTask);
+                refresh();
+              } else {
+                dateError.style.display = "block";
+              }
             } else if (
               document.getElementById("editTaskPriority").value === "high"
             ) {
@@ -208,10 +255,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 finalDate: document.getElementById("finalDateEdit").value,
               };
 
-              updateTask(newTask);
+              if (verifyDate(newTask)) {
+                updateTask(newTask);
+                refresh();
+              } else {
+                dateError.style.display = "block";
+              }
             }
           }
-          window.location.href = "interface.html";
         });
 
         async function updateTask(task) {
@@ -236,18 +287,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
           console.log(taskkk.priority);
 
-          await fetch(`http://localhost:8080/backEnd/rest/users/task/update`, {
-            method: "PUT",
-            headers: headers,
-            body: JSON.stringify(taskkk),
-          }).then(function (response) {
-            if (response.status == 404) {
-              console.log(user.username);
-              alert("Information not found");
-            } else if (response.status == 200) {
-              console.log("Task updated.");
-            }
-          });
+          if (taskkk.initialDate > task.finalDate) {
+            dateError.style.display = "block";
+          } else {
+            await fetch(
+              `http://localhost:8080/backEnd/rest/users/task/update`,
+              {
+                method: "PUT",
+                headers: headers,
+                body: JSON.stringify(taskkk),
+              }
+            ).then(function (response) {
+              if (response.status == 404) {
+                console.log(user.username);
+                alert("Information not found");
+              } else if (response.status == 200) {
+                console.log("Task updated.");
+              }
+            });
+          }
         }
       }
     });
@@ -331,7 +389,8 @@ async function getUserData(username) {
       } else if (response.status == 200) {
         const userData = await response.json();
         console.log(userData);
-        document.getElementById("displayUsername").textContent = userData.firstName;
+        document.getElementById("displayUsername").textContent =
+          userData.firstName;
       }
     })
     .catch(function (error) {
