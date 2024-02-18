@@ -111,7 +111,6 @@ public class User {
            }
        }
    }
-
     public UserDTO toUserDTO() {
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername(username);

@@ -28,8 +28,6 @@ public class UserService {
         }
         return userDTOs;
     }
-
-
     @GET
     @Path("/getUser")
     @Produces(MediaType.APPLICATION_JSON)
@@ -41,7 +39,6 @@ public class UserService {
             return Response.status(200).entity(user).build();
         }
     }
-
     @GET
     @Path("/profilePhoto")
     @Produces(MediaType.APPLICATION_JSON)
@@ -55,7 +52,6 @@ public class UserService {
             return Response.status(200).entity(user.getProfilePhoto()).build();
         }
     }
-
     @POST
     @Path("/addTask")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -64,7 +60,6 @@ public class UserService {
             if (!userBean.authorizeUser(username, password)) {
                 return Response.status(403).entity("Forbidden").build();
             }
-
             t.createId();
             t.inicialStatus();
             userBean.addTask(username, t);
@@ -92,7 +87,6 @@ public class UserService {
             return Response.status(500).entity("Internal Server Error: " + e.getMessage()).build();
         }
     }
-
     @POST
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -116,7 +110,6 @@ public class UserService {
     public Response verifyLogin(@HeaderParam("username") String username, @HeaderParam("password") String password) {
         try {
             User verifiedUser = userBean.verifyLogin(username, password);
-
             if (verifiedUser == null) {
                 return Response.status(401).entity("Incorrect username or password").build();
             } else {
@@ -155,12 +148,10 @@ public class UserService {
         List<User> users = userBean.getUsers();
         for (User u : users) {
             if (username.equals(u.getUsername())) {
-
                 userBean.updateUserToNew(u, updatedUser);
                 return Response.status(200).entity("Information updated").build();
             }
         }
-
         return Response.status(404).entity("User with this username is not found").build();
     }
     @GET
@@ -175,7 +166,6 @@ public class UserService {
             return Response.status(200).entity(tasks).build();
         }
     }
-
     @PUT
     @Path("/task/update")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -186,11 +176,9 @@ public class UserService {
             return Response.status(404).entity("Task not found").build();
         } else {
             userBean.updateTask(username, id, t);
-            System.out.println("Updated task status: " + t.getStatus());
             return Response.status(200).entity("Task updated successfully").build();
         }
     }
-
     @GET
     @Path("/getTask")
     @Produces(MediaType.APPLICATION_JSON)
