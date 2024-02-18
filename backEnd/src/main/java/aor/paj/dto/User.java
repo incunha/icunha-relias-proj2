@@ -114,4 +114,17 @@ public class User {
 
         tasks.removeAll(tasksToRemove);
     }
+
+
+    public UserDTO toUserDTO() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(username);
+        userDTO.setEmail(email);
+        userDTO.setFirstName(firstName);
+        userDTO.setLastName(lastName);
+        userDTO.setPhoneNumber(phoneNumber);
+        userDTO.setProfilePhoto(profilePhoto);
+        userDTO.setTasks(tasks);
+        return userDTO;
+    }
 }

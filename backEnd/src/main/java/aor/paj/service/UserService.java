@@ -3,6 +3,7 @@ package aor.paj.service;
 import aor.paj.bean.UserBean;
 import aor.paj.dto.Task;
 import aor.paj.dto.User;
+import aor.paj.dto.UserDTO;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -19,8 +20,13 @@ public class UserService {
 
     @GET
     @Path("/all")
-    @Produces(MediaType.APPLICATION_JSON) public List<User> getUsers() {
-        return userBean.getUsers();
+    @Produces(MediaType.APPLICATION_JSON) public List<UserDTO> getUsers() {
+        List<User> users = userBean.getUsers();
+        List<UserDTO> userDTOs = new ArrayList<>();
+        for (User user : users) {
+            userDTOs.add(user.toUserDTO());
+        }
+        return userDTOs;
     }
 
 
@@ -32,7 +38,7 @@ public class UserService {
         if (user == null) {
             return Response.status(404).entity("User not found").build();
         } else {
-            return Response.status(200).entity(user).build();
+            return Response.status(200).entity(user.toUserDTO()).build();
         }
     }
 
@@ -56,7 +62,7 @@ public class UserService {
     public Response addTask(@HeaderParam("username")String username,@HeaderParam("password")String password, Task t) {
         try {
             if (!userBean.authorizeUser(username, password)) {
-                return Response.status(403).entity("Forbidden: Access Denied").build();
+                return Response.status(403).entity("Forbidden").build();
             }
 
             t.createId();
@@ -75,7 +81,7 @@ public class UserService {
     public Response removeTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @HeaderParam("id") String id) {
         try {
             if (!userBean.authorizeUser(username, password)) {
-                return Response.status(403).entity("Forbidden: Access Denied").build();
+                return Response.status(403).entity("Forbidden").build();
             } else {
                 userBean.removeTask(username, id);
                 return Response.status(200).entity("Task has been removed").build();
@@ -160,7 +166,7 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllTasks(@HeaderParam("username")String username,@HeaderParam("password")String password) {
         if (!userBean.authorizeUser(username, password)) {
-            return Response.status(403).entity("User is not authorized").build();
+            return Response.status(403).entity("Forbidden").build();
         } else {
             ArrayList<Task> tasks = userBean.getAllTasks(username);
             userBean.orderTasks(username, tasks);
