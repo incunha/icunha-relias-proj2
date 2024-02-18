@@ -22,14 +22,15 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON) public List<User> getUsers() {
         return userBean.getUsers();
     }
+
+
     @GET
     @Path("/getUser")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@HeaderParam("username") String username) {
-
         User user = userBean.getUser(username);
         if (user == null) {
-            return Response.status(404).entity("User não encontrado.").build();
+            return Response.status(404).entity("User not found").build();
         } else {
             return Response.status(200).entity(user).build();
         }
@@ -38,18 +39,20 @@ public class UserService {
     @GET
     @Path("/profilePhoto")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getProfilePhoto(@HeaderParam("username") String username) {
+    public Response getProfilePhoto(@HeaderParam("username") String username, @HeaderParam("password") String password) {
         User user = userBean.getUser(username);
-        if (user == null) {
+        if (!userBean.authorizeUser(username, password)) {
+            return Response.status(403).entity("Forbidden.").build();
+        } else if (user == null) {
             return Response.status(404).entity("User não encontrado.").build();
         } else {
             return Response.status(200).entity(user.getProfilePhoto()).build();
         }
     }
+
     @POST
     @Path("/addTask")
     @Consumes(MediaType.APPLICATION_JSON) public Response addTask(@HeaderParam("username")String username,@HeaderParam("password")String password, Task t) {
-
         if(!userBean.authorizeUser(username, password)){
             return Response.status(405).entity("Forbidden.").build();
         } else {

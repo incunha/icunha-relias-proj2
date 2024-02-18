@@ -1,7 +1,9 @@
 //Função chamada cada vez que a página é carregada
 document.addEventListener("DOMContentLoaded", function () {
   const username = localStorage.getItem("username");
-  document.getElementById("displayUsername").textContent = username;
+  const password = localStorage.getItem("password");
+  getUserData(username);
+  getPhotoUrl(username, password);
 
   //Obtém a tarefa a ser editada da sessionStorage
   const taskID = sessionStorage.getItem("taskToEdite");
@@ -282,3 +284,57 @@ document.addEventListener("DOMContentLoaded", function () {
     dateTimeDisplay.textContent = dateTimeString;
   }
 });
+
+async function getPhotoUrl(username, password) {
+  let photoUrlRequest = "http://localhost:8080/backEnd/rest/users/profilePhoto";
+
+  try {
+    const response = await fetch(photoUrlRequest, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/JSON",
+        Accept: "application/JSON",
+        username: username,
+        password: password,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.text();
+      document.getElementById("userIcon").src = data;
+    } else if (response.status === 401) {
+      alert("Invalid credentials");
+    } else if (response.status === 404) {
+      alert("teste 404");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Something went wrong");
+  }
+}
+
+async function getUserData(username) {
+  let user = {
+    username: username,
+  };
+
+  const headers = new Headers();
+  headers.append("username", user.username);
+
+  await fetch("http://localhost:8080/backEnd/rest/users/getUser", {
+    method: "GET",
+    headers: headers,
+  })
+    .then(async function (response) {
+      if (response.status == 404) {
+        alert("erro");
+      } else if (response.status == 200) {
+        const userData = await response.json();
+        console.log(userData);
+        document.getElementById("displayUsername").textContent = userData.firstName;
+      }
+    })
+    .catch(function (error) {
+      console.error("Error fetching user information:", error);
+    });
+}

@@ -191,5 +191,7 @@ public class UserBean {
             u.getTasks().sort(Comparator.comparing(Task::getPriority,Comparator.reverseOrder()).thenComparing(Task::getInitialDate).thenComparing(Task::getFinalDate));
         }
     }
+
     }
+
 }

@@ -377,18 +377,11 @@ footer a {
   padding-top: 10px;
 }
 
-/*caracteristicas das tarefas*/
-.task {
-  background-color: #fff;
-  border: 2px solid #000;
-  margin: 0px;
-  padding: 5px;
-  box-sizing: border-box;
-}
+
 /*caracteristicas da area onde cada tarefa é exibida*/
 .taskArea > div {
   width: 90%;
-  background-color: #fff;
+  height: 50px; /* Adjust the height as desired */
   border: 2px solid #205d88;
   margin: 12px;
   padding: 10px;
@@ -398,10 +391,7 @@ footer a {
   justify-content: space-between;
   align-items: center;
 }
-/*adiciona uma sombra quando se passa sobre a tarefa*/
-.taskArea > div:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-}
+
 /*caracteristicas da area da tarefa quando é clicada*/
 .taskArea div:active {
   border-width: 4px; /* Aumenta a largura da borda da div quando clicada */
@@ -414,12 +404,7 @@ footer a {
   text-overflow: ellipsis;
   flex-grow: 1;
 }
-/*icon prioridade*/
-.priority-icon {
-  width: 2em;
-  height: 2em;
-  flex-shrink: 0;
-}
+
 /*caracteristicas gerais dos modals*/
 .modal {
   display: none;
@@ -486,6 +471,8 @@ footer a {
   flex-direction: column;
   margin: 3% 0;
 }
+
+
 /*tamanho do campo de entrada da descrição da tarefa*/
 .modal textarea#taskDescription {
   height: 170px;
@@ -558,19 +545,7 @@ footer a {
   height: 3rem;
 }
 
-/*mostra o trashIcon*/
-#trashIcon.show {
-  display: block;
-}
 
-/*animacao do trashIcon*/
-#trashIcon.highlightTrash {
-  position: fixed;
-  bottom: 7rem;
-  left: 59rem;
-  width: 3.5rem;
-  height: 3.5rem;
-}
 
 /*caracteristicas do aside*/
 aside {
