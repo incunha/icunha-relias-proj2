@@ -1,18 +1,16 @@
 //Listener para quando todas as acções de quando a página carrega
 
 window.onload = function () {
-  //Obtém o username da sessionStorage
+  //Obtém o username e password da localStorage
   const username = localStorage.getItem("username");
   const password = localStorage.getItem("password");
   //Vai buscar o elemento que mostra o username
   getUserData(username);
   //Chama a função para mostrar a foto de perfil
   getPhotoUrl(username, password);
-
   displayDateTime(); // Adiciona a exibição da data e hora
   setInterval(displayDateTime, 1000); // Atualiza a cada segundo
-  //Chama a função para mostrar as tarefas
-  //displayTasks();
+  //Chama a função para obter as tarefas
   gettasks();
 };
 
@@ -22,46 +20,38 @@ const addTaskButton = document.getElementById("addTaskButton");
 const newTaskModal = document.getElementById("newTaskModal");
 //Obtem o botao para cancelar a adição de uma nova tarefa
 const cancelButtonAddTaskModal = document.getElementById("cancelTaskButton");
-
+//taskAreas To do, Doing, Done
 const todoSection = document.getElementById("todo");
 const doingSection = document.getElementById("doing");
 const doneSection = document.getElementById("done");
-
 //Obtem o modal de aviso de delete
 const deleteWarning = document.getElementById("deleteWarning");
 //Obtem os 2 botões do avisos de delete
 const yesButton = document.getElementById("yesButtonDelete");
 const noButton = document.getElementById("noButtonDelete");
-
 //Obtem o popup menu que aparece com o click direito
 const contextMenu = document.getElementById("contextMenu");
 //Obtem a opcao de deconste do popup menu
 const deleteTaskOption = document.getElementById("deleteTask");
 //Obtem a opcao de editar do popup menu
 const editTaskOption = document.getElementById("editTask");
-
 //Obtem a modal que mostra os detalhes da tarefa
 const taskDetailsModal = document.getElementById("taskDetailsModal");
 //Obtem o label para o titulo da tarefa
 const modalTaskTitle = document.getElementById("taskTitleinfo");
 //Obtem o label para a descrição da tarefa
 const modalTaskDescription = document.getElementById("taskDescriptioninfo");
-
 //Obtem o botão para fechar a modal de detalhes da tarefa
 const modalOkButton = document.getElementById("modalOkButton");
-
 //Obtem o warning modal
 const warningModal = document.getElementById("warningModal");
 //Obtem o botão de ok do warning modal
 const okButton = document.getElementById("modalWarningOkButton");
-
 //Obtem o titulo e descrição do modal de adicionar uma nova tarefa
 const taskTitle = document.getElementById("taskTitle").value;
 const taskDescription = document.getElementById("taskDescription").value;
-
 //Obtem o botão de logout
 const botaoLogout = document.getElementById("logoutButton");
-
 //Obtem a div que mostra a data e hora
 const dateTimeDisplay = document.getElementById("dateTimeDisplay");
 
@@ -77,7 +67,7 @@ window.addEventListener("click", function (event) {
     contextMenu.style.display = "none";
   }
 });
-
+//Função que faz logout
 async function logout() {
   const headers = new Headers();
   headers.append("username", localStorage.getItem("username"));
@@ -148,7 +138,12 @@ submitTaskButton.addEventListener("click", async function () {
   const descricao = document.getElementById("taskDescription").value;
   const priority = document.getElementById("editTaskPriority").value;
   const inicalDate = document.getElementById("initialDate").value;
-  const finalDate = document.getElementById("finalDate").value;
+  let finalDate = document.getElementById("finalDate").value;
+  if(inicalDate === ""){
+    dateError.style.display = "block";
+  }else if(finalDate === ""){
+    finalDate = '2199-12-31';
+  }
 
   dateErrorPriority.style.display = "none";
   if (titulo === "" || descricao === "") {
@@ -198,7 +193,7 @@ submitTaskButton.addEventListener("click", async function () {
     });
   }
 });
-
+//Função que vai buscar as tarefas do user
 async function gettasks() {
   let user = {
     username: localStorage.getItem("username"),
@@ -227,10 +222,9 @@ yesButton.addEventListener("click", async function () {
   // Close the deleteWarning modal and remove the background overlay
   deleteWarning.style.display = "none";
   document.body.classList.remove("modal-open");
-
   //Obtem o identificador da tarefa que foi guardado no atributo data-task-id do deleteWarning modal
   const taskId = deleteWarning.getAttribute("data-task-id");
-
+//Vai buscar o username e a password da localStorage
   let userUsado = {
     username: localStorage.getItem("username"),
     password: localStorage.getItem("password"),
@@ -254,49 +248,40 @@ yesButton.addEventListener("click", async function () {
     }
   });
 });
-
+//Listener para quando o botão de "No" do deleteWarning modal é clicado
 noButton.addEventListener("click", function () {
   //Esconde o deleteWarning modal e remove o escurecimento do fundo da página
   deleteWarning.style.display = "none";
   document.body.classList.remove("modal-open");
 });
-
 //Listener para quando o botão de "Delete" do popup menu é clicado
 deleteTaskOption.addEventListener("click", () => {
   //Esconde o popup menu
   contextMenu.style.display = "none";
-
   //Obtem o identificador da tarefa que foi guardado no atributo data-task-id do popup menu
   const taskId = contextMenu.getAttribute("data-task-id");
-
   //Guarda o identificador da tarefa no atributo data-task-id do deleteWarning modal
   deleteWarning.setAttribute("data-task-id", taskId);
-
   //Mostra o deleteWarning modal e escurece o fundo da página
   deleteWarning.style.display = "block";
   document.body.classList.add("modal-open");
 });
-
 //Listener para quando o botão de "Edit" do popup menu é clicado
 editTaskOption.addEventListener("click", async () => {
   //Esconde o popup menu
   contextMenu.style.display = "none";
-
   //Obtem o identificador da tarefa que foi guardado no atributo data-task-id do popup menu
   const taskId = contextMenu.getAttribute("data-task-id");
   sessionStorage.setItem("taskToEdite", taskId);
-
   //Redireciona para a página de editar tarefa
   window.location.href = "editTaskPage.html";
 });
-
 //Listener para quando o botão de "Ok" do modal de detalhes da tarefa é clicado
 modalOkButton.addEventListener("click", function () {
   //Esconde o modal de detalhes da tarefa e remove o escurecimento do fundo da página
   taskDetailsModal.style.display = "none";
   document.body.classList.remove("modal-open");
 });
-
 //Listener para quando o botão de "Ok" do modal de aviso é clicado
 okButton.addEventListener("click", function () {
   //Esconde o modal de aviso e remove o escurecimento do fundo da página
@@ -304,7 +289,6 @@ okButton.addEventListener("click", function () {
   //Remove o escurecimento do fundo da página
   document.getElementById("modalOverlay2").style.display = "none";
 });
-
 //Função que define o que acontece quando uma tarefa é largada sobre um determinado elemento
 async function drop(event) {
   //Evita o comportamento padrão do browser
@@ -343,13 +327,12 @@ async function drop(event) {
         taskMoved.status = 300;
         targetSection.appendChild(taskElement);
       }
-
-      updateStatusTask(taskMoved);
-      gettasks();
+      updateStatusTask(taskMoved);//Atualiza o status da tarefa
+      gettasks();//Vai buscar as tarefas
     }
   });
 }
-
+//Função que atualiza o status da tarefa
 async function updateStatusTask(task) {
   let username = localStorage.getItem("username");
   let password = localStorage.getItem("password");
@@ -396,7 +379,7 @@ function displayTasks(tasks) {
   //Função que cria um elemento para uma tarefa na secção correspondente
   createTaskElements(tasks);
 }
-
+//Função que cria o elemento (div) para uma tarefa na secção correspondente
 function createTaskElements(tasksArray) {
   let todoTasksContainer = document.getElementById("todo");
   let doingTasksContainer = document.getElementById("doing");
@@ -428,16 +411,13 @@ function createTaskElements(tasksArray) {
     taskElement.addEventListener("contextmenu", (e) => {
       //Previnir o comportamento padrão do browser
       e.preventDefault();
-
+    //Faz com que o popup menu apareça no local onde o botão direito do rato foi clicado
       contextMenu.style.top = `${e.pageY}px`;
       contextMenu.style.left = `${e.pageX}px`;
-
       //Guarda o identificador e a prioridade da tarefa
       contextMenu.setAttribute("data-task-id", task.id);
-
       //Guarda o identificador da tarefa no sessionStorage
       sessionStorage.setItem("taskID", task.id);
-
       //Mostra o popup menu
       contextMenu.style.display = "block";
     });
@@ -448,20 +428,23 @@ function createTaskElements(tasksArray) {
 
     //Adiciona um listener para quando o elemento div é clicado duas vezes
     taskElement.addEventListener("dblclick", function () {
-      //Coloca no modal os detalhes da tarefa o titulo e a descrição
+      //Coloca no modal os detalhes da tarefa o titulo, a descrição, a data inicial e a data final
       modalTaskTitle.textContent = task.title;
       modalTaskDescription.textContent = task.description;
       console.log(task.initialDate);
       document.getElementById("taskInitialDateinfo").textContent =
         task.initialDate;
       console.log(task.finalDate);
+      if(task.finalDate === '2199-12-31'){
+        task.finalDate = 'No final date';
+      }
       document.getElementById("taskFinalDateinfo").textContent = task.finalDate;
 
       //Mostra o modal escurecendo o fundo da página
       taskDetailsModal.style.display = "block";
       document.body.classList.add("modal-open");
     });
-
+    //Adiciona o elemento div à secção correspondente
     if (task.status == 100) {
       todoTasksContainer.appendChild(taskElement);
     } else if (task.status == 200) {
@@ -471,7 +454,7 @@ function createTaskElements(tasksArray) {
     }
   }
 }
-
+    //Função que apaga uma tarefa
 async function deleteTask(task) {
   let username = localStorage.getItem("username");
   let password = localStorage.getItem("password");
@@ -498,8 +481,8 @@ async function deleteTask(task) {
   });
 }
 
-//Função que mostra a data e hora
-function displayDateTime() {
+  //Função que mostra a data e hora
+  function displayDateTime() {
   const currentDate = new Date();
 
   //Formata a data e hora

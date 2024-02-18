@@ -1,3 +1,4 @@
+//Função para adicionar um novo utilizador
 async function addUser(form) {
   let user = {
     username: form.username.value,
@@ -43,7 +44,7 @@ async function addUser(form) {
     });
   }
 }
-
+//Função para mostrar a imagem de perfil
 document.getElementById("photoReg").addEventListener("input", function () {
   var div = document.getElementById("profilePreview");
   div.style.backgroundImage = "url(" + this.value + ")";

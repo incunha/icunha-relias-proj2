@@ -1,24 +1,23 @@
-//Função chamada cada vez que a página é carregada
+//Função que garante que o HTML é carregado antes de executar o script
 document.addEventListener("DOMContentLoaded", function () {
   const username = localStorage.getItem("username");
   const password = localStorage.getItem("password");
   getUserData(username);
   getPhotoUrl(username, password);
-
   //Obtém a tarefa a ser editada da sessionStorage
   const taskID = sessionStorage.getItem("taskToEdite");
   getTask(taskID);
-
+  //Função para verificar se a data inicial é menor que a data final
   function verifyDate(task) {
     if (task.initialDate > task.finalDate) {
       return false;
     } else return true;
   }
-
+  //Função para ir para a página de interface
   function refresh() {
     window.location.href = "interface.html";
   }
-
+  //Função para obter a tarefa a ser editada
   async function getTask(taskId) {
     let userUsado = {
       username: localStorage.getItem("username"),
@@ -45,8 +44,11 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("editarTarefaDescricao").textContent =
           taskEdit.description;
         document.getElementById("initialDateEdit").value = taskEdit.initialDate;
+        if (taskEdit.finalDate == '2199-12-31') {
+          document.getElementById("finalDateEdit").value = "";
+        }else{
         document.getElementById("finalDateEdit").value = taskEdit.finalDate;
-
+        }
         if (taskEdit.priority == 100) {
           document.getElementById("editTaskPriority").value = "low";
         } else if (taskEdit.priority == 200) {
@@ -54,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if (taskEdit.priority == 300) {
           document.getElementById("editTaskPriority").value = "high";
         }
-
         if (taskEdit.status == 100) {
           document.getElementById("editTaskStatus").value = "ToDo";
         } else if (taskEdit.status == 200) {
@@ -73,6 +74,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (document.getElementById("editTaskPriority").value === "low") {
               let priorityS = 100;
+              let finaldate = document.getElementById("finalDateEdit").value;
+              if (finaldate === "") {
+                finaldate = "2199-12-31";
+              }
               const newTask = {
                 title: document.getElementById("editarTarefaTitulo").value,
                 description: document.getElementById("editarTarefaDescricao")
@@ -80,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 priority: priorityS,
                 status: statusS,
                 initialDate: document.getElementById("initialDateEdit").value,
-                finalDate: document.getElementById("finalDateEdit").value,
+                finalDate: finaldate,
                 id: taskEdit.id,
               };
               if (verifyDate(newTask)) {
@@ -93,6 +98,11 @@ document.addEventListener("DOMContentLoaded", function () {
               document.getElementById("editTaskPriority").value === "medium"
             ) {
               let priorityS = 200;
+              let finaldate = document.getElementById("finalDateEdit").value;
+              if (finaldate === "") {
+                finaldate = "2199-12-31";
+              }
+              
               const newTask = {
                 title: document.getElementById("editarTarefaTitulo").value,
                 description: document.getElementById("editarTarefaDescricao")
@@ -101,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 status: statusS,
                 id: taskEdit.id,
                 initialDate: document.getElementById("initialDateEdit").value,
-                finalDate: document.getElementById("finalDateEdit").value,
+                finalDate: finaldate,
               };
               if (verifyDate(newTask)) {
                 updateTask(newTask);
@@ -113,6 +123,10 @@ document.addEventListener("DOMContentLoaded", function () {
               document.getElementById("editTaskPriority").value === "high"
             ) {
               let priorityS = 300;
+              let finaldate = document.getElementById("finalDateEdit").value;
+              if (finaldate === "") {
+                finaldate = "2199-12-31";
+              }
               const newTask = {
                 title: document.getElementById("editarTarefaTitulo").value,
                 description: document.getElementById("editarTarefaDescricao")
@@ -121,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 status: statusS,
                 id: taskEdit.id,
                 initialDate: document.getElementById("initialDateEdit").value,
-                finalDate: document.getElementById("finalDateEdit").value,
+                finalDate: finaldate,
               };
 
               if (verifyDate(newTask)) {
@@ -135,6 +149,10 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("editTaskStatus").value === "Doing"
           ) {
             let statusS = 200;
+            let finaldate = document.getElementById("finalDateEdit").value;
+              if (finaldate === "") {
+                finaldate = "2199-12-31";
+              }
 
             if (document.getElementById("editTaskPriority").value === "low") {
               let priorityS = 100;
@@ -146,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 status: statusS,
                 id: taskEdit.id,
                 initialDate: document.getElementById("initialDateEdit").value,
-                finalDate: document.getElementById("finalDateEdit").value,
+                finalDate: finaldate,
               };
 
               if (verifyDate(newTask)) {
@@ -159,6 +177,10 @@ document.addEventListener("DOMContentLoaded", function () {
               document.getElementById("editTaskPriority").value === "medium"
             ) {
               let priorityS = 200;
+              let finaldate = document.getElementById("finalDateEdit").value;
+              if (finaldate === "") {
+                finaldate = "2199-12-31";
+              }
               const newTask = {
                 title: document.getElementById("editarTarefaTitulo").value,
                 description: document.getElementById("editarTarefaDescricao")
@@ -167,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 status: statusS,
                 id: taskEdit.id,
                 initialDate: document.getElementById("initialDateEdit").value,
-                finalDate: document.getElementById("finalDateEdit").value,
+                finalDate: finaldate,
               };
 
               if (verifyDate(newTask)) {
@@ -180,6 +202,10 @@ document.addEventListener("DOMContentLoaded", function () {
               document.getElementById("editTaskPriority").value === "high"
             ) {
               let priorityS = 300;
+              let finaldate = document.getElementById("finalDateEdit").value;
+              if (finaldate === "") {
+                finaldate = "2199-12-31";
+              }
               const newTask = {
                 title: document.getElementById("editarTarefaTitulo").value,
                 description: document.getElementById("editarTarefaDescricao")
@@ -188,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 status: statusS,
                 id: taskEdit.id,
                 initialDate: document.getElementById("initialDateEdit").value,
-                finalDate: document.getElementById("finalDateEdit").value,
+                finalDate: finaldate,
               };
               if (verifyDate(newTask)) {
                 updateTask(newTask);
@@ -201,6 +227,10 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("editTaskStatus").value === "Done"
           ) {
             let statusS = 300;
+            let finaldate = document.getElementById("finalDateEdit").value;
+              if (finaldate === "") {
+                finaldate = "2199-12-31";
+              }
 
             if (document.getElementById("editTaskPriority").value === "low") {
               let priorityS = 100;
@@ -212,7 +242,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 status: statusS,
                 id: taskEdit.id,
                 initialDate: document.getElementById("initialDateEdit").value,
-                finalDate: document.getElementById("finalDateEdit").value,
+                finalDate: finaldate,
               };
 
               if (verifyDate(newTask)) {
@@ -225,6 +255,10 @@ document.addEventListener("DOMContentLoaded", function () {
               document.getElementById("editTaskPriority").value === "medium"
             ) {
               let priorityS = 200;
+              let finaldate = document.getElementById("finalDateEdit").value;
+              if (finaldate === "") {
+                finaldate = "2199-12-31";
+              }
               const newTask = {
                 title: document.getElementById("editarTarefaTitulo").value,
                 description: document.getElementById("editarTarefaDescricao")
@@ -233,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 status: statusS,
                 id: taskEdit.id,
                 initialDate: document.getElementById("initialDateEdit").value,
-                finalDate: document.getElementById("finalDateEdit").value,
+                finalDate: finaldate,
               };
 
               if (verifyDate(newTask)) {
@@ -246,6 +280,10 @@ document.addEventListener("DOMContentLoaded", function () {
               document.getElementById("editTaskPriority").value === "high"
             ) {
               let priorityS = 300;
+              let finaldate = document.getElementById("finalDateEdit").value;
+              if (finaldate === "") {
+                finaldate = "2199-12-31";
+              }
               const newTask = {
                 title: document.getElementById("editarTarefaTitulo").value,
                 description: document.getElementById("editarTarefaDescricao")
@@ -254,7 +292,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 status: statusS,
                 id: taskEdit.id,
                 initialDate: document.getElementById("initialDateEdit").value,
-                finalDate: document.getElementById("finalDateEdit").value,
+                finalDate: finaldate,
               };
 
               if (verifyDate(newTask)) {
@@ -266,7 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           }
         });
-
+        //Função para atualizar a tarefa
         async function updateTask(task) {
           let username = localStorage.getItem("username");
           let password = localStorage.getItem("password");
@@ -280,7 +318,6 @@ document.addEventListener("DOMContentLoaded", function () {
           const taskkk = {
             title: task.title,
             description: task.description,
-            //id: task.id,
             priority: task.priority,
             status: task.status,
             initialDate: task.initialDate,
@@ -313,14 +350,8 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-
-  //Preenche os campos do formulário com os detalhes da tarefa a editar
-  //document.getElementById("editTaskModal").style.display = "block";
-  //document.body.classList.add("modal-open");
-
   displayDateTime(); // Adiciona a exibição da data e hora
   setInterval(displayDateTime, 1000); // Atualiza a cada segundo
-
   // Adiciona um listener para o botão de cancelar a edição da tarefa
   document
     .getElementById("CancelaEditarTarefa")
@@ -345,7 +376,7 @@ document.addEventListener("DOMContentLoaded", function () {
     dateTimeDisplay.textContent = dateTimeString;
   }
 });
-
+//Função para obter a foto de perfil do utilizador
 async function getPhotoUrl(username, password) {
   let photoUrlRequest = "http://localhost:8080/backEnd/rest/users/profilePhoto";
 
@@ -359,7 +390,6 @@ async function getPhotoUrl(username, password) {
         password: password,
       },
     });
-
     if (response.status === 200) {
       const data = await response.text();
       document.getElementById("userIcon").src = data;
@@ -373,15 +403,13 @@ async function getPhotoUrl(username, password) {
     alert("Something went wrong");
   }
 }
-
+//Função para obter os dados do utilizador
 async function getUserData(username) {
   let user = {
     username: username,
   };
-
   const headers = new Headers();
   headers.append("username", user.username);
-
   await fetch("http://localhost:8080/backEnd/rest/users/getUser", {
     method: "GET",
     headers: headers,

@@ -55,16 +55,17 @@ public class UserService {
     @POST
     @Path("/addTask")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response addTask(@HeaderParam("username")String username,@HeaderParam("password")String password, Task t) {
         try {
             if (!userBean.authorizeUser(username, password)) {
                 return Response.status(403).entity("Forbidden").build();
+            }else {
+                t.createId();
+                t.inicialStatus();
+                userBean.addTask(username, t);
+                return Response.status(200).entity(t).build();
             }
-            t.createId();
-            t.inicialStatus();
-            userBean.addTask(username, t);
-
-            return Response.status(200).entity("A new task has been created").build();
         } catch (Exception e) {
             return Response.status(500).entity("Internal Server Error: " + e.getMessage()).build();
         }
@@ -92,6 +93,7 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUser(User a) {
         try {
+            System.out.println(a.getProfilePhoto());
             if (userBean.usernameExists(a.getUsername()) || userBean.emailExists(a.getEmail())) {
                 return Response.status(409).entity("Username or email already exists").build();
             } else if (!userBean.validateFields(a)) {
