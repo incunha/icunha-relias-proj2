@@ -9,7 +9,7 @@ async function addUser(form) {
     profilePhoto: form.photo.value,
   };
 
-  if (
+  /*if (
     user.username.trim() === "" ||
     user.password.trim() === "" ||
     user.email.trim() === "" ||
@@ -18,22 +18,21 @@ async function addUser(form) {
     user.phoneNumber.trim() === "" ||
     user.profilePhoto.trim() === ""
   ) {
-  } else {
-    const response = await fetch(
-      "http://localhost:8080/backEnd/rest/users/register",
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify(user),
-      }
-    );
+  }*/
+  const response = await fetch(
+    "http://localhost:8080/backEnd/rest/users/register",
+    {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(user),
+    }
+  );
 
-    return response.status; // Retorna o status da resposta
-  }
+  return response.status; // Retorna o status da resposta
 }
 
 module.exports = { addUser };
