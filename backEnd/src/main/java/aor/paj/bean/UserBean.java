@@ -27,7 +27,6 @@ public class UserBean {
         }
         return false;
     }
-
     public boolean emailExists(String email) {
         for (User user : users) {
             if (user.getEmail().equals(email)) {
@@ -36,7 +35,6 @@ public class UserBean {
         }
         return false;
     }
-
     public UserBean() {
         File f = new File(filenameUser);
         if (f.exists()) {
@@ -50,7 +48,6 @@ public class UserBean {
         } else
             users = new ArrayList<>();
     }
-
     public void writeIntoJsonFile() {
         Jsonb jsonb = JsonbBuilder.create(new JsonbConfig().withFormatting(true));
         try {
@@ -59,7 +56,6 @@ public class UserBean {
             throw new RuntimeException(e);
         }
     }
-
     public ArrayList<User> getUsers() {
         return users;
     }
@@ -72,14 +68,12 @@ public class UserBean {
         }
         return null;
     }
-
     public void addUser(User a) {
         System.out.println(a.getUsername());
         a.setTasks(new ArrayList<>());
         users.add(a);
         writeIntoJsonFile();
     }
-
     public boolean validateFields(User a) {
         return a != null &&
                 a.getFirstName() != null && !a.getFirstName().isEmpty() &&
@@ -89,7 +83,6 @@ public class UserBean {
                 a.getPhoneNumber() != null && !a.getPhoneNumber().isEmpty() &&
                 a.getUsername() != null && !a.getUsername().isEmpty();
     }
-
     public User verifyLogin(String username, String password) {
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
@@ -116,8 +109,6 @@ public class UserBean {
         }
         return false;
     }
-
-
     public void addTask(String username, Task t) {
         for (User u : users) {
             if (u.getUsername().equals(username)) {
@@ -126,16 +117,15 @@ public class UserBean {
             }
         }
     }
-
-    public void removeTask(String username, String id) {
+    public boolean removeTask(String username, String id) {
         for (User u : users) {
             if (u.getUsername().equals(username)) {
                 u.removeTask(id);
                 writeIntoJsonFile();
             }
         }
+        return false;
     }
-
     public ArrayList <Task> getAllTasks(String username) {
         for (User u : users) {
             if (u.getUsername().equals(username)) {
@@ -144,7 +134,6 @@ public class UserBean {
         }
         return null;
     }
-
     public void updateUserToNew (User u, User user) {
         u.setEmail(user.getEmail());
         u.setFirstName(user.getFirstName());
@@ -154,13 +143,11 @@ public class UserBean {
         u.setProfilePhoto(user.getProfilePhoto());
         writeIntoJsonFile();
     }
-
     public void updateTask(String username, String id, Task t) {
         for (User u : users) {
             if (u.getUsername().equals(username)) {
                 for (Task task : u.getTasks()) {
                     if (task.getId().equals(id)) {
-                        System.out.println(task.getId());
                         task.updateTask(t);
                         writeIntoJsonFile();
                     }
@@ -168,7 +155,6 @@ public class UserBean {
             }
         }
     }
-
     public Task getTask(String username, String id) {
         for (User u : users) {
             if (u.getUsername().equals(username)) {
@@ -181,12 +167,23 @@ public class UserBean {
         }
         return null;
     }
-
     public void orderTasks(String username, ArrayList<Task> tasks) {
         for (User u : users) {
             if (u.getUsername().equals(username)) {
             u.getTasks().sort(Comparator.comparing(Task::getPriority,Comparator.reverseOrder()).thenComparing(Task::getInitialDate).thenComparing(Task::getFinalDate));
             }
         }
+    }
+    public boolean taskExists(String username, String id) {
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
+                for (Task task : u.getTasks()) {
+                    if (task.getId().equals(id)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

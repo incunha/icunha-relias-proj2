@@ -1,8 +1,8 @@
+//Função para voltar para a página anterior
 document.getElementById("goBackButton").addEventListener("click", function () {
   window.location.href = "interface.html";
 });
-
-/* Função para ver a password através da checkbox */
+//Função para mostrar/esconder a password
 function togglePasswordVisibility() {
   var passwordInput = document.getElementById("passwordInput");
   var verPasswordCheckbox = document.getElementById("showPasswordCheckbox");
@@ -13,12 +13,12 @@ function togglePasswordVisibility() {
     passwordInput.type = "password";
   }
 }
-
+//Função para carregar as informações do utilizador
 window.onload = async function () {
   const username = localStorage.getItem("username"); // Obtém o nome de utilizador da localStorage
 
   // Obtém a password da localStorage
-  const password = localStorage.getItem("password");
+  const password = localStorage.getItem("password"); // Obtém a password da localStorage
 
   let user = {
     username: username,
@@ -57,7 +57,7 @@ window.onload = async function () {
       console.error("Error fetching user information:", error);
     });
 };
-
+//Função para obter a URL da foto de perfil do utilizador
 async function getPhotoUrl(username, password) {
   let photoUrlRequest = "http://localhost:8080/backEnd/rest/users/profilePhoto";
 
@@ -89,7 +89,7 @@ async function getPhotoUrl(username, password) {
         div.style.backgroundImage = "url(" + this.value + ")";
       });
     } else if (response.status == 403) {
-      alert("+++++++++++++++Acess Denied");
+      alert("Acess Denied");
     } else if (response.status == 404) {
       alert("User not found");
     }
@@ -127,7 +127,7 @@ document
       userData.phoneNumber.trim() === "" ||
       userData.profilePhoto.trim() === ""
     ) {
-      alert("pls fill all the fields");
+      alert("please fill all the fields");
     } else if (
       userData.email.indexOf("@") === -1 ||
       userData.email.indexOf("@") !== userData.email.lastIndexOf("@") ||
@@ -138,6 +138,7 @@ document
       saveNewInfos(userData);
     }
   });
+  //Função para atualizar as informações do utilizador
 async function saveNewInfos(userData) {
   const response = await fetch(
     `http://localhost:8080/backEnd/rest/users/update`,

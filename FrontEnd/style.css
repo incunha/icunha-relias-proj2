@@ -1,3 +1,4 @@
+/* Define as características gerais do corpo das páginas */
 body {
   background-image: url("resources/Backgrounds/background1.jpg"); /* Define a imagem de fundo */
   background-size: cover; /* Ajusta o tamanho da imagem de fundo para cobrir completamente a página */
@@ -10,7 +11,7 @@ body {
   height: 100vh;
   margin: 0;
 }
-/* escurece a imagem de fundo */
+/* cria uma sobreposição cinza semi-transparente que cobre o conteúdo do corpo da página e fica atrás do conteúdo */
 body::before {
   content: "";
   position: absolute;
@@ -237,47 +238,36 @@ footer a {
 #argola1 {
   left: 25%;
 }
-
 #argola2 {
   left: 30%;
 }
-
 #argola3 {
   left: 35%;
 }
-
 #argola4 {
   left: 40%;
 }
-
 #argola5 {
   left: 50%;
 }
-
 #argola6 {
   left: 55%;
 }
-
 #argola7 {
   left: 60%;
 }
-
 #argola8 {
   left: 65%;
 }
-
 #argola9 {
   left: 74%;
 }
-
 #argola10 {
   left: 79%;
 }
-
 #argola11 {
   left: 84%;
 }
-
 #argola12 {
   left: 89%;
 }
@@ -314,11 +304,11 @@ footer a {
 
 /* botão de editar perfil */
 #editProfileButton {
-  position: relative;
-  top: 16rem;
+  position: relative;/* Define a posição */
+  top: 16rem;/* Define a posição em relação ao topo */
   left: 0%;
   margin-left: 0;
-  width: 12rem;
+  width: 12rem;/* Define a largura */
   font-family: inherit;
   font-size: inherit;
   background: white;
@@ -534,18 +524,6 @@ footer a {
   word-wrap: break-word;
   word-break: break-all;
 }
-
-/*Posiciona o trashIcon*/
-#trashIcon {
-  display: none;
-  position: fixed;
-  bottom: 7rem;
-  left: 59rem;
-  width: 3rem;
-  height: 3rem;
-}
-
-
 
 /*caracteristicas do aside*/
 aside {
@@ -824,7 +802,6 @@ aside::after {
 }
 
 /*CSS da página de registo*/
-
 /*container do formulário de registo*/
 #formContainer {
   margin-top: 0px;
@@ -839,12 +816,12 @@ aside::after {
   text-align: center;
   margin-top: 5px;
 }
-
+/*posição do formulário de registo*/
 #registrationForm {
   margin-top: 20px;
   margin-left: 100px;
 }
-
+/* Define as características do formulário de registo */
 .input-group {
   display: flex;
   align-items: center;
@@ -880,11 +857,11 @@ aside::after {
   margin-left: 400px;
   border: none;
 }
-
+/*posição do container do formulário de edição de perfil*/
 .profile-content {
   margin-left: 600px; 
 }
-
+/*Caracteristicas do título do formulário de edição de perfil*/
 #editProfileTitle {
   font-family: Arial, sans-serif;
   color: #205d88;
@@ -894,7 +871,7 @@ aside::after {
   margin-top: 30px;
   margin-left: 50px;
 }
-
+/*container do formulário de edição de perfil*/
 #profilePreviewContainer {
   position: fixed;
   right: 10%; 
@@ -902,7 +879,7 @@ aside::after {
   text-align: center;
   color: #205d88;
 }
-
+/*caracteristicas do container do avatar do user*/
 #profilePreview {
   border: 5px solid #205d88; 
   border-radius: 50%; 
@@ -910,7 +887,7 @@ aside::after {
   width: 250px; 
   height: 250px; 
 }
-
+/*caracteristicas do botão de voltar*/
 #goBackButton {
   position: fixed;
   top: 10px;
@@ -920,7 +897,7 @@ aside::after {
   font-size: 15px;
   height: 30px;
 }
-
+/*caracteristicas do botão de submeter o registo*/
 button[type="submit"] {
   margin-left: 255px;
   width: 100px;

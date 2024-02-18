@@ -106,6 +106,4 @@ public class Task {
         this.initialDate = task.getInitialDate();
         this.finalDate = task.getFinalDate();
     }
-
-
 }

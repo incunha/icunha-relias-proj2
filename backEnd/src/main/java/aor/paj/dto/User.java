@@ -103,19 +103,14 @@ public class User {
         tasks.add(t);
     }
 
-    public void removeTask(String id){
-        List<Task> tasksToRemove = new ArrayList<>();
-
-        for(Task t: tasks){
-            if(t.getId().equals(id)){
-                tasksToRemove.add(t);
-            }
-        }
-
-        tasks.removeAll(tasksToRemove);
-    }
-
-
+   public void removeTask(String id) {
+       for (Task t : tasks) {
+           if (t.getId().equals(id)) {
+               tasks.remove(t);
+               break;
+           }
+       }
+   }
     public UserDTO toUserDTO() {
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername(username);
