@@ -51,7 +51,7 @@ public class UserBean {
             users = new ArrayList<>();
     }
 
-    private void writeIntoJsonFile() {
+    public void writeIntoJsonFile() {
         Jsonb jsonb = JsonbBuilder.create(new JsonbConfig().withFormatting(true));
         try {
             jsonb.toJson(users, new FileOutputStream(filenameUser));
@@ -91,7 +91,6 @@ public class UserBean {
     }
 
     public User verifyLogin(String username, String password) {
-        System.out.println(username + " " + password);
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 return user;
