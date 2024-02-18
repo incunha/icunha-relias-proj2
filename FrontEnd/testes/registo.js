@@ -9,16 +9,6 @@ async function addUser(form) {
     profilePhoto: form.photo.value,
   };
 
-  /*if (
-    user.username.trim() === "" ||
-    user.password.trim() === "" ||
-    user.email.trim() === "" ||
-    user.firstName.trim() === "" ||
-    user.lastName.trim() === "" ||
-    user.phoneNumber.trim() === "" ||
-    user.profilePhoto.trim() === ""
-  ) {
-  }*/
   const response = await fetch(
     "http://localhost:8080/backEnd/rest/users/register",
     {

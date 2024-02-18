@@ -839,7 +839,7 @@ aside::after {
 }
 
 .input-group input {
-  width: 200px;
+  width: 390px;
   box-sizing: border-box;
   padding: 10px;
   border: none;
@@ -860,6 +860,13 @@ aside::after {
 /*posição do container do formulário de edição de perfil*/
 .profile-content {
   margin-left: 600px; 
+}
+#goBackButton {
+  background-color: #205d88;
+  color: white;
+  position: fixed;
+  top: 10px;
+  right: 10px;
 }
 /*Caracteristicas do título do formulário de edição de perfil*/
 #editProfileTitle {
@@ -899,7 +906,7 @@ aside::after {
 }
 /*caracteristicas do botão de submeter o registo*/
 button[type="submit"] {
-  margin-left: 255px;
+  margin-left: 240px;
   width: 100px;
   height: 30px;
   color: white;
