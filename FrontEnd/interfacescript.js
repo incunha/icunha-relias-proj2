@@ -378,6 +378,8 @@ async function updateStatusTask(task) {
     if (response.status == 403) {
       console.log(user.username);
       alert("Acess Denied");
+    } else if (response.status == 404) {
+      alert("Task not found");
     } else if (response.status == 200) {
       console.log("Task updated");
     }
@@ -487,6 +489,8 @@ async function deleteTask(task) {
     if (response.status == 403) {
       console.log(user.username);
       alert("Acess Denied");
+    }else if (response.status == 404) {
+      alert("Task not found");
     } else if (response.status == 200) {
       console.log("task deleted");
       gettasks();

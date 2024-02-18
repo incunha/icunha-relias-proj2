@@ -127,13 +127,14 @@ public class UserBean {
         }
     }
 
-    public void removeTask(String username, String id) {
+    public boolean removeTask(String username, String id) {
         for (User u : users) {
             if (u.getUsername().equals(username)) {
                 u.removeTask(id);
                 writeIntoJsonFile();
             }
         }
+        return false;
     }
 
     public ArrayList <Task> getAllTasks(String username) {
@@ -188,5 +189,17 @@ public class UserBean {
             u.getTasks().sort(Comparator.comparing(Task::getPriority,Comparator.reverseOrder()).thenComparing(Task::getInitialDate).thenComparing(Task::getFinalDate));
             }
         }
+    }
+    public boolean taskExists(String username, String id) {
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
+                for (Task task : u.getTasks()) {
+                    if (task.getId().equals(id)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

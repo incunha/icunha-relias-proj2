@@ -82,9 +82,11 @@ public class UserService {
         try {
             if (!userBean.authorizeUser(username, password)) {
                 return Response.status(403).entity("Forbidden").build();
+            } else if (!userBean.taskExists(username, id)) {
+                return Response.status(404).entity("Task not found").build();
             } else {
                 userBean.removeTask(username, id);
-                return Response.status(200).entity("Task has been removed").build();
+                return Response.status(200).entity("Task removed successfully").build();
             }
         } catch (Exception e) {
             return Response.status(500).entity("Internal Server Error: " + e.getMessage()).build();
@@ -180,6 +182,8 @@ public class UserService {
     public Response updateTask(@HeaderParam("username")String username,@HeaderParam("password")String password, @HeaderParam("id") String id, Task t) {
         if (!userBean.authorizeUser(username, password)) {
             return Response.status(403).entity("Forbidden").build();
+        } else if (!userBean.taskExists(username, id)) {
+            return Response.status(404).entity("Task not found").build();
         } else {
             userBean.updateTask(username, id, t);
             System.out.println("Updated task status: " + t.getStatus());

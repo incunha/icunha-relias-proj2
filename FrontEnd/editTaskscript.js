@@ -302,6 +302,8 @@ document.addEventListener("DOMContentLoaded", function () {
             ).then(function (response) {
               if (response.status == 403) {
                 alert("Acess Denied");
+              } else if (response.status == 404) {
+                alert("Task not found");
               } else if (response.status == 200) {
                 console.log("Task updated.");
               }
