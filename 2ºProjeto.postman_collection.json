@@ -52,6 +52,12 @@
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
+									"pm.test(\"username is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"username\");\r",
+									"});\r",
+									"pm.test(\"password is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"password\");\r",
+									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -60,7 +66,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"exec": [],
+								"exec": [
+									""
+								],
 								"type": "text/javascript"
 							}
 						}
@@ -201,41 +209,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Schema is valid\", function () {\r",
-									"  var schema = {\r",
-									"    type: \"object\",\r",
-									"    properties: {\r",
-									"      email: { type: \"string\" },\r",
-									"      firstName: { type: \"string\" },\r",
-									"      lastName: { type: \"string\" },\r",
-									"      password: { type: \"string\" },\r",
-									"      phoneNumber: { type: \"string\" },\r",
-									"      profilePhoto: { type: [\"string\", \"null\"] },\r",
-									"      tasks: {\r",
-									"        type: \"array\",\r",
-									"        items: {\r",
-									"          type: \"object\",\r",
-									"          properties: {\r",
-									"            description: { type: \"string\" },\r",
-									"            finalDate: { type: \"string\" },\r",
-									"            id: { type: \"string\" },\r",
-									"            initialDate: { type: \"string\" },\r",
-									"            priority: { type: \"number\" },\r",
-									"            status: { type: \"number\" },\r",
-									"            title: { type: \"string\" },\r",
-									"          },\r",
-									"        },\r",
-									"      },\r",
-									"      username: { type: \"string\" },\r",
-									"    },\r",
-									"    required: [\"email\", \"firstName\", \"lastName\", \"password\", \"phoneNumber\", \"tasks\", \"username\"],\r",
-									"  };\r",
 									"\r",
-									"  var response = pm.response.json();\r",
-									"  pm.expect(tv4.validate(response, schema)).to.be.true;\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
 									"});\r",
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
+									"pm.test(\"username is present in the request headers\", function(){\r",
+									"    pm.request.headers.has(\"username\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -244,7 +223,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"exec": [],
+								"exec": [
+									""
+								],
 								"type": "text/javascript"
 							}
 						}
@@ -254,7 +235,7 @@
 						"header": [
 							{
 								"key": "username",
-								"value": "toy",
+								"value": "toyiuioo",
 								"type": "text"
 							}
 						],
@@ -357,7 +338,9 @@
 									"});\r",
 									"pm.test(\"password is present in the request headers\", function(){\r",
 									"    pm.request.headers.has(\"password\");\r",
-									"});"
+									"});\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -365,7 +348,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"exec": [],
+								"exec": [
+									""
+								],
 								"type": "text/javascript"
 							}
 						}
@@ -781,8 +766,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
 									"});\r",
 									"\r",
 									"pm.test(\"username is present in the request headers\", function(){\r",
@@ -801,7 +786,9 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"exec": [],
+								"exec": [
+									""
+								],
 								"type": "text/javascript"
 							}
 						}
@@ -821,7 +808,7 @@
 							},
 							{
 								"key": "id",
-								"value": "task625.8227825268826",
+								"value": "task625.822733333333",
 								"type": "text"
 							}
 						],
