@@ -100,7 +100,6 @@ public class UserBean {
         return null;
     }
 
-
     public User logout(String username) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
@@ -109,7 +108,6 @@ public class UserBean {
         }
         return null;
     }
-
 
     public boolean authorizeUser(String username, String password) {
         for (User user : users) {
@@ -189,9 +187,7 @@ public class UserBean {
         for (User u : users) {
             if (u.getUsername().equals(username)) {
             u.getTasks().sort(Comparator.comparing(Task::getPriority,Comparator.reverseOrder()).thenComparing(Task::getInitialDate).thenComparing(Task::getFinalDate));
+            }
         }
     }
-
-    }
-
 }
